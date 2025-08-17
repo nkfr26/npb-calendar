@@ -44,10 +44,15 @@ function DayButton({
   const isSaturday = day.date.getDay() === 6;
   const isHoliday = day.date.getDay() === 0;
   return (
-    <CalendarDayButton day={day} modifiers={modifiers} {...props}>
+    <CalendarDayButton
+      day={day}
+      modifiers={modifiers}
+      {...props}
+      className="data-[selected-single=true]:bg-transparent data-[selected-single=true]:border data-[selected-single=true]:border-primary/20"
+    >
       <span
         className={
-          isSaturday ? "text-blue-400" : isHoliday ? "text-red-400" : ""
+          isSaturday ? "text-blue-500" : isHoliday ? "text-red-500" : ""
         }
       >
         {children}
