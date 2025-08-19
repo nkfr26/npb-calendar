@@ -23,7 +23,7 @@ export function Calendar21({
       onSelect={setDate}
       month={month}
       onMonthChange={setMonth}
-      className="rounded-lg border shadow-sm [--cell-size:--spacing(11)] md:[--cell-size:--spacing(13)]"
+      className="rounded-lg border shadow-sm w-full"
       components={{ DayButton }}
       formatters={{
         formatCaption: (date, options) => format(date, "y年 LLLL", options),
@@ -48,7 +48,7 @@ function DayButton({
       day={day}
       modifiers={modifiers}
       {...props}
-      className="data-[selected-single=true]:bg-transparent data-[selected-single=true]:border data-[selected-single=true]:border-primary/20"
+      className="data-[selected-single=true]:bg-transparent data-[selected-single=true]:border data-[selected-single=true]:border-primary/20 h-9"
     >
       <span
         className={
@@ -57,7 +57,7 @@ function DayButton({
       >
         {children}
       </span>
-      <span>{isSaturday ? 1 : null}</span>
+      {isSaturday ? <span>1</span> : null}
     </CalendarDayButton>
   );
 }
