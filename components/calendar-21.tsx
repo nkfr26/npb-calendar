@@ -23,6 +23,8 @@ export function Calendar21({
       onSelect={setDate}
       month={month}
       onMonthChange={setMonth}
+      startMonth={new Date(month.getFullYear(), 0)}
+      endMonth={new Date(month.getFullYear(), 11)}
       className="rounded-lg border shadow-sm w-full"
       components={{ DayButton }}
       formatters={{
