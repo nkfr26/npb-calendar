@@ -1,21 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import { Calendar21 } from "@/components/calendar-21";
+import { formatDate } from "@/lib/utils";
+import { useCalendar } from "./use-calendar";
+import { useScheduleManagement } from "./use-schedule-management";
 
 export default function Home() {
-  const [date, setDate] = useState<Date | undefined>(undefined);
-  const [month, setMonth] = useState(new Date());
+  const calendar = useCalendar();
+  const { schedules } = useScheduleManagement(calendar.month);
+  console.log(
+    "selected",
+    calendar.selected?.toLocaleDateString(),
+    schedules[calendar.selected ? formatDate(calendar.selected) : ""],
+  );
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start w-full">
-        <Calendar21
-          date={date}
-          setDate={setDate}
-          month={month}
-          setMonth={setMonth}
-        />
+        <Calendar21 {...calendar} schedules={schedules} />
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a

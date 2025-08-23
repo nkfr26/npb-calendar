@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/noNestedComponentDefinitions: https://github.com/shadcn-ui/ui/blob/main/apps/v4/registry/new-york-v4/ui/calendar.tsx */
 "use client";
 
 import {
