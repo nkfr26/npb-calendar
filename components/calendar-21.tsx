@@ -58,7 +58,7 @@ export function Calendar21({
               >
                 {children}
               </span>
-              {(schedules[formatDate(day.date)] || []).length ? (
+              {schedules[formatDate(day.date)]?.length ? (
                 <span className="text-gray-600">
                   {schedules[formatDate(day.date)].length}
                 </span>

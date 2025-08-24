@@ -41,7 +41,15 @@ const useScheduleManagement = (month: Date) => {
     queryKey: ["schedules", monthNumber],
     queryFn: () => fetchSchedules(monthNumber),
   });
-  return { schedules: groupSchedulesByDate(data || []) };
+  return {
+    schedules: groupSchedulesByDate(data || []),
+    teams:
+      data?.flatMap((schedule) => [
+        schedule.match.home,
+        schedule.match.visitor,
+      ]) || [],
+    stadiums: data?.map((schedule) => schedule.info.stadium) || [],
+  };
 };
 
 export { useScheduleManagement, type GroupedSchedules };
