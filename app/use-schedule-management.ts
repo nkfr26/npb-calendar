@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 type Schedule = {
   date: string;
@@ -35,21 +36,39 @@ const groupSchedulesByDate = (schedules: Schedule[]): GroupedSchedules => {
 };
 
 // TODO: フィルタリング
+type Filter = {
+  teams: string[];
+  stadiums: string[];
+  // "" | "ホーム" | "ビジター"
+  homeVisitor: string;
+  // "" | "デーゲーム" | "ナイター"
+  dayNight: string;
+};
+
 const useScheduleManagement = (month: Date) => {
   const monthNumber = month.getMonth() + 1;
   const { data } = useQuery({
     queryKey: ["schedules", monthNumber],
     queryFn: () => fetchSchedules(monthNumber),
   });
+
+  const [filter, setFilter] = useState<Filter>({
+    teams: [],
+    stadiums: [],
+    homeVisitor: "",
+    dayNight: "",
+  });
   return {
-    schedules: groupSchedulesByDate(data || []),
     teams:
       data?.flatMap((schedule) => [
         schedule.match.home,
         schedule.match.visitor,
       ]) || [],
     stadiums: data?.map((schedule) => schedule.info.stadium) || [],
+    filter,
+    setFilter,
+    schedules: groupSchedulesByDate(data || []),
   };
 };
 
-export { useScheduleManagement, type GroupedSchedules };
+export { useScheduleManagement, type Filter, type GroupedSchedules };
