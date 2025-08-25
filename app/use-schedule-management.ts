@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { isEqual } from "lodash";
 import { useState } from "react";
 
 type Schedule = {
@@ -35,14 +36,54 @@ const groupSchedulesByDate = (schedules: Schedule[]): GroupedSchedules => {
   return grouped;
 };
 
-// TODO: フィルタリング
 type Filter = {
   teams: string[];
+  homeVisitor: string; // "" | "ホーム" | "ビジター"
   stadiums: string[];
-  // "" | "ホーム" | "ビジター"
-  homeVisitor: string;
-  // "" | "デーゲーム" | "ナイター"
-  dayNight: string;
+  dayNight: string; // "" | "デーゲーム" | "ナイター"
+};
+
+const DEFAULT_FILTER: Filter = {
+  teams: [],
+  homeVisitor: "",
+  stadiums: [],
+  dayNight: "",
+};
+
+const filterSchedules = (schedules: Schedule[], filter: Filter): Schedule[] => {
+  if (isEqual(filter, DEFAULT_FILTER)) return schedules;
+
+  return schedules.filter((schedule) => {
+    const teamSet = new Set(filter.teams);
+    if (teamSet.size) {
+      const isHome = teamSet.has(schedule.match.home);
+      const isVisitor = teamSet.has(schedule.match.visitor);
+
+      switch (filter.homeVisitor) {
+        case "ホーム":
+          if (!isHome) return false;
+          break;
+        case "ビジター":
+          if (!isVisitor) return false;
+          break;
+        default:
+          if (!isHome && !isVisitor) return false;
+      }
+    }
+
+    const stadiumSet = new Set(filter.stadiums);
+    if (stadiumSet.size && !stadiumSet.has(schedule.info.stadium)) return false;
+
+    switch (filter.dayNight) {
+      case "デーゲーム":
+        if ("18:00" <= schedule.info.time) return false;
+        break;
+      case "ナイター":
+        if (schedule.info.time < "18:00") return false;
+    }
+
+    return true;
+  });
 };
 
 const useScheduleManagement = (month: Date) => {
@@ -52,12 +93,7 @@ const useScheduleManagement = (month: Date) => {
     queryFn: () => fetchSchedules(monthNumber),
   });
 
-  const [filter, setFilter] = useState<Filter>({
-    teams: [],
-    stadiums: [],
-    homeVisitor: "",
-    dayNight: "",
-  });
+  const [filter, setFilter] = useState<Filter>(DEFAULT_FILTER);
   return {
     teams:
       data?.flatMap((schedule) => [
@@ -67,7 +103,7 @@ const useScheduleManagement = (month: Date) => {
     stadiums: data?.map((schedule) => schedule.info.stadium) || [],
     filter,
     setFilter,
-    schedules: groupSchedulesByDate(data || []),
+    schedules: groupSchedulesByDate(filterSchedules(data || [], filter)),
   };
 };
 
