@@ -28,7 +28,7 @@ export function BasicMultiSelect({
       <MultiSelectContent search={false}>
         {/* Items must be wrapped in a group for proper styling */}
         <MultiSelectGroup>
-          {Array.from(new Set(items)).map((item) => (
+          {[...new Set(items)].map((item) => (
             <MultiSelectItem key={item} value={item}>
               {item}
             </MultiSelectItem>
