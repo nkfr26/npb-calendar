@@ -91,20 +91,53 @@ const useScheduleManagement = (month: Date) => {
   const { data } = useQuery({
     queryKey: ["schedules", monthNumber],
     queryFn: () => fetchSchedules(monthNumber),
+    initialData: [],
+    initialDataUpdatedAt: 0,
   });
 
   const [filter, setFilter] = useState<Filter>(DEFAULT_FILTER);
+  const baseFilter: Filter = {
+    ...DEFAULT_FILTER,
+    homeVisitor: filter.homeVisitor,
+    dayNight: filter.dayNight,
+  };
+
+  const [isDependent, setIsDependent] = useState(false);
+  const teamDropDownData = isDependent
+    ? filterSchedules(data, {
+        ...baseFilter,
+        stadiums: filter.stadiums,
+      })
+    : data;
+  const stadiumDropDownData = isDependent
+    ? filterSchedules(data, {
+        ...baseFilter,
+        teams: filter.teams,
+      })
+    : data;
   return {
-    teams:
-      data?.flatMap((schedule) => [
+    teams: [
+      ...teamDropDownData.flatMap((schedule) => [
         schedule.match.home,
         schedule.match.visitor,
-      ]) || [],
-    stadiums: data?.map((schedule) => schedule.info.stadium) || [],
+      ]),
+      ...filter.teams,
+    ],
+    stadiums: [
+      ...stadiumDropDownData.map((schedule) => schedule.info.stadium),
+      ...filter.stadiums,
+    ],
     filter,
     setFilter,
-    schedules: groupSchedulesByDate(filterSchedules(data || [], filter)),
+    isDependent,
+    setIsDependent,
+    schedules: groupSchedulesByDate(filterSchedules(data, filter)),
   };
 };
 
-export { useScheduleManagement, type Filter, type GroupedSchedules };
+export {
+  useScheduleManagement,
+  DEFAULT_FILTER,
+  type Filter,
+  type GroupedSchedules,
+};

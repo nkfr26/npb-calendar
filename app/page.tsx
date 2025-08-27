@@ -8,8 +8,15 @@ import { useScheduleManagement } from "./use-schedule-management";
 
 export default function Home() {
   const calendar = useCalendar();
-  const { teams, stadiums, filter, setFilter, schedules } =
-    useScheduleManagement(calendar.month);
+  const {
+    teams,
+    stadiums,
+    filter,
+    setFilter,
+    isDependent,
+    setIsDependent,
+    schedules,
+  } = useScheduleManagement(calendar.month);
 
   console.log(
     "selected",
@@ -24,6 +31,8 @@ export default function Home() {
           stadiums={stadiums}
           filter={filter}
           setFilter={setFilter}
+          isDependent={isDependent}
+          setIsDependent={setIsDependent}
         />
         <Calendar21 {...calendar} schedules={schedules} />
       </main>

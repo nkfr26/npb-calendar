@@ -1,21 +1,38 @@
-import type { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction, useId } from "react";
 import { BasicMultiSelect } from "@/components/basic-multi-select";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import type { Filter } from "./use-schedule-management";
+import { DEFAULT_FILTER, type Filter } from "./use-schedule-management";
 
 export function ScheduleFilter({
   teams,
   stadiums,
   filter,
   setFilter,
+  isDependent,
+  setIsDependent,
 }: {
   teams: string[];
   stadiums: string[];
   filter: Filter;
   setFilter: Dispatch<SetStateAction<Filter>>;
+  isDependent: boolean;
+  setIsDependent: Dispatch<SetStateAction<boolean>>;
 }) {
+  const id = useId();
   return (
     <>
+      <div className="flex items-center space-x-2">
+        <Switch
+          id={id}
+          checked={isDependent}
+          onCheckedChange={setIsDependent}
+        />
+        <Label htmlFor={id}>選択肢を連動させる</Label>
+      </div>
+      <Button onClick={() => setFilter(DEFAULT_FILTER)}>リセット</Button>
       <BasicMultiSelect
         placeholder="球団"
         items={teams}
