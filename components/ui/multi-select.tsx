@@ -57,6 +57,10 @@ export function MultiSelect({
   );
   const [items, setItems] = useState<Map<string, ReactNode>>(new Map());
 
+  useEffect(() => {
+    setSelectedValues(new Set(values));
+  }, [values]);
+
   function toggleValue(value: string) {
     const getNewSet = (prev: Set<string>) => {
       const newSet = new Set(prev);
