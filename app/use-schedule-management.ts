@@ -132,6 +132,7 @@ const useScheduleManagement = (month: Date) => {
     isDependent,
     setIsDependent,
     schedules: groupSchedulesByDate(filterSchedules(data, filter)),
+    isFiltered: !isEqual(filter, DEFAULT_FILTER),
   };
 };
 

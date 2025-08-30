@@ -93,7 +93,7 @@ export function MultiSelect({
         onItemAdded,
       }}
     >
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={setOpen} modal>
         {children}
       </Popover>
     </MultiSelectContext>

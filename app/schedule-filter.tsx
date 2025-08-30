@@ -23,16 +23,18 @@ export function ScheduleFilter({
 }) {
   const id = useId();
   return (
-    <>
-      <div className="flex items-center space-x-2">
-        <Switch
-          id={id}
-          checked={isDependent}
-          onCheckedChange={setIsDependent}
-        />
-        <Label htmlFor={id}>選択肢を連動させる</Label>
+    <div className="flex flex-col gap-5">
+      <div className="flex justify-between">
+        <div className="flex items-center space-x-2">
+          <Switch
+            id={id}
+            checked={isDependent}
+            onCheckedChange={setIsDependent}
+          />
+          <Label htmlFor={id}>選択肢を連動させる</Label>
+        </div>
+        <Button onClick={() => setFilter(DEFAULT_FILTER)}>リセット</Button>
       </div>
-      <Button onClick={() => setFilter(DEFAULT_FILTER)}>リセット</Button>
       <BasicMultiSelect
         placeholder="球団"
         items={teams}
@@ -68,6 +70,6 @@ export function ScheduleFilter({
         <ToggleGroupItem value="デーゲーム">デーゲーム</ToggleGroupItem>
         <ToggleGroupItem value="ナイター">ナイター</ToggleGroupItem>
       </ToggleGroup>
-    </>
+    </div>
   );
 }
