@@ -1,5 +1,6 @@
 "use client";
 
+import Linkify from "linkify-react";
 import { Funnel } from "lucide-react";
 import { useState } from "react";
 import { Calendar21 } from "@/components/calendar-21";
@@ -54,13 +55,24 @@ export default function Home() {
         <Calendar21 {...calendar} schedules={schedules} />
         <ScrollArea className="min-h-0 rounded-md border p-4">
           <pre>
-            {JSON.stringify(
-              calendar.selected
-                ? { [formatDate(calendar.selected)]: selectedDateSchedule }
-                : schedules,
-              null,
-              2,
-            )}
+            {
+              <Linkify
+                options={{
+                  target: "_brank",
+                  rel: "noopener noreferrer",
+                  className:
+                    "text-[#0000EE] underline active:text-[#FF0000] visited:text-[#551A8B]",
+                }}
+              >
+                {JSON.stringify(
+                  calendar.selected
+                    ? { [formatDate(calendar.selected)]: selectedDateSchedule }
+                    : schedules,
+                  null,
+                  2,
+                )}
+              </Linkify>
+            }
           </pre>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>

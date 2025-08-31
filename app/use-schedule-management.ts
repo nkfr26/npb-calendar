@@ -6,6 +6,7 @@ type Schedule = {
   date: string;
   match: { home: string; visitor: string };
   info: { stadium: string; time: string };
+  ticket?: { primary: string; resale?: string | string[] };
 };
 
 const fetchSchedules = async (month: number): Promise<Schedule[]> => {
@@ -19,6 +20,7 @@ type GroupedSchedules = {
   [date: string]: {
     match: { home: string; visitor: string };
     info: { stadium: string; time: string };
+    ticket?: { primary: string; resale?: string | string[] };
   }[];
 };
 
@@ -31,6 +33,7 @@ const groupSchedulesByDate = (schedules: Schedule[]): GroupedSchedules => {
     grouped[schedule.date].push({
       match: schedule.match,
       info: schedule.info,
+      ...(schedule.ticket && { ticket: schedule.ticket }),
     });
   }
   return grouped;
