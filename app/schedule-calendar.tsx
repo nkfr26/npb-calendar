@@ -12,7 +12,7 @@ import type { GroupedSchedules } from "@/app/use-schedule-management";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import { formatDate } from "@/lib/utils";
 
-export function Calendar21({
+export function ScheduleCalendar({
   selected,
   onSelect,
   month,

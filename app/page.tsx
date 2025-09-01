@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar21 } from "@/components/calendar-21";
 import { formatDate } from "@/lib/utils";
-import { CalendarSchedule } from "./calendar-schedule";
 import { Content } from "./content";
+import { MainBlock } from "./main-block";
+import { ScheduleCalendar } from "./schedule-calendar";
 import { ScheduleDisplay } from "./schedule-display";
 import { ScheduleFilter } from "./schedule-filter";
 import { ScheduleFilterCard } from "./schedule-filter-card";
@@ -52,16 +52,16 @@ export default function Home() {
       <div className="hidden md:block">
         <ScheduleFilterCard>{scheduleFilter}</ScheduleFilterCard>
       </div>
-      <CalendarSchedule>
+      <MainBlock>
         <div className="md:hidden">
           <ScheduleFilterDrawerButtonBlock
             onClick={() => setOpen(true)}
             isFiltered={isFiltered}
           />
         </div>
-        <Calendar21 {...calendar} schedules={schedules} />
+        <ScheduleCalendar {...calendar} schedules={schedules} />
         <ScheduleDisplay data={displayScheduleData} />
-      </CalendarSchedule>
+      </MainBlock>
       <ScheduleFilterDrawer open={open} onOpenChange={setOpen}>
         {scheduleFilter}
       </ScheduleFilterDrawer>
