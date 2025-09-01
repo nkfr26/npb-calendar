@@ -4,13 +4,13 @@ import { useState } from "react";
 import { formatDate } from "@/lib/utils";
 import { Content } from "./content";
 import { ScheduleCalendar } from "./schedule-calendar";
-import { ScheduleViewer } from "./schedule-display";
 import { ScheduleFilter } from "./schedule-filter";
 import { ScheduleFilterCard } from "./schedule-filter-card";
 import {
   DrawerOpenButton,
   ScheduleFilterDrawer,
 } from "./schedule-filter-drawer";
+import { ScheduleViewer } from "./schedule-viewer";
 import { useCalendar } from "./use-calendar";
 import { useScheduleManagement } from "./use-schedule-management";
 
