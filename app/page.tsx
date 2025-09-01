@@ -1,23 +1,17 @@
 "use client";
 
-import Linkify from "linkify-react";
-import { Funnel } from "lucide-react";
 import { useState } from "react";
 import { Calendar21 } from "@/components/calendar-21";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { formatDate } from "@/lib/utils";
+import { CalendarSchedule } from "./calendar-schedule";
+import { Content } from "./content";
+import { ScheduleDisplay } from "./schedule-display";
 import { ScheduleFilter } from "./schedule-filter";
+import { ScheduleFilterCard } from "./schedule-filter-card";
+import {
+  ScheduleFilterDrawer,
+  ScheduleFilterDrawerButtonBlock,
+} from "./schedule-filter-drawer";
 import { useCalendar } from "./use-calendar";
 import { useScheduleManagement } from "./use-schedule-management";
 
@@ -35,80 +29,42 @@ export default function Home() {
   } = useScheduleManagement(calendar.month);
   const [open, setOpen] = useState(false);
 
-  const selectedDateSchedule =
-    schedules[calendar.selected ? formatDate(calendar.selected) : ""];
+  const scheduleFilter = (
+    <ScheduleFilter
+      teams={teams}
+      stadiums={stadiums}
+      filter={filter}
+      setFilter={setFilter}
+      isDependent={isDependent}
+      setIsDependent={setIsDependent}
+    />
+  );
+
+  // 日付未選択時はすべてのスケジュールを表示
+  const displayScheduleData = calendar.selected
+    ? {
+        [formatDate(calendar.selected)]:
+          schedules[formatDate(calendar.selected)],
+      }
+    : schedules;
   return (
-    <div className="max-w-6xl mx-auto h-dvh p-6 md:pt-18 flex gap-2">
-      <Card className="w-xs self-start shadow-none hidden md:block">
-        <CardContent>
-          <ScheduleFilter
-            teams={teams}
-            stadiums={stadiums}
-            filter={filter}
-            setFilter={setFilter}
-            isDependent={isDependent}
-            setIsDependent={setIsDependent}
+    <Content>
+      <div className="hidden md:block">
+        <ScheduleFilterCard>{scheduleFilter}</ScheduleFilterCard>
+      </div>
+      <CalendarSchedule>
+        <div className="md:hidden">
+          <ScheduleFilterDrawerButtonBlock
+            onClick={() => setOpen(true)}
+            isFiltered={isFiltered}
           />
-        </CardContent>
-      </Card>
-      <div className="flex-1 flex flex-col gap-2 min-w-0">
-        <div className="flex justify-end md:hidden">
-          <Button className="relative" onClick={() => setOpen(true)}>
-            <Funnel /> 絞り込み
-            {isFiltered ? (
-              <Badge className="absolute -top-2 -right-2 h-4 w-4 rounded-full p-0 border-2 border-background" />
-            ) : null}
-          </Button>
         </div>
         <Calendar21 {...calendar} schedules={schedules} />
-        <ScrollArea className="min-h-0 text-sm rounded-md border p-4">
-          <pre>
-            {
-              <Linkify
-                options={{
-                  target: "_brank",
-                  rel: "noopener noreferrer",
-                  className:
-                    "text-[#0000EE] underline active:text-[#FF0000] visited:text-[#551A8B]",
-                }}
-              >
-                {JSON.stringify(
-                  calendar.selected && selectedDateSchedule
-                    ? { [formatDate(calendar.selected)]: selectedDateSchedule }
-                    : schedules,
-                  null,
-                  2,
-                )}
-              </Linkify>
-            }
-          </pre>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </div>
-
-      <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle className="sr-only" />
-            <DrawerDescription className="sr-only" />
-          </DrawerHeader>
-          <div className="px-4">
-            <ScheduleFilter
-              teams={teams}
-              stadiums={stadiums}
-              filter={filter}
-              setFilter={setFilter}
-              isDependent={isDependent}
-              setIsDependent={setIsDependent}
-            />
-          </div>
-          <DrawerFooter>
-            <Button onClick={() => setOpen(false)} autoFocus>
-              OK
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </div>
+        <ScheduleDisplay data={displayScheduleData} />
+      </CalendarSchedule>
+      <ScheduleFilterDrawer open={open} onOpenChange={setOpen}>
+        {scheduleFilter}
+      </ScheduleFilterDrawer>
+    </Content>
   );
 }

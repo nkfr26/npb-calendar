@@ -1,0 +1,58 @@
+import { Funnel } from "lucide-react";
+import type { ReactNode } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+
+export function ScheduleFilterDrawer({
+  open,
+  onOpenChange,
+  children,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  children: ReactNode;
+}) {
+  return (
+    <Drawer open={open} onOpenChange={onOpenChange}>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle className="sr-only" />
+          <DrawerDescription className="sr-only" />
+        </DrawerHeader>
+        <div className="px-4">{children}</div>
+        <DrawerFooter>
+          <Button onClick={() => onOpenChange(false)} autoFocus>
+            OK
+          </Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
+export function ScheduleFilterDrawerButtonBlock({
+  onClick,
+  isFiltered,
+}: {
+  onClick: () => void;
+  isFiltered: boolean;
+}) {
+  return (
+    <div className="flex justify-end">
+      <Button className="relative" onClick={onClick}>
+        <Funnel /> 絞り込み
+        {isFiltered && (
+          <Badge className="absolute -top-2 -right-2 h-4 w-4 rounded-full p-0 border-2 border-background" />
+        )}
+      </Button>
+    </div>
+  );
+}
