@@ -3,14 +3,13 @@
 import { useState } from "react";
 import { formatDate } from "@/lib/utils";
 import { Content } from "./content";
-import { MainBlock } from "./main-block";
 import { ScheduleCalendar } from "./schedule-calendar";
-import { ScheduleDisplay } from "./schedule-display";
+import { ScheduleViewer } from "./schedule-display";
 import { ScheduleFilter } from "./schedule-filter";
 import { ScheduleFilterCard } from "./schedule-filter-card";
 import {
+  DrawerOpenButton,
   ScheduleFilterDrawer,
-  ScheduleFilterDrawerButtonBlock,
 } from "./schedule-filter-drawer";
 import { useCalendar } from "./use-calendar";
 import { useScheduleManagement } from "./use-schedule-management";
@@ -41,7 +40,7 @@ export default function Home() {
   );
 
   // 日付未選択時はすべてのスケジュールを表示
-  const displayScheduleData = calendar.selected
+  const displaySchedules = calendar.selected
     ? {
         [formatDate(calendar.selected)]:
           schedules[formatDate(calendar.selected)],
@@ -49,22 +48,24 @@ export default function Home() {
     : schedules;
   return (
     <Content>
-      <div className="hidden md:block">
-        <ScheduleFilterCard>{scheduleFilter}</ScheduleFilterCard>
-      </div>
-      <MainBlock>
-        <div className="md:hidden">
-          <ScheduleFilterDrawerButtonBlock
-            onClick={() => setOpen(true)}
-            isFiltered={isFiltered}
-          />
+      <div className="h-dvh p-6 md:pt-18 flex gap-2">
+        <div className="hidden md:block">
+          <ScheduleFilterCard>{scheduleFilter}</ScheduleFilterCard>
         </div>
-        <ScheduleCalendar {...calendar} schedules={schedules} />
-        <ScheduleDisplay data={displayScheduleData} />
-      </MainBlock>
-      <ScheduleFilterDrawer open={open} onOpenChange={setOpen}>
-        {scheduleFilter}
-      </ScheduleFilterDrawer>
+        <div className="flex-1 flex flex-col gap-2 min-w-0">
+          <div className="flex justify-end md:hidden">
+            <DrawerOpenButton
+              onClick={() => setOpen(true)}
+              isFiltered={isFiltered}
+            />
+          </div>
+          <ScheduleCalendar {...calendar} schedules={schedules} />
+          <ScheduleViewer schedules={displaySchedules} />
+        </div>
+        <ScheduleFilterDrawer open={open} onOpenChange={setOpen}>
+          {scheduleFilter}
+        </ScheduleFilterDrawer>
+      </div>
     </Content>
   );
 }

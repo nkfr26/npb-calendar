@@ -38,7 +38,7 @@ export function ScheduleFilterDrawer({
   );
 }
 
-export function ScheduleFilterDrawerButtonBlock({
+export function DrawerOpenButton({
   onClick,
   isFiltered,
 }: {
@@ -46,13 +46,11 @@ export function ScheduleFilterDrawerButtonBlock({
   isFiltered: boolean;
 }) {
   return (
-    <div className="flex justify-end">
-      <Button className="relative" onClick={onClick}>
-        <Funnel /> 絞り込み
-        {isFiltered && (
-          <Badge className="absolute -top-2 -right-2 h-4 w-4 rounded-full p-0 border-2 border-background" />
-        )}
-      </Button>
-    </div>
+    <Button className="relative" onClick={onClick}>
+      <Funnel /> 絞り込み
+      {isFiltered && (
+        <Badge className="absolute -top-2 -right-2 h-4 w-4 rounded-full p-0 border-2 border-background" />
+      )}
+    </Button>
   );
 }
