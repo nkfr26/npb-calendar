@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { formatDate } from "@/lib/utils";
 import { Content } from "./content";
 import { ScheduleCalendar } from "./schedule-calendar";
 import { ScheduleFilter } from "./schedule-filter";
@@ -38,14 +37,6 @@ export default function Home() {
       setIsDependent={setIsDependent}
     />
   );
-
-  // 日付未選択時はすべてのスケジュールを表示
-  const displaySchedules = calendar.selected
-    ? {
-        [formatDate(calendar.selected)]:
-          schedules[formatDate(calendar.selected)],
-      }
-    : schedules;
   return (
     <Content>
       <div className="flex h-dvh gap-2 p-6 md:pt-18">
@@ -60,7 +51,7 @@ export default function Home() {
             />
           </div>
           <ScheduleCalendar {...calendar} schedules={schedules} />
-          <ScheduleViewer schedules={displaySchedules} />
+          <ScheduleViewer schedules={schedules} selected={calendar.selected} />
         </div>
         <ScheduleFilterDrawer open={open} onOpenChange={setOpen}>
           {scheduleFilter}
