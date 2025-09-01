@@ -38,8 +38,8 @@ export default function Home() {
   const selectedDateSchedule =
     schedules[calendar.selected ? formatDate(calendar.selected) : ""];
   return (
-    <div className="max-w-6xl mx-auto h-dvh p-6 pt-18 flex gap-4">
-      <Card className="w-xs self-start hidden md:block">
+    <div className="max-w-6xl mx-auto h-dvh p-6 md:pt-18 flex gap-2">
+      <Card className="w-xs self-start shadow-none hidden md:block">
         <CardContent>
           <ScheduleFilter
             teams={teams}
@@ -51,9 +51,17 @@ export default function Home() {
           />
         </CardContent>
       </Card>
-      <div className="flex-1 flex flex-col gap-4 min-w-0">
+      <div className="flex-1 flex flex-col gap-2 min-w-0">
+        <div className="flex justify-end md:hidden">
+          <Button className="relative" onClick={() => setOpen(true)}>
+            <Funnel /> 絞り込み
+            {isFiltered ? (
+              <Badge className="absolute -top-2 -right-2 h-4 w-4 rounded-full p-0 border-2 border-background" />
+            ) : null}
+          </Button>
+        </div>
         <Calendar21 {...calendar} schedules={schedules} />
-        <ScrollArea className="min-h-0 rounded-md border p-4">
+        <ScrollArea className="min-h-0 text-sm rounded-md border p-4">
           <pre>
             {
               <Linkify
@@ -65,7 +73,7 @@ export default function Home() {
                 }}
               >
                 {JSON.stringify(
-                  calendar.selected
+                  calendar.selected && selectedDateSchedule
                     ? { [formatDate(calendar.selected)]: selectedDateSchedule }
                     : schedules,
                   null,
@@ -78,16 +86,6 @@ export default function Home() {
         </ScrollArea>
       </div>
 
-      <div className="fixed bottom-8 left-8">
-        <div className="relative md:hidden">
-          <Button size="icon" className="size-10" onClick={() => setOpen(true)}>
-            <Funnel />
-          </Button>
-          {isFiltered ? (
-            <Badge className="absolute -top-2 -right-2 h-4 w-4 rounded-full p-0 border-2 border-background" />
-          ) : null}
-        </div>
-      </div>
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerContent>
           <DrawerHeader>
