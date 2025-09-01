@@ -49,7 +49,7 @@ export function DrawerOpenButton({
     <Button className="relative" onClick={onClick}>
       <Funnel /> 絞り込み
       {isFiltered && (
-        <Badge className="absolute -top-2 -right-2 h-4 w-4 rounded-full p-0 border-2 border-background" />
+        <Badge className="-top-2 -right-2 absolute h-4 w-4 rounded-full border-2 border-background p-0" />
       )}
     </Button>
   );

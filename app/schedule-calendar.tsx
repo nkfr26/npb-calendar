@@ -34,7 +34,7 @@ export function ScheduleCalendar({
       onMonthChange={onMonthChange}
       startMonth={new Date(month.getFullYear(), 2)}
       endMonth={new Date(month.getFullYear(), 10)}
-      className="rounded-lg border w-full [&_th:nth-child(6)]:text-blue-700 [&_th:nth-child(7)]:text-red-500"
+      className="w-full rounded-lg border [&_th:nth-child(6)]:text-blue-700 [&_th:nth-child(7)]:text-red-500"
       components={{
         // biome-ignore lint/correctness/noNestedComponentDefinitions: to use `schedules`
         DayButton: ({ children, modifiers, day, ...props }) => {
@@ -47,7 +47,7 @@ export function ScheduleCalendar({
               day={day}
               modifiers={modifiers}
               {...props}
-              className="data-[selected-single=true]:bg-transparent data-[selected-single=true]:border data-[selected-single=true]:border-primary/20 h-10"
+              className="h-10 data-[selected-single=true]:border data-[selected-single=true]:border-primary/20 data-[selected-single=true]:bg-transparent"
             >
               <span
                 className={

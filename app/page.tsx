@@ -48,11 +48,11 @@ export default function Home() {
     : schedules;
   return (
     <Content>
-      <div className="h-dvh p-6 md:pt-18 flex gap-2">
+      <div className="flex h-dvh gap-2 p-6 md:pt-18">
         <div className="hidden md:block">
           <ScheduleFilterCard>{scheduleFilter}</ScheduleFilterCard>
         </div>
-        <div className="flex-1 flex flex-col gap-2 min-w-0">
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
           <div className="flex justify-end md:hidden">
             <DrawerOpenButton
               onClick={() => setOpen(true)}

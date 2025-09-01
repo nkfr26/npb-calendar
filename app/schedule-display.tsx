@@ -4,7 +4,7 @@ import type { GroupedSchedules } from "./use-schedule-management";
 
 export function ScheduleViewer({ schedules }: { schedules: GroupedSchedules }) {
   return (
-    <ScrollArea className="min-h-0 text-sm rounded-md border p-4">
+    <ScrollArea className="min-h-0 rounded-md border p-4 text-sm">
       <pre>
         <Linkify
           options={{
