@@ -11,7 +11,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 
-export function ScheduleFilterDrawer({
+export function FilterDrawer({
   open,
   onOpenChange,
   children,

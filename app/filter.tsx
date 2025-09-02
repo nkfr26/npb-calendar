@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { DEFAULT_FILTER, type Filter } from "./use-schedule-management";
+import {
+  DEFAULT_FILTER,
+  type Filter as FilterType,
+} from "./use-schedule-management";
 
-export function ScheduleFilter({
+export function Filter({
   teams,
   stadiums,
   filter,
@@ -16,8 +19,8 @@ export function ScheduleFilter({
 }: {
   teams: string[];
   stadiums: string[];
-  filter: Filter;
-  setFilter: Dispatch<SetStateAction<Filter>>;
+  filter: FilterType;
+  setFilter: Dispatch<SetStateAction<FilterType>>;
   isDependent: boolean;
   setIsDependent: Dispatch<SetStateAction<boolean>>;
 }) {

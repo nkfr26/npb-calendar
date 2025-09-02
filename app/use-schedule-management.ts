@@ -16,29 +16,6 @@ const fetchSchedules = async (month: number): Promise<Schedule[]> => {
   return response.ok ? await response.json() : [];
 };
 
-type GroupedSchedules = {
-  [date: string]: {
-    match: { home: string; visitor: string };
-    info: { stadium: string; time: string };
-    ticket?: { primary: string; resale?: string | string[] };
-  }[];
-};
-
-const groupSchedulesByDate = (schedules: Schedule[]): GroupedSchedules => {
-  const grouped: GroupedSchedules = {};
-  for (const schedule of schedules) {
-    if (!grouped[schedule.date]) {
-      grouped[schedule.date] = [];
-    }
-    grouped[schedule.date].push({
-      match: schedule.match,
-      info: schedule.info,
-      ...(schedule.ticket && { ticket: schedule.ticket }),
-    });
-  }
-  return grouped;
-};
-
 type Filter = {
   teams: string[];
   homeVisitor: string; // "" | "ホーム" | "ビジター"
@@ -89,6 +66,29 @@ const filterSchedules = (schedules: Schedule[], filter: Filter): Schedule[] => {
   });
 };
 
+type GroupedSchedules = {
+  [date: string]: {
+    match: { home: string; visitor: string };
+    info: { stadium: string; time: string };
+    ticket?: { primary: string; resale?: string | string[] };
+  }[];
+};
+
+const groupSchedulesByDate = (schedules: Schedule[]): GroupedSchedules => {
+  const grouped: GroupedSchedules = {};
+  for (const schedule of schedules) {
+    if (!grouped[schedule.date]) {
+      grouped[schedule.date] = [];
+    }
+    grouped[schedule.date].push({
+      match: schedule.match,
+      info: schedule.info,
+      ...(schedule.ticket && { ticket: schedule.ticket }),
+    });
+  }
+  return grouped;
+};
+
 const useScheduleManagement = (month: Date) => {
   const monthNumber = month.getMonth() + 1;
   const { data } = useQuery({
@@ -134,14 +134,14 @@ const useScheduleManagement = (month: Date) => {
     setFilter,
     isDependent,
     setIsDependent,
-    schedules: groupSchedulesByDate(filterSchedules(data, filter)),
     isFiltered: !isEqual(filter, DEFAULT_FILTER),
+    schedules: groupSchedulesByDate(filterSchedules(data, filter)),
   };
 };
 
 export {
-  useScheduleManagement,
-  DEFAULT_FILTER,
   type Filter,
   type GroupedSchedules,
+  DEFAULT_FILTER,
+  useScheduleManagement,
 };
