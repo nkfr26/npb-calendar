@@ -63,7 +63,7 @@ export function ScheduleViewer({
                   })}
                 </div>
                 <div className="text-gray-600 text-xs">
-                  {displaySchedules[key]?.length}試合
+                  {displaySchedules[key]?.length || 0}試合
                 </div>
               </div>
               <ChevronDown
@@ -72,7 +72,9 @@ export function ScheduleViewer({
                 }`}
               />
             </CollapsibleTrigger>
-            <CollapsibleContent className="border-t">
+            <CollapsibleContent
+              className={displaySchedules[key]?.length ? "border-t" : ""}
+            >
               <div className="flex flex-col divide-y">
                 {displaySchedules[key]?.map((value) => {
                   const ticket = value.ticket;
