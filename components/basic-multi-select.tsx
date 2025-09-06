@@ -16,7 +16,7 @@ export function BasicMultiSelect({
   setSelectedValues,
 }: {
   placeholder: string;
-  items: string[];
+  items: Set<string>;
   selectedValues: string[];
   setSelectedValues: (values: string[]) => void;
 }) {
@@ -28,7 +28,7 @@ export function BasicMultiSelect({
       <MultiSelectContent search={false}>
         {/* Items must be wrapped in a group for proper styling */}
         <MultiSelectGroup>
-          {[...new Set(items)].map((item) => (
+          {[...items].map((item) => (
             <MultiSelectItem key={item} value={item}>
               {item}
             </MultiSelectItem>

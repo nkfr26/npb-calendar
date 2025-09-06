@@ -80,7 +80,7 @@ const groupSchedulesByDate = (schedules: Schedule[]): GroupedSchedules => {
     if (!grouped[schedule.date]) {
       grouped[schedule.date] = [];
     }
-    grouped[schedule.date].push({
+    grouped[schedule.date]?.push({
       match: schedule.match,
       info: schedule.info,
       ...(schedule.ticket && { ticket: schedule.ticket }),
@@ -119,17 +119,17 @@ const useScheduleManagement = (month: Date) => {
       })
     : data;
   return {
-    teams: [
+    teams: new Set([
       ...teamDropDownData.flatMap((schedule) => [
         schedule.match.home,
         schedule.match.visitor,
       ]),
       ...filter.teams,
-    ],
-    stadiums: [
+    ]),
+    stadiums: new Set([
       ...stadiumDropDownData.map((schedule) => schedule.info.stadium),
       ...filter.stadiums,
-    ],
+    ]),
     filter,
     setFilter,
     isDependent,

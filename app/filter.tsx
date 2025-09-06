@@ -17,8 +17,8 @@ export function Filter({
   isDependent,
   setIsDependent,
 }: {
-  teams: string[];
-  stadiums: string[];
+  teams: Set<string>;
+  stadiums: Set<string>;
   filter: FilterType;
   setFilter: Dispatch<SetStateAction<FilterType>>;
   isDependent: boolean;
