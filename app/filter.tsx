@@ -42,7 +42,12 @@ export function Filter({
         placeholder="球団"
         items={teams}
         selectedValues={filter.teams}
-        setSelectedValues={(values) => setFilter({ ...filter, teams: values })}
+        setSelectedValues={(values) => {
+          setFilter((prev) => ({ ...prev, teams: values }));
+          if (values.length === 0) {
+            setFilter((prev) => ({ ...prev, homeVisitor: "" }));
+          }
+        }}
       />
       <ToggleGroup
         variant="outline"
@@ -50,7 +55,9 @@ export function Filter({
         type="single"
         disabled={filter.teams.length === 0}
         value={filter.homeVisitor}
-        onValueChange={(value) => setFilter({ ...filter, homeVisitor: value })}
+        onValueChange={(value) =>
+          setFilter((prev) => ({ ...prev, homeVisitor: value }))
+        }
       >
         <ToggleGroupItem value="ホーム">ホーム</ToggleGroupItem>
         <ToggleGroupItem value="ビジター">ビジター</ToggleGroupItem>
@@ -60,7 +67,7 @@ export function Filter({
         items={stadiums}
         selectedValues={filter.stadiums}
         setSelectedValues={(values) =>
-          setFilter({ ...filter, stadiums: values })
+          setFilter((prev) => ({ ...prev, stadiums: values }))
         }
       />
       <ToggleGroup
@@ -68,10 +75,12 @@ export function Filter({
         className="w-full"
         type="single"
         value={filter.dayNight}
-        onValueChange={(value) => setFilter({ ...filter, dayNight: value })}
+        onValueChange={(value) =>
+          setFilter((prev) => ({ ...prev, dayNight: value }))
+        }
       >
         <ToggleGroupItem value="デーゲーム">デーゲーム</ToggleGroupItem>
-        <ToggleGroupItem value="ナイター">ナイター</ToggleGroupItem>
+        <ToggleGroupItem value="ナイター">18時～</ToggleGroupItem>
       </ToggleGroup>
     </div>
   );

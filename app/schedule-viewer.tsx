@@ -1,5 +1,4 @@
 import { ChevronDown, Clock, ExternalLink, MapPin, Ticket } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,
@@ -13,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatDate } from "@/lib/utils";
 import type { GroupedSchedules } from "./use-schedule-management";
 
@@ -24,15 +23,6 @@ export function ScheduleViewer({
   schedules: GroupedSchedules;
   selected: Date | undefined;
 }) {
-  const [openItems, setOpenItems] = useState<number[]>([]);
-  const toggleItem = (index: number) => {
-    setOpenItems((prev) =>
-      prev.includes(index)
-        ? prev.filter((item) => item !== index)
-        : [...prev, index],
-    );
-  };
-
   // 日付未選択時はすべてのスケジュールを表示
   const displaySchedules = selected
     ? {
@@ -46,37 +36,32 @@ export function ScheduleViewer({
   return (
     <ScrollArea className="min-h-0 rounded-md border p-4 text-sm">
       <div className="space-y-2">
-        {Object.keys(displaySchedules).map((key, index) => (
-          <Collapsible
-            key={key}
-            open={openItems.includes(index)}
-            onOpenChange={() => toggleItem(index)}
-            className="rounded-lg border"
-          >
+        {Object.keys(displaySchedules).map((dateString) => (
+          <Collapsible key={dateString} className="group rounded-lg border">
             <CollapsibleTrigger className="flex w-full items-center justify-between p-4 text-left hover:bg-muted/50">
               <div className="flex flex-col">
                 <div className="font-medium">
-                  {new Date(key).toLocaleDateString("ja-JP", {
+                  {new Date(dateString).toLocaleDateString("ja-JP", {
                     month: "long",
                     day: "numeric",
                     weekday: "short",
                   })}
                 </div>
                 <div className="text-gray-600 text-xs">
-                  {displaySchedules[key]?.length || 0}試合
+                  {displaySchedules[dateString]?.length || 0}試合
                 </div>
               </div>
               <ChevronDown
-                className={`size-4 transition-transform duration-200 ${
-                  openItems.includes(index) ? "rotate-180 transform" : ""
-                }`}
+                className={
+                  "size-4 transition-transform duration-200 group-data-[state=open]:rotate-180"
+                }
               />
             </CollapsibleTrigger>
             <CollapsibleContent
-              className={displaySchedules[key]?.length ? "border-t" : ""}
+              className={displaySchedules[dateString]?.length ? "border-t" : ""}
             >
               <div className="flex flex-col divide-y">
-                {displaySchedules[key]?.map((value) => {
+                {displaySchedules[dateString]?.map((value) => {
                   const ticket = value.ticket;
                   const resaleUrls = ticket?.resale
                     ? Array.isArray(ticket.resale)
@@ -85,7 +70,7 @@ export function ScheduleViewer({
                     : undefined;
                   return (
                     <div
-                      key={JSON.stringify(value)}
+                      key={dateString + value.match.home}
                       className="flex justify-between p-4"
                     >
                       <div className="flex flex-col gap-1">
@@ -123,27 +108,21 @@ export function ScheduleViewer({
                             {resaleUrls && (
                               <>
                                 <DropdownMenuSeparator />
-                                {resaleUrls.map((resaleUrl, resaleIndex) => (
+                                {resaleUrls.map((resaleUrl, index) => (
                                   <DropdownMenuItem
                                     key={resaleUrl}
                                     onClick={() => handleTicketClick(resaleUrl)}
                                   >
                                     <ExternalLink />
-                                    {1 < resaleUrls.length
-                                      ? `リセール ${resaleIndex + 1}`
-                                      : "リセール"}
+                                    {resaleUrls.length === 1
+                                      ? "リセール"
+                                      : `リセール ${index + 1}`}
                                   </DropdownMenuItem>
                                 ))}
                               </>
                             )}
                           </DropdownMenuContent>
                         </DropdownMenu>
-                      )}
-                      {!ticket && (
-                        <Button variant="outline" disabled>
-                          <Ticket />
-                          チケット
-                        </Button>
                       )}
                     </div>
                   );
@@ -153,7 +132,6 @@ export function ScheduleViewer({
           </Collapsible>
         ))}
       </div>
-      <ScrollBar orientation="horizontal" />
     </ScrollArea>
   );
 }
