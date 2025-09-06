@@ -48,6 +48,7 @@ export function ScheduleCalendar({
               modifiers={modifiers}
               {...props}
               className="h-10 data-[selected-single=true]:border data-[selected-single=true]:border-primary/20 data-[selected-single=true]:bg-transparent"
+              disabled={!schedules[formatDate(day.date)]}
             >
               <span
                 className={
@@ -62,7 +63,7 @@ export function ScheduleCalendar({
               </span>
               {schedules[formatDate(day.date)]?.length ? (
                 <span className="text-gray-600">
-                  {schedules[formatDate(day.date)].length}
+                  {schedules[formatDate(day.date)]?.length}
                 </span>
               ) : null}
             </CalendarDayButton>
