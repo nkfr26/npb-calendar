@@ -80,7 +80,7 @@ export function Filter({
         }
       >
         <ToggleGroupItem value="デーゲーム">デーゲーム</ToggleGroupItem>
-        <ToggleGroupItem value="ナイター">18時～</ToggleGroupItem>
+        <ToggleGroupItem value="ナイター">ナイター</ToggleGroupItem>
       </ToggleGroup>
     </div>
   );

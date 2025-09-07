@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Content } from "./content";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Filter } from "./filter";
 import { FilterCard } from "./filter-card";
 import { DrawerOpenButton, FilterDrawer } from "./filter-drawer";
@@ -17,27 +17,42 @@ export default function Home() {
   );
   const [open, setOpen] = useState(false);
   return (
-    <Content>
-      <div className="flex h-dvh gap-2 p-6 md:pt-18">
-        <div className="hidden md:block">
-          <FilterCard>
-            <Filter {...filter} />
-          </FilterCard>
-        </div>
-        <div className="flex min-w-0 flex-1 flex-col gap-2">
-          <div className="flex justify-end md:hidden">
-            <DrawerOpenButton
-              onClick={() => setOpen(true)}
-              isFiltered={isFiltered}
-            />
+    <div className="flex h-dvh flex-col">
+      <header className="border-b">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex items-center justify-between px-4 py-2">
+            <div className="font-mono text-lg">npb-calendar</div>
+            <div className="md:hidden">
+              <DrawerOpenButton
+                onClick={() => setOpen(true)}
+                isFiltered={isFiltered}
+              />
+            </div>
           </div>
-          <ScheduleCalendar {...calendar} schedules={schedules} />
-          <ScheduleViewer schedules={schedules} selected={calendar.selected} />
         </div>
-        <FilterDrawer open={open} onOpenChange={setOpen}>
-          <Filter {...filter} />
-        </FilterDrawer>
-      </div>
-    </Content>
+      </header>
+      <main className="overflow-auto">
+        <div className="mx-auto flex h-full max-w-6xl gap-4 pl-4">
+          <div className="hidden pt-4 md:block">
+            <FilterCard>
+              <Filter {...filter} />
+            </FilterCard>
+          </div>
+          <ScrollArea className="flex-1 pr-4">
+            <div className="flex flex-col gap-4 py-4">
+              <ScheduleCalendar {...calendar} schedules={schedules} />
+              <ScheduleViewer
+                schedules={schedules}
+                selected={calendar.selected}
+              />
+            </div>
+          </ScrollArea>
+        </div>
+      </main>
+
+      <FilterDrawer open={open} onOpenChange={setOpen}>
+        <Filter {...filter} />
+      </FilterDrawer>
+    </div>
   );
 }
