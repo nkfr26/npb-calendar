@@ -17,11 +17,11 @@ export default function Home() {
   );
   const [open, setOpen] = useState(false);
   return (
-    <div className="flex h-dvh flex-col">
+    <div className="flex h-dvh flex-col text-sm">
       <header className="border-b">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center justify-between px-4 py-2">
-            <div className="font-mono text-lg">npb-calendar</div>
+            <div className="font-mono text-xl">npb-calendar</div>
             <div className="md:hidden">
               <DrawerOpenButton
                 onClick={() => setOpen(true)}

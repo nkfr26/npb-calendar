@@ -1,6 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { isEqual } from "lodash";
-import { useState } from "react";
+import {
+  parseAsArrayOf,
+  parseAsBoolean,
+  parseAsString,
+  useQueryState,
+  useQueryStates,
+} from "nuqs";
 
 type Schedule = {
   date: string;
@@ -98,14 +104,23 @@ const useScheduleManagement = (month: Date) => {
     initialDataUpdatedAt: 0,
   });
 
-  const [filter, setFilter] = useState<Filter>(DEFAULT_FILTER);
+  const [filter, setFilter] = useQueryStates({
+    teams: parseAsArrayOf(parseAsString).withDefault([]),
+    homeVisitor: parseAsString.withDefault(""),
+    stadiums: parseAsArrayOf(parseAsString).withDefault([]),
+    dayNight: parseAsString.withDefault(""),
+  });
+
+  const [isDependent, setIsDependent] = useQueryState(
+    "isDependent",
+    parseAsBoolean.withDefault(false),
+  );
   const baseFilter: Filter = {
     ...DEFAULT_FILTER,
     homeVisitor: filter.homeVisitor,
     dayNight: filter.dayNight,
   };
 
-  const [isDependent, setIsDependent] = useState(false);
   const teamDropDownData = isDependent
     ? filterSchedules(data, {
         ...baseFilter,
