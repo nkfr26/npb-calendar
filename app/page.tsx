@@ -31,7 +31,7 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <main className="overflow-auto">
+      <main className="overflow-auto [scrollbar-gutter:stable]">
         <div className="mx-auto flex h-full max-w-6xl gap-4 pl-4">
           <div className="hidden pt-4 md:block">
             <FilterCard>
