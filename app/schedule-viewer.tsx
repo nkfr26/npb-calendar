@@ -41,13 +41,27 @@ export function ScheduleViewer({
         >
           <CollapsibleTrigger className="sticky top-0 flex w-full items-center justify-between bg-background p-4 text-left hover:bg-accent">
             <div className="flex flex-col">
-              <div className="font-medium">
-                {new Date(dateString).toLocaleDateString("ja-JP", {
-                  month: "long",
-                  day: "numeric",
-                  weekday: "short",
-                })}
-              </div>
+              {(() => {
+                const date = new Date(dateString);
+                const [isSaturday, isHoliday] = [
+                  date.getDay() === 6,
+                  date.getDay() === 0,
+                ];
+                const textColor = isSaturday
+                  ? "text-blue-700"
+                  : isHoliday
+                    ? "text-red-500"
+                    : "";
+                return (
+                  <div className={`font-medium ${textColor}`}>
+                    {date.toLocaleDateString("ja-JP", {
+                      month: "long",
+                      day: "numeric",
+                      weekday: "short",
+                    })}
+                  </div>
+                );
+              })()}
               <div className="text-gray-600 text-xs">
                 {displaySchedules[dateString]?.length || 0}試合
               </div>
@@ -83,11 +97,11 @@ export function ScheduleViewer({
                       <div className="flex gap-2 text-gray-600 text-xs">
                         <div className="flex items-center gap-1">
                           <Clock size={12} />
-                          <span>{value.info.time}</span>
+                          {value.info.time}
                         </div>
                         <div className="flex items-center gap-1">
                           <MapPin size={12} />
-                          <span>{value.info.stadium}</span>
+                          {value.info.stadium}
                         </div>
                       </div>
                     </div>

@@ -51,18 +51,18 @@ export function ScheduleCalendar({
               disabled={!schedules[formatDate(day.date)]}
             >
               <span
-                className={
+                className={`font-medium ${
                   isSaturday
                     ? "text-blue-700"
                     : isHoliday
                       ? "text-red-500"
                       : "text-black"
-                }
+                }`}
               >
                 {children}
               </span>
               {schedules[formatDate(day.date)]?.length ? (
-                <span className="text-gray-600">
+                <span className="text-gray-800">
                   {schedules[formatDate(day.date)]?.length}
                 </span>
               ) : null}
