@@ -20,7 +20,7 @@ export default function Home() {
     <div className="flex h-dvh flex-col text-sm">
       <header className="border-b">
         <div className="mx-auto max-w-6xl">
-          <div className="flex items-center justify-between px-4 py-2">
+          <div className="flex items-center justify-between px-4 pt-3 pb-2">
             <div className="font-mono text-xl">npb-calendar</div>
             <div className="md:hidden">
               <DrawerOpenButton
