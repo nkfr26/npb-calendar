@@ -10,6 +10,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatDate } from "@/lib/utils";
@@ -117,8 +118,10 @@ export function ScheduleViewer({
                           <DropdownMenuItem
                             onClick={() => handleTicketClick(ticket.primary)}
                           >
-                            <ExternalLink />
                             購入
+                            <DropdownMenuShortcut>
+                              <ExternalLink />
+                            </DropdownMenuShortcut>
                           </DropdownMenuItem>
                           {resaleUrls && (
                             <>
@@ -128,10 +131,12 @@ export function ScheduleViewer({
                                   key={resaleUrl}
                                   onClick={() => handleTicketClick(resaleUrl)}
                                 >
-                                  <ExternalLink />
                                   {resaleUrls.length === 1
                                     ? "リセール"
                                     : `リセール ${index + 1}`}
+                                  <DropdownMenuShortcut>
+                                    <ExternalLink />
+                                  </DropdownMenuShortcut>
                                 </DropdownMenuItem>
                               ))}
                             </>
