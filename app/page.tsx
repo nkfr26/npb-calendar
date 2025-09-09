@@ -34,10 +34,6 @@ export default function Home() {
                   <MarkGithubIcon />
                 </a>
               </Button>
-              <DrawerOpenButton
-                onClick={() => setOpen(true)}
-                isFiltered={isFiltered}
-              />
             </div>
           </div>
         </div>
@@ -50,7 +46,11 @@ export default function Home() {
             </FilterCard>
           </div>
           <ScrollArea className="flex-1 pr-4">
-            <div className="flex flex-col gap-4 py-4">
+            <div className="flex flex-col gap-2 pt-2 pb-4 md:pt-4">
+              <DrawerOpenButton
+                onClick={() => setOpen(true)}
+                isFiltered={isFiltered}
+              />
               <ScheduleCalendar {...calendar} schedules={schedules} />
               <ScheduleViewer
                 schedules={schedules}
