@@ -47,7 +47,7 @@ export function ScheduleCalendar({
               day={day}
               modifiers={modifiers}
               {...props}
-              className="h-10 data-[selected-single=true]:border data-[selected-single=true]:border-primary/20 data-[selected-single=true]:bg-transparent"
+              className="h-10 data-[selected-single=true]:border-2 data-[selected-single=true]:border-primary/20 data-[selected-single=true]:bg-transparent"
               disabled={!schedules[formatDate(day.date)]}
             >
               <span

@@ -109,12 +109,15 @@ export function ScheduleViewer({
                     {ticket && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline">
+                          <Button>
                             <Ticket />
                             <span className="hidden md:block">チケット</span>
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent
+                          align="end"
+                          className="bg-background"
+                        >
                           <DropdownMenuItem
                             onClick={() => handleTicketClick(ticket.primary)}
                           >
