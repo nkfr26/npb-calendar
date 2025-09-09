@@ -159,7 +159,9 @@ export function MultiSelectValue({
     );
 
     if (overflowElement != null) overflowElement.style.display = "none";
-    items.forEach((child) => child.style.removeProperty("display"));
+    items.forEach((child) => {
+      child.style.removeProperty("display");
+    });
     let amount = 0;
     for (let i = items.length - 1; i >= 0; i--) {
       const child = items[i];
@@ -167,6 +169,7 @@ export function MultiSelectValue({
         break;
       }
       amount = items.length - i;
+      if (child === undefined) continue;
       child.style.display = "none";
       overflowElement?.style.removeProperty("display");
     }
@@ -272,7 +275,7 @@ export function MultiSelectContent({
               }
             />
           ) : (
-            <button className="sr-only" />
+            <button type="button" className="sr-only" />
           )}
           <CommandList>
             {canSearch && (
