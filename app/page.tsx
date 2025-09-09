@@ -1,6 +1,8 @@
 "use client";
 
+import { MarkGithubIcon } from "@primer/octicons-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Filter } from "./filter";
 import { FilterCard } from "./filter-card";
@@ -22,7 +24,16 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center justify-between px-4 pt-3 pb-2">
             <div className="font-mono text-xl">npb-calendar</div>
-            <div className="md:hidden">
+            <div className="flex gap-2">
+              <Button asChild variant="outline" size="icon">
+                <a
+                  href="https://github.com/nkfr26/npb-calendar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MarkGithubIcon />
+                </a>
+              </Button>
               <DrawerOpenButton
                 onClick={() => setOpen(true)}
                 isFiltered={isFiltered}
