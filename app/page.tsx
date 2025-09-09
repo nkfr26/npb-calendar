@@ -45,8 +45,8 @@ export default function Home() {
               <Filter {...filter} />
             </FilterCard>
           </div>
-          <ScrollArea className="flex-1 pr-4">
-            <div className="flex flex-col gap-2 pt-2 pb-4 md:pt-4">
+          <ScrollArea className="flex-1">
+            <div className="flex flex-col gap-2 py-4 pr-4">
               <DrawerOpenButton
                 onClick={() => setOpen(true)}
                 isFiltered={isFiltered}
