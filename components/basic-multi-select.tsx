@@ -25,7 +25,7 @@ export function BasicMultiSelect({
       <MultiSelectTrigger className="w-full">
         <MultiSelectValue placeholder={placeholder} overflowBehavior="wrap" />
       </MultiSelectTrigger>
-      <MultiSelectContent search={false}>
+      <MultiSelectContent search={false} className="bg-background">
         {/* Items must be wrapped in a group for proper styling */}
         <MultiSelectGroup>
           {[...items].map((item) => (

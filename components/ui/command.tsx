@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "./scroll-area";
 
 function Command({
   className,
@@ -86,14 +87,13 @@ function CommandList({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
-    <CommandPrimitive.List
-      data-slot="command-list"
-      className={cn(
-        "max-h-[300px] scroll-py-1 overflow-y-auto overflow-x-hidden",
-        className,
-      )}
-      {...props}
-    />
+    <ScrollArea>
+      <CommandPrimitive.List
+        data-slot="command-list"
+        className={cn("h-[300px]", className)}
+        {...props}
+      />
+    </ScrollArea>
   );
 }
 

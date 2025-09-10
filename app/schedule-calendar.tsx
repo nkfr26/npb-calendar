@@ -52,17 +52,13 @@ export function ScheduleCalendar({
             >
               <span
                 className={`font-medium ${
-                  isSaturday
-                    ? "text-blue-700"
-                    : isHoliday
-                      ? "text-red-500"
-                      : "text-black"
+                  isSaturday ? "text-blue-700" : isHoliday ? "text-red-500" : ""
                 }`}
               >
                 {children}
               </span>
               {schedules[formatDate(day.date)]?.length ? (
-                <span className="text-gray-800">
+                <span className="text-gray-600">
                   {schedules[formatDate(day.date)]?.length}
                 </span>
               ) : null}
