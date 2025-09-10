@@ -90,7 +90,7 @@ function CommandList({
     <ScrollArea>
       <CommandPrimitive.List
         data-slot="command-list"
-        className={cn("h-[300px]", className)}
+        className={cn("max-h-[300px]", className)}
         {...props}
       />
     </ScrollArea>
