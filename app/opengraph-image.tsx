@@ -11,13 +11,25 @@ export const size = {
 
 export const contentType = "image/png";
 
+async function loadGoogleFont(font: string, text: string) {
+  const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
+  const css = await (await fetch(url)).text();
+  const resource = css.match(
+    /src: url\((.+)\) format\('(opentype|truetype)'\)/,
+  );
+
+  if (resource) {
+    const response = await fetch(resource[1] || "");
+    if (response.status === 200) {
+      return await response.arrayBuffer();
+    }
+  }
+
+  throw new Error("failed to load font data");
+}
+
 // Image generation
 export default async function Image() {
-  // Font
-  const udev_gothic_35 = fetch(
-    new URL("./fonts/UDEVGothic35-Regular.ttf", import.meta.url),
-  ).then((res) => res.arrayBuffer());
-
   return new ImageResponse(
     // ImageResponse JSX element
     <div tw="flex flex-col w-full h-full items-center justify-center bg-[#faf9f5] text-[#3d3929]">
@@ -30,8 +42,8 @@ export default async function Image() {
       ...size,
       fonts: [
         {
-          name: "UDEV Gothic 35",
-          data: await udev_gothic_35,
+          name: "JetBrains Mono",
+          data: await loadGoogleFont("JetBrains+Mono", "npb-calendar"),
         },
       ],
     },
