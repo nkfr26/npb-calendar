@@ -30,6 +30,7 @@ export default function Home() {
                   href="https://github.com/nkfr26/npb-calendar"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="cursor-auto"
                 >
                   <MarkGithubIcon />
                 </a>
