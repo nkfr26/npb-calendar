@@ -11,6 +11,7 @@ import { ja } from "react-day-picker/locale";
 import type { GroupedSchedules } from "@/app/use-schedule-management";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import { formatDate } from "@/lib/utils";
+import { useHolidays } from "./use-holiday";
 
 export function ScheduleCalendar({
   selected,
@@ -25,6 +26,7 @@ export function ScheduleCalendar({
   onMonthChange: MonthChangeEventHandler;
   schedules: GroupedSchedules;
 }) {
+  const { holidays } = useHolidays();
   return (
     <Calendar
       mode="single"
@@ -40,14 +42,14 @@ export function ScheduleCalendar({
         DayButton: ({ children, modifiers, day, ...props }) => {
           const [isSaturday, isHoliday] = [
             day.date.getDay() === 6,
-            day.date.getDay() === 0,
+            day.date.getDay() === 0 || !!holidays[formatDate(day.date)],
           ];
           return (
             <CalendarDayButton
               day={day}
               modifiers={modifiers}
               {...props}
-              className="h-10 data-[selected-single=true]:border-2 data-[selected-single=true]:border-primary/20 data-[selected-single=true]:bg-transparent"
+              className="h-10 data-[selected-single=true]:border-2 data-[selected-single=true]:border-primary/40 data-[selected-single=true]:bg-transparent"
               disabled={!schedules[formatDate(day.date)]}
             >
               <span

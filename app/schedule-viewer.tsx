@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatDate } from "@/lib/utils";
+import { useHolidays } from "./use-holiday";
 import type { GroupedSchedules } from "./use-schedule-management";
 
 export function ScheduleViewer({
@@ -23,6 +24,8 @@ export function ScheduleViewer({
   schedules: GroupedSchedules;
   selected: Date | undefined;
 }) {
+  const { holidays } = useHolidays();
+
   // 日付未選択時はすべてのスケジュールを表示
   const displaySchedules = selected
     ? {
@@ -46,7 +49,7 @@ export function ScheduleViewer({
                 const date = new Date(dateString);
                 const [isSaturday, isHoliday] = [
                   date.getDay() === 6,
-                  date.getDay() === 0,
+                  date.getDay() === 0 || !!holidays[formatDate(date)],
                 ];
                 const textColor = isSaturday
                   ? "text-blue-700"
@@ -59,7 +62,8 @@ export function ScheduleViewer({
                       month: "long",
                       day: "numeric",
                       weekday: "short",
-                    })}
+                    })}{" "}
+                    {holidays[formatDate(date)]}
                   </div>
                 );
               })()}
