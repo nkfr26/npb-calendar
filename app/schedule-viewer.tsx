@@ -27,11 +27,12 @@ export function ScheduleViewer({
   const { holidays } = useHolidays();
 
   // 日付未選択時はすべてのスケジュールを表示
-  const displaySchedules = selected
-    ? {
-        [formatDate(selected)]: schedules[formatDate(selected)],
-      }
-    : schedules;
+  const displaySchedules = (() => {
+    if (!selected) return schedules;
+
+    const key = formatDate(selected);
+    return { [key]: schedules[key] || [] };
+  })();
 
   const handleTicketClick = (url: string) => {
     window.open(url, "_blank", "noopener,noreferrer");

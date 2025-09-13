@@ -44,6 +44,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.85.5
         version: 5.85.5(react@19.1.0)
+      babel-plugin-react-compiler:
+        specifier: 19.1.0-rc.3
+        version: 19.1.0-rc.3
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -70,10 +73,10 @@ importers:
         version: 0.539.0(react@19.1.0)
       next:
         specifier: 15.4.6
-        version: 15.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.6(babel-plugin-react-compiler@19.1.0-rc.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       nuqs:
         specifier: ^2.6.0
-        version: 2.6.0(next@15.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+        version: 2.6.0(next@15.4.6(babel-plugin-react-compiler@19.1.0-rc.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       react:
         specifier: 19.1.0
         version: 19.1.0
@@ -127,6 +130,18 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@babel/helper-string-parser@7.27.1':
+    resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/helper-validator-identifier@7.27.1':
+    resolution: {integrity: sha512-D2hP9eA+Sqx1kBZgzxZh0y1trbuU+JoDkiEwqhQ36nodYqJwyEIhPSdMNd7lOm/4io72luTPWH20Yda0xOuUow==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/types@7.28.4':
+    resolution: {integrity: sha512-bkFqkLhh3pMBUQQkpVgWDWq/lqzc2678eUyDlTBhRqhCHFguYYGM0Efga7tYk4TogG/3x0EEl66/OQ+WGbWB/Q==}
+    engines: {node: '>=6.9.0'}
 
   '@biomejs/biome@2.2.0':
     resolution: {integrity: sha512-3On3RSYLsX+n9KnoSgfoYlckYBoU6VRM22cw1gB4Y0OuUVSYd/O/2saOJMrA4HFfA1Ff0eacOvMN1yAAvHtzIw==}
@@ -900,6 +915,9 @@ packages:
     resolution: {integrity: sha512-ik3ZgC9dY/lYVVM++OISsaYDeg1tb0VtP5uL3ouh1koGOaUMDPpbFIei4JkFimWUFPn90sbMNMXQAIVOlnYKJA==}
     engines: {node: '>=10'}
 
+  babel-plugin-react-compiler@19.1.0-rc.3:
+    resolution: {integrity: sha512-mjRn69WuTz4adL0bXGx8Rsyk1086zFJeKmes6aK0xPuK3aaXmDJdLHqwKKMrpm6KAI1MCoUK72d2VeqQbu8YIA==}
+
   caniuse-lite@1.0.30001734:
     resolution: {integrity: sha512-uhE1Ye5vgqju6OI71HTQqcBCZrvHugk0MjLak7Q+HfoBgoq5Bi+5YnwjP4fjDgrtYr/l8MVRBvzz9dPD4KyK0A==}
 
@@ -1269,6 +1287,15 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.30
+
+  '@babel/helper-string-parser@7.27.1': {}
+
+  '@babel/helper-validator-identifier@7.27.1': {}
+
+  '@babel/types@7.28.4':
+    dependencies:
+      '@babel/helper-string-parser': 7.27.1
+      '@babel/helper-validator-identifier': 7.27.1
 
   '@biomejs/biome@2.2.0':
     optionalDependencies:
@@ -1942,6 +1969,10 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  babel-plugin-react-compiler@19.1.0-rc.3:
+    dependencies:
+      '@babel/types': 7.28.4
+
   caniuse-lite@1.0.30001734: {}
 
   chownr@3.0.0: {}
@@ -2082,7 +2113,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  next@15.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  next@15.4.6(babel-plugin-react-compiler@19.1.0-rc.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@next/env': 15.4.6
       '@swc/helpers': 0.5.15
@@ -2100,17 +2131,18 @@ snapshots:
       '@next/swc-linux-x64-musl': 15.4.6
       '@next/swc-win32-arm64-msvc': 15.4.6
       '@next/swc-win32-x64-msvc': 15.4.6
+      babel-plugin-react-compiler: 19.1.0-rc.3
       sharp: 0.34.3
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
 
-  nuqs@2.6.0(next@15.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0):
+  nuqs@2.6.0(next@15.4.6(babel-plugin-react-compiler@19.1.0-rc.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0):
     dependencies:
       '@standard-schema/spec': 1.0.0
       react: 19.1.0
     optionalDependencies:
-      next: 15.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      next: 15.4.6(babel-plugin-react-compiler@19.1.0-rc.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   picocolors@1.1.1: {}
 
