@@ -48,9 +48,11 @@ export function ScheduleViewer({
             <div className="flex flex-col">
               {(() => {
                 const date = new Date(dateString);
+                const holiday = holidays[dateString];
+
                 const [isSaturday, isHoliday] = [
                   date.getDay() === 6,
-                  date.getDay() === 0 || !!holidays[formatDate(date)],
+                  date.getDay() === 0 || !!holiday,
                 ];
                 const textColor = isSaturday
                   ? "text-blue-700"
@@ -58,13 +60,15 @@ export function ScheduleViewer({
                     ? "text-red-500"
                     : "";
                 return (
-                  <div className={`font-medium ${textColor}`}>
+                  <div
+                    className={`flex items-center gap-1 font-medium ${textColor}`}
+                  >
                     {date.toLocaleDateString("ja-JP", {
                       month: "long",
                       day: "numeric",
                       weekday: "short",
-                    })}{" "}
-                    {holidays[formatDate(date)]}
+                    })}
+                    <span className="text-xs">{holiday}</span>
                   </div>
                 );
               })()}
