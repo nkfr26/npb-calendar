@@ -10,7 +10,7 @@ import type {
 import { ja } from "react-day-picker/locale";
 import type { GroupedSchedules } from "@/app/use-schedule-management";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { useHolidays } from "./use-holiday";
 
 export function ScheduleCalendar({
@@ -65,6 +65,23 @@ export function ScheduleCalendar({
                 </span>
               ) : null}
             </CalendarDayButton>
+          );
+        },
+        // biome-ignore lint/correctness/noNestedComponentDefinitions: to use `month`
+        CaptionLabel: ({ children, className, ...props }) => {
+          return (
+            <a
+              {...props}
+              href={`https://npb.jp/games/${month.getFullYear()}/schedule_${(month.getMonth() + 1).toString().padStart(2, "0")}_detail.html`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                className,
+                "z-50 text-[#0000EE] visited:text-[#551A8B] active:text-[#FF0000]",
+              )}
+            >
+              {children}
+            </a>
           );
         },
       }}
