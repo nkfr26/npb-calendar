@@ -16,6 +16,7 @@ export function Filter({
   setFilter,
   isDependent,
   setIsDependent,
+  isFiltered,
 }: {
   teams: Set<string>;
   stadiums: Set<string>;
@@ -23,6 +24,7 @@ export function Filter({
   setFilter: Dispatch<SetStateAction<FilterType>>;
   isDependent: boolean;
   setIsDependent: Dispatch<SetStateAction<boolean>>;
+  isFiltered: boolean;
 }) {
   const id = useId();
   return (
@@ -36,7 +38,12 @@ export function Filter({
           />
           <Label htmlFor={id}>選択肢を連動させる</Label>
         </div>
-        <Button onClick={() => setFilter(DEFAULT_FILTER)}>リセット</Button>
+        <Button
+          disabled={!isFiltered}
+          onClick={() => setFilter(DEFAULT_FILTER)}
+        >
+          リセット
+        </Button>
       </div>
       <BasicMultiSelect
         placeholder="球団"

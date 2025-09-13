@@ -14,9 +14,7 @@ import { useScheduleManagement } from "./use-schedule-management";
 
 export default function Home() {
   const calendar = useCalendar();
-  const { isFiltered, schedules, ...filter } = useScheduleManagement(
-    calendar.month,
-  );
+  const { schedules, ...filter } = useScheduleManagement(calendar.month);
   const [open, setOpen] = useState(false);
   return (
     <div className="flex h-dvh flex-col text-sm">
@@ -48,7 +46,7 @@ export default function Home() {
             <div className="flex flex-col gap-2 py-4 pr-4">
               <DrawerOpenButton
                 onClick={() => setOpen(true)}
-                isFiltered={isFiltered}
+                isFiltered={filter.isFiltered}
               />
               <ScheduleCalendar {...calendar} schedules={schedules} />
               <ScheduleViewer
