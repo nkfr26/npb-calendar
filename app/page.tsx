@@ -24,18 +24,16 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center justify-between px-4 pt-3 pb-2">
             <div className="font-mono text-xl">npb-calendar</div>
-            <div className="flex gap-1">
-              <Button asChild size="icon">
-                <a
-                  href="https://github.com/nkfr26/npb-calendar"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cursor-auto"
-                >
-                  <MarkGithubIcon />
-                </a>
-              </Button>
-            </div>
+            <Button asChild size="icon">
+              <a
+                href="https://github.com/nkfr26/npb-calendar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-auto"
+              >
+                <MarkGithubIcon />
+              </a>
+            </Button>
           </div>
         </div>
       </header>

@@ -68,7 +68,9 @@ export function ScheduleViewer({
                       day: "numeric",
                       weekday: "short",
                     })}
-                    <span className="text-xs">{holiday}</span>
+                    {holiday ? (
+                      <span className="text-xs">{holiday}</span>
+                    ) : null}
                   </div>
                 );
               })()}
