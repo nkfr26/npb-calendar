@@ -316,6 +316,7 @@ export function MultiSelectItem({
         toggleValue(v);
         onSelect?.(v);
       }}
+      className="data-[selected=true]:bg-[#f6f5ef]"
     >
       <CheckIcon
         className={cn("mr-2 size-4", isSelected ? "opacity-100" : "opacity-0")}

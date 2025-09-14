@@ -87,7 +87,7 @@ function CommandList({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
-    <ScrollArea>
+    <ScrollArea type="auto">
       <CommandPrimitive.List
         data-slot="command-list"
         className={cn("max-h-[300px]", className)}

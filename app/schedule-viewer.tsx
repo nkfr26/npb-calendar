@@ -125,10 +125,7 @@ export function ScheduleViewer({
                             <span className="hidden md:block">チケット</span>
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                          align="end"
-                          className="bg-background"
-                        >
+                        <DropdownMenuContent align="end">
                           <DropdownMenuItem
                             onClick={() => handleTicketClick(ticket.primary)}
                           >

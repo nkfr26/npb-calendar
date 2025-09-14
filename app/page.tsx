@@ -44,7 +44,7 @@ export default function Home() {
               <Filter {...filter} />
             </FilterCard>
           </div>
-          <ScrollArea className="flex-1">
+          <ScrollArea type="auto" className="flex-1">
             <div className="flex flex-col gap-2 py-4 pr-4">
               <DrawerOpenButton
                 onClick={() => setOpen(true)}
