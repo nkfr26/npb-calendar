@@ -9,7 +9,7 @@ const fetchHolidays = async (): Promise<Holidays> => {
   return response.ok ? await response.json() : {};
 };
 
-export const useHolidays = () => {
+const useHolidays = () => {
   const { data } = useQuery({
     queryKey: ["holidays"],
     queryFn: () => fetchHolidays(),
@@ -18,3 +18,5 @@ export const useHolidays = () => {
   });
   return { holidays: data };
 };
+
+export { type Holidays, useHolidays };

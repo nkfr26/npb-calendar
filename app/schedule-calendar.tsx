@@ -11,22 +11,23 @@ import { ja } from "react-day-picker/locale";
 import type { GroupedSchedules } from "@/app/use-schedule-management";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import { cn, formatDate } from "@/lib/utils";
-import { useHolidays } from "./use-holiday";
+import type { Holidays } from "./use-holidays";
 
 export function ScheduleCalendar({
   selected,
   onSelect,
   month,
   onMonthChange,
+  holidays,
   schedules,
 }: {
   selected: Date | undefined;
   onSelect: OnSelectHandler<Date | undefined>;
   month: Date;
   onMonthChange: MonthChangeEventHandler;
+  holidays: Holidays;
   schedules: GroupedSchedules;
 }) {
-  const { holidays } = useHolidays();
   return (
     <Calendar
       mode="single"

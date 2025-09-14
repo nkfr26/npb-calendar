@@ -10,10 +10,12 @@ import { DrawerOpenButton, FilterDrawer } from "./filter-drawer";
 import { ScheduleCalendar } from "./schedule-calendar";
 import { ScheduleViewer } from "./schedule-viewer";
 import { useCalendar } from "./use-calendar";
+import { useHolidays } from "./use-holidays";
 import { useScheduleManagement } from "./use-schedule-management";
 
 export default function Home() {
   const calendar = useCalendar();
+  const { holidays } = useHolidays();
   const { schedules, ...filter } = useScheduleManagement(calendar.month);
   const [open, setOpen] = useState(false);
   return (
@@ -48,10 +50,15 @@ export default function Home() {
                 onClick={() => setOpen(true)}
                 isFiltered={filter.isFiltered}
               />
-              <ScheduleCalendar {...calendar} schedules={schedules} />
-              <ScheduleViewer
+              <ScheduleCalendar
+                {...calendar}
+                holidays={holidays}
                 schedules={schedules}
+              />
+              <ScheduleViewer
                 selected={calendar.selected}
+                holidays={holidays}
+                schedules={schedules}
               />
             </div>
           </ScrollArea>

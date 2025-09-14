@@ -14,18 +14,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatDate } from "@/lib/utils";
-import { useHolidays } from "./use-holiday";
+import type { Holidays } from "./use-holidays";
 import type { GroupedSchedules } from "./use-schedule-management";
 
 export function ScheduleViewer({
-  schedules,
   selected,
+  holidays,
+  schedules,
 }: {
-  schedules: GroupedSchedules;
   selected: Date | undefined;
+  holidays: Holidays;
+  schedules: GroupedSchedules;
 }) {
-  const { holidays } = useHolidays();
-
   // 日付未選択時はすべてのスケジュールを表示
   const displaySchedules = (() => {
     if (!selected) return schedules;
