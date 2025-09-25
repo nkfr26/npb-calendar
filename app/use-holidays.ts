@@ -10,11 +10,9 @@ const fetchHolidays = async (): Promise<Holidays> => {
 };
 
 const useHolidays = () => {
-  const { data } = useQuery({
+  const { data = {} } = useQuery({
     queryKey: ["holidays"],
     queryFn: () => fetchHolidays(),
-    initialData: {},
-    initialDataUpdatedAt: 0,
   });
   return { holidays: data };
 };

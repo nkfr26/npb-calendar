@@ -97,11 +97,9 @@ const groupSchedulesByDate = (schedules: Schedule[]): GroupedSchedules => {
 
 const useScheduleManagement = (month: Date) => {
   const monthNumber = month.getMonth() + 1;
-  const { data } = useQuery({
+  const { data = [] } = useQuery({
     queryKey: ["schedules", monthNumber],
     queryFn: () => fetchSchedules(monthNumber),
-    initialData: [],
-    initialDataUpdatedAt: 0,
   });
 
   const [filter, setFilter] = useQueryStates({
