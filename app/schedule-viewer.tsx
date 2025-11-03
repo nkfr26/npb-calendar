@@ -33,10 +33,6 @@ export function ScheduleViewer({
     const key = formatDate(selected);
     return { [key]: schedules[key] || [] };
   })();
-
-  const handleTicketClick = (url: string) => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
   return (
     <div className="flex flex-col gap-2">
       {Object.keys(displaySchedules).map((dateString) => (
@@ -126,28 +122,35 @@ export function ScheduleViewer({
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem
-                            onClick={() => handleTicketClick(ticket.primary)}
-                          >
-                            購入
-                            <DropdownMenuShortcut>
-                              <ExternalLink />
-                            </DropdownMenuShortcut>
+                          <DropdownMenuItem asChild>
+                            <a
+                              href={ticket.primary}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              購入
+                              <DropdownMenuShortcut>
+                                <ExternalLink />
+                              </DropdownMenuShortcut>
+                            </a>
                           </DropdownMenuItem>
                           {resaleUrls && (
                             <>
                               <DropdownMenuSeparator />
                               {resaleUrls.map((resaleUrl, index) => (
-                                <DropdownMenuItem
-                                  key={resaleUrl}
-                                  onClick={() => handleTicketClick(resaleUrl)}
-                                >
-                                  {resaleUrls.length === 1
-                                    ? "リセール"
-                                    : `リセール ${index + 1}`}
-                                  <DropdownMenuShortcut>
-                                    <ExternalLink />
-                                  </DropdownMenuShortcut>
+                                <DropdownMenuItem key={resaleUrl} asChild>
+                                  <a
+                                    href={resaleUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {resaleUrls.length === 1
+                                      ? "リセール"
+                                      : `リセール ${index + 1}`}
+                                    <DropdownMenuShortcut>
+                                      <ExternalLink />
+                                    </DropdownMenuShortcut>
+                                  </a>
                                 </DropdownMenuItem>
                               ))}
                             </>
