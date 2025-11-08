@@ -28,11 +28,13 @@ export function BasicMultiSelect({
       <MultiSelectContent search={false}>
         {/* Items must be wrapped in a group for proper styling */}
         <MultiSelectGroup className="pr-2.5">
-          {[...items].map((item) => (
-            <MultiSelectItem key={item} value={item}>
-              {item}
-            </MultiSelectItem>
-          ))}
+          {[...items]
+            .filter((item) => item !== "")
+            .map((item) => (
+              <MultiSelectItem key={item} value={item}>
+                {item}
+              </MultiSelectItem>
+            ))}
         </MultiSelectGroup>
       </MultiSelectContent>
     </MultiSelect>

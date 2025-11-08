@@ -102,16 +102,20 @@ export function ScheduleViewer({
                         <span className="font-normal text-xs">対</span>{" "}
                         {value.match.visitor}
                       </div>
-                      {value.info.time && value.info.stadium && (
+                      {(value.info.time || value.info.stadium) && (
                         <div className="flex gap-2 text-gray-600 text-xs">
-                          <div className="flex items-center gap-1">
-                            <Clock size={12} />
-                            {value.info.time}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MapPin size={12} />
-                            {value.info.stadium}
-                          </div>
+                          {value.info.time && (
+                            <div className="flex items-center gap-1">
+                              <Clock size={12} />
+                              {value.info.time}
+                            </div>
+                          )}
+                          {value.info.stadium && (
+                            <div className="flex items-center gap-1">
+                              <MapPin size={12} />
+                              {value.info.stadium}
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
