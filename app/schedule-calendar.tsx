@@ -35,8 +35,8 @@ export function ScheduleCalendar({
       onSelect={onSelect}
       month={month}
       onMonthChange={onMonthChange}
-      startMonth={new Date(month.getFullYear(), 2)}
-      endMonth={new Date(month.getFullYear(), 10)}
+      startMonth={new Date(new Date().getFullYear(), 2)}
+      endMonth={new Date(new Date().getFullYear() + 1, 10)}
       className="w-full rounded-lg border [&_th:nth-child(6)]:text-blue-700 [&_th:nth-child(7)]:text-red-500"
       components={{
         // biome-ignore lint/correctness/noNestedComponentDefinitions: to use `schedules`

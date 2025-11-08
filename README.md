@@ -1,5 +1,4 @@
-https://github.com/nkfr26/npb-schedule  
-https://github.com/nkfr26/syukujitsu-json
+[npb-schedule](https://github.com/nkfr26/npb-schedule) [syukujitsu-json](https://github.com/nkfr26/syukujitsu-json)
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 

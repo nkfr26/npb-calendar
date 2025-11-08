@@ -15,9 +15,11 @@ type Schedule = {
   ticket?: { primary: string; resale?: string | string[] };
 };
 
-const fetchSchedules = async (month: number): Promise<Schedule[]> => {
+const fetchSchedules = async (date: Date): Promise<Schedule[]> => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
   const response = await fetch(
-    `https://nkfr26.github.io/npb-schedule/schedule_${month.toString().padStart(2, "0")}_detail.json`,
+    `https://nkfr26.github.io/npb-schedule/${year}/schedule_${month.toString().padStart(2, "0")}_detail.json`,
   );
   return response.ok ? await response.json() : [];
 };
@@ -95,11 +97,10 @@ const groupSchedulesByDate = (schedules: Schedule[]): GroupedSchedules => {
   return grouped;
 };
 
-const useScheduleManagement = (month: Date) => {
-  const monthNumber = month.getMonth() + 1;
+const useScheduleManagement = (date: Date) => {
   const { data = [] } = useQuery({
-    queryKey: ["schedules", monthNumber],
-    queryFn: () => fetchSchedules(monthNumber),
+    queryKey: ["schedules", date.toString()],
+    queryFn: () => fetchSchedules(date),
   });
 
   const [filter, setFilter] = useQueryStates({

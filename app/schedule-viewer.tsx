@@ -96,22 +96,24 @@ export function ScheduleViewer({
                     key={dateString + value.match.home}
                     className="flex justify-between p-4"
                   >
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col justify-center gap-1">
                       <div className="font-medium">
                         {value.match.home}{" "}
                         <span className="font-normal text-xs">対</span>{" "}
                         {value.match.visitor}
                       </div>
-                      <div className="flex gap-2 text-gray-600 text-xs">
-                        <div className="flex items-center gap-1">
-                          <Clock size={12} />
-                          {value.info.time}
+                      {value.info.time && value.info.stadium && (
+                        <div className="flex gap-2 text-gray-600 text-xs">
+                          <div className="flex items-center gap-1">
+                            <Clock size={12} />
+                            {value.info.time}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MapPin size={12} />
+                            {value.info.stadium}
+                          </div>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <MapPin size={12} />
-                          {value.info.stadium}
-                        </div>
-                      </div>
+                      )}
                     </div>
                     {ticket && (
                       <DropdownMenu>
