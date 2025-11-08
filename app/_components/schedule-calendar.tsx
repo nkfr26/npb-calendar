@@ -8,7 +8,7 @@ import type {
   OnSelectHandler,
 } from "react-day-picker";
 import { ja } from "react-day-picker/locale";
-import type { GroupedSchedules } from "@/app/use-schedule-management";
+import type { GroupedSchedules } from "@/app/_components/use-schedule-management";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import { cn, formatDate } from "@/lib/utils";
 import type { Holidays } from "./use-holidays";

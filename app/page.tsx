@@ -4,14 +4,14 @@ import { MarkGithubIcon } from "@primer/octicons-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Filter } from "./filter";
-import { FilterCard } from "./filter-card";
-import { DrawerOpenButton, FilterDrawer } from "./filter-drawer";
-import { ScheduleCalendar } from "./schedule-calendar";
-import { ScheduleViewer } from "./schedule-viewer";
-import { useCalendar } from "./use-calendar";
-import { useHolidays } from "./use-holidays";
-import { useScheduleManagement } from "./use-schedule-management";
+import { Filter } from "./_components/filter";
+import { FilterCard } from "./_components/filter-card";
+import { DrawerOpenButton, FilterDrawer } from "./_components/filter-drawer";
+import { ScheduleCalendar } from "./_components/schedule-calendar";
+import { ScheduleViewer } from "./_components/schedule-viewer";
+import { useCalendar } from "./_components/use-calendar";
+import { useHolidays } from "./_components/use-holidays";
+import { useScheduleManagement } from "./_components/use-schedule-management";
 
 export default function Home() {
   const calendar = useCalendar();
