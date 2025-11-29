@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useQueryState } from "nuqs";
 import type { MonthChangeEventHandler } from "react-day-picker";
+import { dateParser, monthParser } from "../_lib/utils";
 
-const getInitialMonth = (month: Date) => {
+export const getInitialMonth = (month: Date) => {
   const monthNumber = month.getMonth() + 1;
 
   if (monthNumber === 12) {
@@ -13,9 +14,15 @@ const getInitialMonth = (month: Date) => {
 };
 
 export const useCalendar = () => {
-  const [selected, setSelected] = useState<Date | undefined>(undefined);
-  const [month, setMonth] = useState(() => getInitialMonth(new Date()));
+  const [selected, setSelected] = useQueryState("selected", dateParser);
+  const [month, setMonth] = useQueryState(
+    "month",
+    monthParser.withDefault(getInitialMonth(new Date())),
+  );
 
+  const onSelect = (selected: Date | undefined) => {
+    setSelected(selected ?? null);
+  };
   const onMonthChange: MonthChangeEventHandler = (month) => {
     const monthNumber = month.getMonth();
     if (monthNumber === 11) {
@@ -25,7 +32,7 @@ export const useCalendar = () => {
     } else {
       setMonth(month);
     }
-    setSelected(undefined);
+    setSelected(null);
   };
-  return { selected, onSelect: setSelected, month, onMonthChange };
+  return { selected: selected ?? undefined, onSelect, month, onMonthChange };
 };
