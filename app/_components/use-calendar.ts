@@ -2,7 +2,7 @@ import { useQueryState } from "nuqs";
 import type { MonthChangeEventHandler } from "react-day-picker";
 import { dateParser, monthParser } from "../_lib/utils";
 
-export const getInitialMonth = (month: Date) => {
+const getInitialMonth = (month: Date) => {
   const monthNumber = month.getMonth() + 1;
 
   if (monthNumber === 12) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { MarkGithubIcon } from "@primer/octicons-react";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -23,7 +24,9 @@ export default function Home() {
       <header className="border-b">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center justify-between px-4 pt-3 pb-2">
-            <div className="font-mono text-xl">npb-calendar</div>
+            <Link href="/" className="font-mono text-xl">
+              npb-calendar
+            </Link>
             <Button asChild size="icon">
               <a
                 href="https://github.com/nkfr26/npb-calendar"

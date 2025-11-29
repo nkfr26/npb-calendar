@@ -45,25 +45,25 @@ export function ScheduleCalendar({
             day.date.getDay() === 6,
             day.date.getDay() === 0 || !!holidays[formatDate(day.date)],
           ];
+          const schedule = schedules[formatDate(day.date)];
           return (
             <CalendarDayButton
               day={day}
               modifiers={modifiers}
               {...props}
               className="h-10 data-[selected-single=true]:border-2 data-[selected-single=true]:border-primary/40 data-[selected-single=true]:bg-transparent"
-              disabled={!schedules[formatDate(day.date)]}
             >
               <span
-                className={`font-medium ${
-                  isSaturday ? "text-blue-700" : isHoliday ? "text-red-500" : ""
-                }`}
+                className={cn("font-medium", {
+                  "text-blue-700": isSaturday,
+                  "text-red-500": isHoliday,
+                  "!opacity-25": !schedule,
+                })}
               >
                 {children}
               </span>
-              {schedules[formatDate(day.date)]?.length ? (
-                <span className="text-gray-600">
-                  {schedules[formatDate(day.date)]?.length}
-                </span>
+              {schedule ? (
+                <span className="text-gray-600">{schedule.length}</span>
               ) : null}
             </CalendarDayButton>
           );
