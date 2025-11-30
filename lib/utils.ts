@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { createParser } from "nuqs";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -14,3 +15,23 @@ export function formatDate(date: Date) {
     })
     .replaceAll("/", "-");
 }
+
+export const dateParser = createParser({
+  parse(value) {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  },
+  serialize(value) {
+    return formatDate(value);
+  },
+});
+
+export const monthParser = createParser({
+  parse(value) {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  },
+  serialize(value) {
+    return formatDate(value).slice(0, 7);
+  },
+});

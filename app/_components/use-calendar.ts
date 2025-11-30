@@ -1,6 +1,6 @@
 import { useQueryState } from "nuqs";
 import type { MonthChangeEventHandler } from "react-day-picker";
-import { dateParser, monthParser } from "../_lib/utils";
+import { dateParser, monthParser } from "@/lib/utils";
 
 const getInitialMonth = (month: Date) => {
   const monthNumber = month.getMonth() + 1;
