@@ -35,6 +35,7 @@ export function Filter({
             id={id}
             checked={isDependent}
             onCheckedChange={setIsDependent}
+            aria-label="選択肢を連動させる"
           />
           <Label htmlFor={id}>選択肢を連動させる</Label>
         </div>
@@ -55,6 +56,7 @@ export function Filter({
             setFilter((prev) => ({ ...prev, homeVisitor: "" }));
           }
         }}
+        ariaLabel="球団"
       />
       <ToggleGroup
         variant="outline"
@@ -76,6 +78,7 @@ export function Filter({
         setSelectedValues={(values) =>
           setFilter((prev) => ({ ...prev, stadiums: values }))
         }
+        ariaLabel="球場"
       />
       <ToggleGroup
         variant="outline"

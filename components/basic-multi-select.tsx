@@ -14,15 +14,17 @@ export function BasicMultiSelect({
   items,
   selectedValues,
   setSelectedValues,
+  ariaLabel,
 }: {
   placeholder: string;
   items: Set<string>;
   selectedValues: string[];
   setSelectedValues: (values: string[]) => void;
+  ariaLabel: string;
 }) {
   return (
     <MultiSelect values={selectedValues} onValuesChange={setSelectedValues}>
-      <MultiSelectTrigger className="w-full">
+      <MultiSelectTrigger className="w-full" aria-label={ariaLabel}>
         <MultiSelectValue placeholder={placeholder} overflowBehavior="wrap" />
       </MultiSelectTrigger>
       <MultiSelectContent search={false}>

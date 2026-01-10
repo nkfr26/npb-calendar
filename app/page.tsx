@@ -33,6 +33,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cursor-auto"
+                aria-label="GitHub Repository"
               >
                 <MarkGithubIcon />
               </a>
