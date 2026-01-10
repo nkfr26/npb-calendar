@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "check": "biome check --write . && tsc --noEmit"
   },
   "dependencies": {
     "@primer/octicons-react": "^19.18.0",
