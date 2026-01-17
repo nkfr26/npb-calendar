@@ -39,20 +39,14 @@ export function FilterDrawer({
 }
 
 export function DrawerOpenButton({
-  onClick,
   isFiltered,
   props,
 }: {
-  onClick: () => void;
   isFiltered: boolean;
   props?: React.ComponentProps<typeof Button>;
 }) {
   return (
-    <Button
-      onClick={onClick}
-      {...props}
-      className={`relative ${props?.className}`}
-    >
+    <Button {...props} className={`relative ${props?.className}`}>
       <Funnel /> 絞り込み
       {isFiltered && (
         <Badge className="-top-2 -right-2 absolute h-4 w-4 rounded-full border-2 border-background p-0" />

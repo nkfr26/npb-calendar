@@ -70,9 +70,8 @@ export default function Home() {
           <ScrollArea type="auto" className="flex-1">
             <div className="flex flex-col gap-2 py-4 pr-4">
               <DrawerOpenButton
-                onClick={() => setOpen(true)}
                 isFiltered={isFiltered}
-                props={{ className: "md:hidden" }}
+                props={{ onClick: () => setOpen(true), className: "md:hidden" }}
               />
               <ScheduleCalendar
                 {...calendar}
