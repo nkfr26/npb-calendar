@@ -7,26 +7,49 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   DEFAULT_FILTER,
   type Filter as FilterType,
-} from "./use-schedule-management";
+  filterSchedules,
+} from "./use-filter";
+import type { Schedule } from "./use-schedules-query";
 
 export function Filter({
-  teams,
-  stadiums,
+  schedules,
   filter,
   setFilter,
+  isFiltered,
   isDependent,
   setIsDependent,
-  isFiltered,
 }: {
-  teams: Set<string>;
-  stadiums: Set<string>;
+  schedules: Schedule[];
   filter: FilterType;
   setFilter: Dispatch<SetStateAction<FilterType>>;
+  isFiltered: boolean;
   isDependent: boolean;
   setIsDependent: Dispatch<SetStateAction<boolean>>;
-  isFiltered: boolean;
 }) {
   const id = useId();
+  const teamDropDownData = isDependent
+    ? filterSchedules(schedules, {
+        ...filter,
+        teams: [],
+      })
+    : schedules;
+  const stadiumDropDownData = isDependent
+    ? filterSchedules(schedules, {
+        ...filter,
+        stadiums: [],
+      })
+    : schedules;
+  const teams = new Set([
+    ...teamDropDownData.flatMap((schedule) => [
+      schedule.match.home,
+      schedule.match.visitor,
+    ]),
+    ...filter.teams,
+  ]);
+  const stadiums = new Set([
+    ...stadiumDropDownData.map((schedule) => schedule.info.stadium),
+    ...filter.stadiums,
+  ]);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex justify-between">

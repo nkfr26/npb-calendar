@@ -1,0 +1,43 @@
+import { useQuery } from "@tanstack/react-query";
+import { ofetch } from "ofetch";
+import * as v from "valibot";
+
+const scheduleSchema = v.object({
+  date: v.string(),
+  match: v.object({
+    home: v.string(),
+    visitor: v.string(),
+  }),
+  info: v.object({
+    stadium: v.string(),
+    time: v.string(),
+  }),
+  ticket: v.optional(
+    v.object({
+      primary: v.string(),
+      resale: v.optional(v.union([v.string(), v.array(v.string())])),
+    }),
+  ),
+});
+
+export type Schedule = v.InferOutput<typeof scheduleSchema>;
+
+const fetchSchedules = async (date: Date): Promise<Schedule[]> => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  try {
+    const response = await ofetch(
+      `https://nkfr26.github.io/npb-schedule/${year}/schedule_${month.toString().padStart(2, "0")}_detail.json`,
+    );
+    return v.parse(v.array(scheduleSchema), response);
+  } catch {
+    return [];
+  }
+};
+
+export const useSchedulesQuery = (date: Date) => {
+  return useQuery({
+    queryKey: ["schedules", date],
+    queryFn: () => fetchSchedules(date),
+  });
+};

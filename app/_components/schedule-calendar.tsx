@@ -8,26 +8,25 @@ import type {
   OnSelectHandler,
 } from "react-day-picker";
 import { ja } from "react-day-picker/locale";
-import type { GroupedSchedules } from "@/app/_components/use-schedule-management";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import { cn, formatDate } from "@/lib/utils";
-import type { Holidays } from "./use-holidays";
+import type { GroupedSchedules } from "./use-filter";
+import { useHolidaysQuery } from "./use-holidays-query";
 
 export function ScheduleCalendar({
   selected,
   onSelect,
   month,
   onMonthChange,
-  holidays,
-  schedules,
+  groupedSchedules,
 }: {
   selected: Date | undefined;
   onSelect: OnSelectHandler<Date | undefined>;
   month: Date;
   onMonthChange: MonthChangeEventHandler;
-  holidays: Holidays;
-  schedules: GroupedSchedules;
+  groupedSchedules: GroupedSchedules;
 }) {
+  const { data: holidays = {} } = useHolidaysQuery();
   return (
     <Calendar
       mode="single"
@@ -45,7 +44,7 @@ export function ScheduleCalendar({
             day.date.getDay() === 6,
             day.date.getDay() === 0 || !!holidays[formatDate(day.date)],
           ];
-          const schedule = schedules[formatDate(day.date)];
+          const schedule = groupedSchedules[formatDate(day.date)];
           return (
             <CalendarDayButton
               day={day}
