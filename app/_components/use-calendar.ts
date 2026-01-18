@@ -1,5 +1,8 @@
 import { createParser, useQueryState } from "nuqs";
-import type { MonthChangeEventHandler } from "react-day-picker";
+import type {
+  MonthChangeEventHandler,
+  OnSelectHandler,
+} from "react-day-picker";
 import { formatDate } from "@/lib/utils";
 
 const createDateParser = (serializeFn: (date: Date) => string) =>
@@ -13,7 +16,6 @@ const createDateParser = (serializeFn: (date: Date) => string) =>
 
 const getInitialMonth = (month: Date) => {
   const monthNumber = month.getMonth() + 1;
-
   switch (monthNumber) {
     case 12:
       return new Date(month.getFullYear() + 1, 2);
@@ -30,16 +32,16 @@ export const useCalendar = () => {
     "selected",
     createDateParser(formatDate),
   );
+  const onSelect: OnSelectHandler<Date | undefined> = (selected) => {
+    setSelected(selected ?? null);
+  };
+
   const [month, setMonth] = useQueryState(
     "month",
     createDateParser((date) => formatDate(date).slice(0, 7)).withDefault(
       getInitialMonth(new Date()),
     ),
   );
-
-  const onSelect = (selected: Date | undefined) => {
-    setSelected(selected ?? null);
-  };
   const onMonthChange: MonthChangeEventHandler = (month) => {
     const monthNumber = month.getMonth();
     switch (monthNumber) {
