@@ -27,27 +27,27 @@ export function Filter({
   setIsDependent: Dispatch<SetStateAction<boolean>>;
 }) {
   const id = useId();
-  const teamDropDownData = isDependent
+  const schedulesForTeamSelect = isDependent
     ? filterSchedules(schedules, {
         ...filter,
         teams: [],
       })
     : schedules;
-  const stadiumDropDownData = isDependent
+  const schedulesForStadiumSelect = isDependent
     ? filterSchedules(schedules, {
         ...filter,
         stadiums: [],
       })
     : schedules;
   const teams = new Set([
-    ...teamDropDownData.flatMap((schedule) => [
+    ...schedulesForTeamSelect.flatMap((schedule) => [
       schedule.match.home,
       schedule.match.visitor,
     ]),
     ...filter.teams,
   ]);
   const stadiums = new Set([
-    ...stadiumDropDownData.map((schedule) => schedule.info.stadium),
+    ...schedulesForStadiumSelect.map((schedule) => schedule.info.stadium),
     ...filter.stadiums,
   ]);
   return (
