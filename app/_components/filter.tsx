@@ -1,3 +1,4 @@
+import { parseAsBoolean, useQueryState } from "nuqs";
 import { type Dispatch, type SetStateAction, useId } from "react";
 import { BasicMultiSelect } from "@/components/basic-multi-select";
 import { Button } from "@/components/ui/button";
@@ -16,17 +17,17 @@ export function Filter({
   filter,
   setFilter,
   isFiltered,
-  isDependent,
-  setIsDependent,
 }: {
   schedules: Schedule[];
   filter: FilterType;
   setFilter: Dispatch<SetStateAction<FilterType>>;
   isFiltered: boolean;
-  isDependent: boolean;
-  setIsDependent: Dispatch<SetStateAction<boolean>>;
 }) {
   const id = useId();
+  const [isDependent, setIsDependent] = useQueryState(
+    "isDependent",
+    parseAsBoolean.withDefault(false),
+  );
   const schedulesForTeamSelect = isDependent
     ? filterSchedules(schedules, {
         ...filter,

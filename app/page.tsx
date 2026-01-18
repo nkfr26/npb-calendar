@@ -2,7 +2,6 @@
 
 import { MarkGithubIcon } from "@primer/octicons-react";
 import Link from "next/link";
-import { parseAsBoolean, useQueryState } from "nuqs";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -25,12 +24,7 @@ export default function Home() {
   const groupedSchedules = groupSchedulesByDate(
     filterSchedules(schedules, filter),
   );
-
   const [open, setOpen] = useState(false);
-  const [isDependent, setIsDependent] = useQueryState(
-    "isDependent",
-    parseAsBoolean.withDefault(false),
-  );
   return (
     <div className="flex h-dvh flex-col text-sm">
       <header className="border-b">
@@ -61,8 +55,6 @@ export default function Home() {
                 filter={filter}
                 setFilter={setFilter}
                 isFiltered={isFiltered}
-                isDependent={isDependent}
-                setIsDependent={setIsDependent}
               />
             </FilterCard>
           </div>
@@ -91,8 +83,6 @@ export default function Home() {
           filter={filter}
           setFilter={setFilter}
           isFiltered={isFiltered}
-          isDependent={isDependent}
-          setIsDependent={setIsDependent}
         />
       </FilterDrawer>
     </div>
