@@ -41,3 +41,28 @@ export const useSchedulesQuery = (date: Date) => {
     queryFn: () => fetchSchedules(date),
   });
 };
+
+export type GroupedSchedules = {
+  [date: string]: {
+    match: { home: string; visitor: string };
+    info: { stadium: string; time: string };
+    ticket?: { primary: string; resale?: string | string[] };
+  }[];
+};
+
+export const groupSchedulesByDate = (
+  schedules: Schedule[],
+): GroupedSchedules => {
+  const grouped: GroupedSchedules = {};
+  for (const schedule of schedules) {
+    if (!grouped[schedule.date]) {
+      grouped[schedule.date] = [];
+    }
+    grouped[schedule.date]?.push({
+      match: schedule.match,
+      info: schedule.info,
+      ...(schedule.ticket && { ticket: schedule.ticket }),
+    });
+  }
+  return grouped;
+};

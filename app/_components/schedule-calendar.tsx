@@ -10,8 +10,8 @@ import type {
 import { ja } from "react-day-picker/locale";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import { cn, formatDate } from "@/lib/utils";
-import type { GroupedSchedules } from "./use-filter";
 import { useHolidaysQuery } from "./use-holidays-query";
+import type { GroupedSchedules } from "./use-schedules-query";
 
 export function ScheduleCalendar({
   selected,

@@ -14,8 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatDate } from "@/lib/utils";
-import type { GroupedSchedules } from "./use-filter";
 import { useHolidaysQuery } from "./use-holidays-query";
+import type { GroupedSchedules } from "./use-schedules-query";
 
 export function ScheduleViewer({
   selected,

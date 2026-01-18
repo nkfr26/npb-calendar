@@ -12,12 +12,11 @@ import { DrawerOpenButton, FilterDrawer } from "./_components/filter-drawer";
 import { ScheduleCalendar } from "./_components/schedule-calendar";
 import { ScheduleViewer } from "./_components/schedule-viewer";
 import { useCalendar } from "./_components/use-calendar";
+import { filterSchedules, useFilter } from "./_components/use-filter";
 import {
-  filterSchedules,
   groupSchedulesByDate,
-  useFilter,
-} from "./_components/use-filter";
-import { useSchedulesQuery } from "./_components/use-schedules-query";
+  useSchedulesQuery,
+} from "./_components/use-schedules-query";
 
 export default function Home() {
   const calendar = useCalendar();
