@@ -89,7 +89,10 @@ export function Filter({
         disabled={filter.teams.length === 0}
         value={filter.homeVisitor}
         onValueChange={(value) =>
-          setFilter((prev) => ({ ...prev, homeVisitor: value }))
+          setFilter((prev) => ({
+            ...prev,
+            homeVisitor: value as typeof prev.homeVisitor,
+          }))
         }
       >
         <ToggleGroupItem value="ホーム">ホーム</ToggleGroupItem>
@@ -110,7 +113,10 @@ export function Filter({
         type="single"
         value={filter.dayNight}
         onValueChange={(value) =>
-          setFilter((prev) => ({ ...prev, dayNight: value }))
+          setFilter((prev) => ({
+            ...prev,
+            dayNight: value as typeof prev.dayNight,
+          }))
         }
       >
         <ToggleGroupItem value="デーゲーム">デーゲーム</ToggleGroupItem>
