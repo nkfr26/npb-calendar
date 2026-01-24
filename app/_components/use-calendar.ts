@@ -9,7 +9,7 @@ import { formatDate } from "@/lib/utils";
 const createTemporalParser = <
   T extends Temporal.PlainDate | Temporal.PlainYearMonth,
 >(
-  from: (value: string) => T,
+  from: (item: string) => T,
 ) =>
   createParser({
     parse(value) {
