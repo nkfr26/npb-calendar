@@ -23,11 +23,13 @@ const scheduleSchema = v.object({
 export type Schedule = v.InferOutput<typeof scheduleSchema>;
 
 const fetchSchedules = async (date: Date): Promise<Schedule[]> => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
+  const [year, month] = [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+  ];
   try {
     const response = await ofetch(
-      `https://nkfr26.github.io/npb-schedule/${year}/schedule_${month.toString().padStart(2, "0")}_detail.json`,
+      `https://nkfr26.github.io/npb-schedule/${year}/schedule_${month}_detail.json`,
     );
     return v.parse(v.array(scheduleSchema), response);
   } catch {
