@@ -77,7 +77,7 @@ export function ScheduleCalendar({
               rel="noopener noreferrer"
               className={cn(
                 className,
-                "text-[#0000EE] visited:text-[#551A8B] active:text-[#FF0000]",
+                "z-40 text-[#0000EE] visited:text-[#551A8B] active:text-[#FF0000]",
               )}
               aria-label="年月"
             >
