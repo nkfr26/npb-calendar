@@ -25,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className="[scrollbar-gutter:stable]">
+    <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} "grid min-h-svh grid-rows-[auto_1fr] text-sm antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} grid min-h-svh grid-rows-[auto_1fr] text-sm antialiased [scrollbar-gutter:stable]`}
       >
         <Providers>
           <Header />

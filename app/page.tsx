@@ -22,7 +22,7 @@ export default function Home() {
   );
   const [open, setOpen] = useState(false);
   return (
-    <main className="mx-auto flex h-full max-w-6xl gap-4 p-4">
+    <main className="mx-auto flex h-full w-full max-w-6xl gap-4 p-4">
       <div className="hidden md:block">
         <FilterCard className="sticky top-18">
           <Filter
