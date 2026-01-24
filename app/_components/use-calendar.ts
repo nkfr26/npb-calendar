@@ -16,6 +16,8 @@ const createDateParser = (serializeFn: (date: Date) => string) =>
 
 const getInitialMonth = (month: Date) => {
   const monthNumber = month.getMonth() + 1;
+
+  // 12月 or 1月 or 2月 -> 3月
   switch (monthNumber) {
     case 12:
       return new Date(month.getFullYear() + 1, 2);
@@ -41,12 +43,14 @@ export const useCalendar = () => {
     createDateParser(formatYearMonth).withDefault(getInitialMonth(new Date())),
   );
   const onMonthChange: MonthChangeEventHandler = (month) => {
-    const monthNumber = month.getMonth();
+    const monthNumber = month.getMonth() + 1;
+
+    // 12月 -> 3月 or 2月 -> 11月
     switch (monthNumber) {
-      case 11:
+      case 12:
         setMonth(new Date(month.getFullYear() + 1, 2));
         break;
-      case 1:
+      case 2:
         setMonth(new Date(month.getFullYear() - 1, 10));
         break;
       default:
@@ -54,5 +58,6 @@ export const useCalendar = () => {
     }
     setSelected(null);
   };
+
   return { selected: selected ?? undefined, onSelect, month, onMonthChange };
 };
