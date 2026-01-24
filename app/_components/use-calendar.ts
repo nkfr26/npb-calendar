@@ -3,7 +3,7 @@ import type {
   MonthChangeEventHandler,
   OnSelectHandler,
 } from "react-day-picker";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatYearMonth } from "@/lib/utils";
 
 const createDateParser = (serializeFn: (date: Date) => string) =>
   createParser({
@@ -38,9 +38,7 @@ export const useCalendar = () => {
 
   const [month, setMonth] = useQueryState(
     "month",
-    createDateParser((date) => formatDate(date).slice(0, 7)).withDefault(
-      getInitialMonth(new Date()),
-    ),
+    createDateParser(formatYearMonth).withDefault(getInitialMonth(new Date())),
   );
   const onMonthChange: MonthChangeEventHandler = (month) => {
     const monthNumber = month.getMonth();

@@ -87,7 +87,7 @@ export function ScheduleCalendar({
         },
       }}
       formatters={{
-        formatCaption: (date, options) => format(date, "y年 LLLL", options),
+        formatCaption: (date, options) => format(date, "yyyy年 M月", options),
       }}
       locale={ja}
       showOutsideDays={false}
