@@ -40,7 +40,7 @@ export function ScheduleViewer({
           key={dateString}
           className="group overflow-clip rounded-lg border"
         >
-          <CollapsibleTrigger className="sticky top-0 flex w-full items-center justify-between bg-background p-4 text-left hover:bg-accent">
+          <CollapsibleTrigger className="sticky top-14 flex w-full items-center justify-between bg-background p-4 text-left hover:bg-accent">
             <div className="flex flex-col">
               {(() => {
                 const date = new Date(dateString);

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Filter } from "./_components/filter";
 import { FilterCard } from "./_components/filter-card";
 import { DrawerOpenButton, FilterDrawer } from "./_components/filter-drawer";
@@ -23,34 +22,27 @@ export default function Home() {
   );
   const [open, setOpen] = useState(false);
   return (
-    <main className="overflow-auto">
-      <div className="mx-auto flex h-full max-w-6xl gap-4 pl-4">
-        <div className="hidden pt-4 md:block">
-          <FilterCard>
-            <Filter
-              schedules={schedules}
-              filter={filter}
-              setFilter={setFilter}
-              isFiltered={isFiltered}
-            />
-          </FilterCard>
-        </div>
-        <ScrollArea type="auto" className="flex-1">
-          <div className="flex flex-col gap-2 py-4 pr-4">
-            <DrawerOpenButton
-              isFiltered={isFiltered}
-              props={{ onClick: () => setOpen(true), className: "md:hidden" }}
-            />
-            <ScheduleCalendar
-              {...calendar}
-              groupedSchedules={groupedSchedules}
-            />
-            <ScheduleViewer
-              selected={calendar.selected}
-              groupedSchedules={groupedSchedules}
-            />
-          </div>
-        </ScrollArea>
+    <main className="mx-auto flex h-full max-w-6xl gap-4 p-4">
+      <div className="hidden md:block">
+        <FilterCard className="sticky top-18">
+          <Filter
+            schedules={schedules}
+            filter={filter}
+            setFilter={setFilter}
+            isFiltered={isFiltered}
+          />
+        </FilterCard>
+      </div>
+      <div className="flex w-full flex-col gap-2">
+        <DrawerOpenButton
+          isFiltered={isFiltered}
+          props={{ onClick: () => setOpen(true), className: "md:hidden" }}
+        />
+        <ScheduleCalendar {...calendar} groupedSchedules={groupedSchedules} />
+        <ScheduleViewer
+          selected={calendar.selected}
+          groupedSchedules={groupedSchedules}
+        />
       </div>
 
       <FilterDrawer open={open} onOpenChange={setOpen}>
