@@ -77,7 +77,7 @@ export function ScheduleCalendar({
               rel="noopener noreferrer"
               className={cn(
                 className,
-                "z-50 text-[#0000EE] visited:text-[#551A8B] active:text-[#FF0000]",
+                "text-[#0000EE] visited:text-[#551A8B] active:text-[#FF0000]",
               )}
               aria-label="年月"
             >
@@ -87,7 +87,7 @@ export function ScheduleCalendar({
         },
       }}
       formatters={{
-        formatCaption: (date, options) => format(date, "y年 LLLL", options),
+        formatCaption: (date, options) => format(date, "yyyy年 M月", options),
       }}
       locale={ja}
       showOutsideDays={false}

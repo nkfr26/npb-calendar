@@ -1,10 +1,9 @@
-import type { ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
-export function FilterCard({ children }: { children: ReactNode }) {
+export function FilterCard({ ...props }: React.ComponentProps<typeof Card>) {
   return (
-    <Card className="w-xs self-start shadow-none">
-      <CardContent>{children}</CardContent>
+    <Card {...props} className={`w-xs shadow-none ${props.className}`}>
+      <CardContent>{props.children}</CardContent>
     </Card>
   );
 }
