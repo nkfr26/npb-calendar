@@ -3,58 +3,92 @@ import type {
   MonthChangeEventHandler,
   OnSelectHandler,
 } from "react-day-picker";
+import { Temporal } from "temporal-polyfill";
 import { formatDate } from "@/lib/utils";
 
-const createDateParser = (serializeFn: (date: Date) => string) =>
+const createTemporalParser = <
+  T extends Temporal.PlainDate | Temporal.PlainYearMonth,
+>(
+  from: (value: string) => T,
+) =>
   createParser({
-    parse(dateString) {
-      const date = new Date(dateString);
-      return Number.isNaN(date.getTime()) ? null : date;
+    parse(value) {
+      try {
+        return from(value);
+      } catch {
+        return null;
+      }
     },
-    serialize: serializeFn,
+    serialize(value) {
+      return value.toString();
+    },
   });
 
-const getInitialMonth = (month: Date) => {
-  const monthNumber = month.getMonth() + 1;
+const getInitialMonth = (yearMonth: Temporal.PlainYearMonth) => {
+  const monthNumber = yearMonth.month;
   switch (monthNumber) {
     case 12:
-      return new Date(month.getFullYear() + 1, 2);
+      return Temporal.PlainYearMonth.from({
+        year: yearMonth.year + 1,
+        month: 3,
+      });
     case 1:
     case 2:
-      return new Date(month.getFullYear(), 2);
+      return Temporal.PlainYearMonth.from({
+        year: yearMonth.year,
+        month: 3,
+      });
     default:
-      return month;
+      return yearMonth;
   }
 };
 
 export const useCalendar = () => {
   const [selected, setSelected] = useQueryState(
     "selected",
-    createDateParser(formatDate),
+    createTemporalParser(Temporal.PlainDate.from),
   );
   const onSelect: OnSelectHandler<Date | undefined> = (selected) => {
-    setSelected(selected ?? null);
+    setSelected(
+      selected ? Temporal.PlainDate.from(formatDate(selected)) : null,
+    );
   };
 
   const [month, setMonth] = useQueryState(
     "month",
-    createDateParser((date) => formatDate(date).slice(0, 7)).withDefault(
-      getInitialMonth(new Date()),
+    createTemporalParser(Temporal.PlainYearMonth.from).withDefault(
+      getInitialMonth(Temporal.Now.plainDateISO().toPlainYearMonth()),
     ),
   );
   const onMonthChange: MonthChangeEventHandler = (month) => {
     const monthNumber = month.getMonth();
     switch (monthNumber) {
       case 11:
-        setMonth(new Date(month.getFullYear() + 1, 2));
+        setMonth(
+          Temporal.PlainYearMonth.from({
+            year: month.getFullYear() + 1,
+            month: 3,
+          }),
+        );
         break;
       case 1:
-        setMonth(new Date(month.getFullYear() - 1, 10));
+        setMonth(
+          Temporal.PlainYearMonth.from({
+            year: month.getFullYear() - 1,
+            month: 11,
+          }),
+        );
         break;
       default:
-        setMonth(month);
+        setMonth(Temporal.PlainYearMonth.from(formatDate(month)));
     }
     setSelected(null);
   };
-  return { selected: selected ?? undefined, onSelect, month, onMonthChange };
+
+  return {
+    selected: selected ? new Date(selected.toString()) : undefined,
+    onSelect,
+    month: new Date(month.year, month.month - 1, 1),
+    onMonthChange,
+  };
 };
