@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} grid min-h-svh grid-rows-[auto_1fr] text-sm antialiased [scrollbar-gutter:stable]`}
+        className={`${geistSans.variable} ${geistMono.variable} grid min-h-svh grid-rows-[auto_1fr] overflow-y-scroll text-sm antialiased`}
       >
         <Providers>
           <Header />
