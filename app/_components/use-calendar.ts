@@ -26,6 +26,8 @@ const createTemporalParser = <
 
 const getInitialMonth = (yearMonth: Temporal.PlainYearMonth) => {
   const monthNumber = yearMonth.month;
+
+  // 12月 or 1月 or 2月 -> 3月
   switch (monthNumber) {
     case 12:
       return Temporal.PlainYearMonth.from({
@@ -61,9 +63,11 @@ export const useCalendar = () => {
     ),
   );
   const onMonthChange: MonthChangeEventHandler = (month) => {
-    const monthNumber = month.getMonth();
+    const monthNumber = month.getMonth() + 1;
+
+    // 12月 -> 3月 or 2月 -> 11月
     switch (monthNumber) {
-      case 11:
+      case 12:
         setMonth(
           Temporal.PlainYearMonth.from({
             year: month.getFullYear() + 1,
@@ -71,7 +75,7 @@ export const useCalendar = () => {
           }),
         );
         break;
-      case 1:
+      case 2:
         setMonth(
           Temporal.PlainYearMonth.from({
             year: month.getFullYear() - 1,
