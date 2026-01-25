@@ -3,7 +3,7 @@ import type {
   MonthChangeEventHandler,
   OnSelectHandler,
 } from "react-day-picker";
-import { Temporal } from "temporal-polyfill";
+import { Temporal } from "temporal-polyfill-lite";
 import { formatDate } from "@/lib/utils";
 
 const createTemporalParser = <
