@@ -15,23 +15,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatDate } from "@/lib/utils";
 import { useHolidaysQuery } from "./use-holidays-query";
-import type { GroupedSchedules } from "./use-schedules-query";
+import type { GroupedSchedulesByDate } from "./use-schedules-query";
 
 export function ScheduleViewer({
   selected,
-  groupedSchedules,
+  groupedSchedulesByDate,
 }: {
   selected: Date | undefined;
-  groupedSchedules: GroupedSchedules;
+  groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
   const { data: holidays = {} } = useHolidaysQuery();
 
   // 日付未選択時はすべてのスケジュールを表示
   const displaySchedules = (() => {
-    if (!selected) return groupedSchedules;
+    if (!selected) return groupedSchedulesByDate;
 
     const key = formatDate(selected);
-    return { [key]: groupedSchedules[key] || [] };
+    return { [key]: groupedSchedulesByDate[key] || [] };
   })();
   return (
     <div className="flex flex-col gap-2">

@@ -1,5 +1,6 @@
 "use client";
 
+import { groupBy } from "es-toolkit";
 import { useState } from "react";
 import { Filter } from "./_components/filter";
 import { FilterCard } from "./_components/filter-card";
@@ -8,17 +9,15 @@ import { ScheduleCalendar } from "./_components/schedule-calendar";
 import { ScheduleViewer } from "./_components/schedule-viewer";
 import { useCalendar } from "./_components/use-calendar";
 import { filterSchedules, useFilter } from "./_components/use-filter";
-import {
-  groupSchedulesByDate,
-  useSchedulesQuery,
-} from "./_components/use-schedules-query";
+import { useSchedulesQuery } from "./_components/use-schedules-query";
 
 export default function Home() {
   const calendar = useCalendar();
   const { data: schedules = [] } = useSchedulesQuery(calendar.month);
   const { filter, setFilter, isFiltered } = useFilter();
-  const groupedSchedules = groupSchedulesByDate(
+  const groupedSchedulesByDate = groupBy(
     filterSchedules(schedules, filter),
+    (schedule) => schedule.date,
   );
   const [open, setOpen] = useState(false);
   return (
@@ -38,10 +37,13 @@ export default function Home() {
           isFiltered={isFiltered}
           props={{ onClick: () => setOpen(true), className: "md:hidden" }}
         />
-        <ScheduleCalendar {...calendar} groupedSchedules={groupedSchedules} />
+        <ScheduleCalendar
+          {...calendar}
+          groupedSchedulesByDate={groupedSchedulesByDate}
+        />
         <ScheduleViewer
           selected={calendar.selected}
-          groupedSchedules={groupedSchedules}
+          groupedSchedulesByDate={groupedSchedulesByDate}
         />
       </div>
 

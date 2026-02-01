@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import type { groupBy } from "es-toolkit";
 import { ofetch } from "ofetch";
 import * as v from "valibot";
 
@@ -44,27 +45,6 @@ export const useSchedulesQuery = (date: Date) => {
   });
 };
 
-export type GroupedSchedules = {
-  [date: string]: {
-    match: { home: string; visitor: string };
-    info: { stadium: string; time: string };
-    ticket?: { primary: string; resale?: string | string[] };
-  }[];
-};
-
-export const groupSchedulesByDate = (
-  schedules: Schedule[],
-): GroupedSchedules => {
-  const grouped: GroupedSchedules = {};
-  for (const schedule of schedules) {
-    if (!grouped[schedule.date]) {
-      grouped[schedule.date] = [];
-    }
-    grouped[schedule.date]?.push({
-      match: schedule.match,
-      info: schedule.info,
-      ...(schedule.ticket && { ticket: schedule.ticket }),
-    });
-  }
-  return grouped;
-};
+export type GroupedSchedulesByDate = ReturnType<
+  typeof groupBy<Schedule, string>
+>;
