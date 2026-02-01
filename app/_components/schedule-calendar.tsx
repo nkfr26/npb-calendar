@@ -11,20 +11,20 @@ import { ja } from "react-day-picker/locale";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import { cn, formatDate } from "@/lib/utils";
 import { useHolidaysQuery } from "./use-holidays-query";
-import type { GroupedSchedules } from "./use-schedules-query";
+import type { GroupedSchedulesByDate } from "./use-schedules-query";
 
 export function ScheduleCalendar({
   selected,
   onSelect,
   month,
   onMonthChange,
-  groupedSchedules,
+  groupedSchedulesByDate,
 }: {
   selected: Date | undefined;
   onSelect: OnSelectHandler<Date | undefined>;
   month: Date;
   onMonthChange: MonthChangeEventHandler;
-  groupedSchedules: GroupedSchedules;
+  groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
   const { data: holidays = {} } = useHolidaysQuery();
   return (
@@ -44,7 +44,7 @@ export function ScheduleCalendar({
             day.date.getDay() === 6,
             day.date.getDay() === 0 || !!holidays[formatDate(day.date)],
           ];
-          const schedule = groupedSchedules[formatDate(day.date)];
+          const schedule = groupedSchedulesByDate[formatDate(day.date)];
           return (
             <CalendarDayButton
               day={day}
