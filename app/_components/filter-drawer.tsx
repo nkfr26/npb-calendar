@@ -29,9 +29,7 @@ export function FilterDrawer({
         </DrawerHeader>
         <div className="px-4">{children}</div>
         <DrawerFooter>
-          <Button onClick={() => onOpenChange(false)} autoFocus>
-            OK
-          </Button>
+          <Button onClick={() => onOpenChange(false)}>OK</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

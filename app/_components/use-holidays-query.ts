@@ -4,9 +4,9 @@ import * as v from "valibot";
 
 const holidaysSchema = v.record(v.string(), v.string());
 
-export type Holidays = v.InferOutput<typeof holidaysSchema>;
-
-const fetchHolidays = async (): Promise<Holidays> => {
+const fetchHolidays = async (): Promise<
+  v.InferOutput<typeof holidaysSchema>
+> => {
   try {
     const response = await ofetch(
       "https://nkfr26.github.io/syukujitsu-json/syukujitsu.json",
