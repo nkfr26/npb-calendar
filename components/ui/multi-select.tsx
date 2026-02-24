@@ -8,7 +8,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -57,22 +56,16 @@ export function MultiSelect({
   );
   const [items, setItems] = useState<Map<string, ReactNode>>(new Map());
 
-  useEffect(() => {
-    setSelectedValues(new Set(values));
-  }, [values]);
-
   function toggleValue(value: string) {
-    const getNewSet = (prev: Set<string>) => {
-      const newSet = new Set(prev);
-      if (newSet.has(value)) {
-        newSet.delete(value);
-      } else {
-        newSet.add(value);
-      }
-      return newSet;
-    };
-    setSelectedValues(getNewSet);
-    onValuesChange?.([...getNewSet(selectedValues)]);
+    const currentValues = values !== undefined ? new Set(values) : selectedValues;
+    const newSet = new Set(currentValues);
+    if (newSet.has(value)) {
+      newSet.delete(value);
+    } else {
+      newSet.add(value);
+    }
+    setSelectedValues(newSet);
+    onValuesChange?.([...newSet]);
   }
 
   const onItemAdded = useCallback((value: string, label: ReactNode) => {
@@ -150,7 +143,7 @@ export function MultiSelectValue({
     (overflowBehavior === "wrap-when-open" && open);
 
   const checkOverflow = useCallback(() => {
-    if (valueRef.current == null) return;
+    if (valueRef.current == null) return 0;
 
     const containerElement = valueRef.current;
     const overflowElement = overflowRef.current;
@@ -173,18 +166,20 @@ export function MultiSelectValue({
       child.style.display = "none";
       overflowElement?.style.removeProperty("display");
     }
-    setOverflowAmount(amount);
+    return amount;
   }, []);
 
-  useLayoutEffect(() => {
-    checkOverflow();
-  }, [checkOverflow]);
+  const updateOverflowAmount = useCallback((amount: number) => {
+    setOverflowAmount(amount);
+  }, []);
 
   const handleResize = useCallback(
     (node: HTMLDivElement) => {
       valueRef.current = node;
 
-      const observer = new ResizeObserver(checkOverflow);
+      const observer = new ResizeObserver(() => {
+        updateOverflowAmount(checkOverflow());
+      });
       observer.observe(node);
 
       return () => {
@@ -192,7 +187,7 @@ export function MultiSelectValue({
         valueRef.current = null;
       };
     },
-    [checkOverflow],
+    [checkOverflow, updateOverflowAmount],
   );
 
   if (selectedValues.size === 0 && placeholder) {
