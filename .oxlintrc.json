@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "eslint",
+    "import",
+    "jsx-a11y",
+    "oxc",
+    "react",
+    "typescript",
+    "unicorn"
+  ],
+  "rules": {
+    "react/exhaustive-deps": "error",
+    "react/rules-of-hooks": "error"
+  }
+}
