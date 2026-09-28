@@ -9,9 +9,7 @@ function getInitialDarkMode() {
   try {
     stored = localStorage.getItem("theme");
   } catch {}
-  return (
-    stored === "dark" || (stored === null && matchMedia(mediaQuery).matches)
-  );
+  return stored === "dark" || (stored === null && matchMedia(mediaQuery).matches);
 }
 
 export function ThemeToggle() {
@@ -29,9 +27,13 @@ export function ThemeToggle() {
   }, []);
 
   const setTheme = (isDark: boolean) => {
-    const theme = isDark ? "dark" : "light";
     setDark(isDark);
+    const theme = isDark ? "dark" : "light";
     document.documentElement.dataset.theme = theme;
+    document.documentElement.classList.add("theme-changing");
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => document.documentElement.classList.remove("theme-changing")),
+    );
     try {
       localStorage.setItem("theme", theme);
     } catch {}
@@ -40,10 +42,7 @@ export function ThemeToggle() {
   return (
     <label
       className={cn(
-        "toggle border-base-content/15 bg-base-content/10 text-base-content/70 toggle-sm has-[:checked]:border-base-content/15 has-[:checked]:bg-base-content/10 has-[:checked]:text-base-content/70",
-        dark
-          ? "before:!bg-black [&>svg]:!text-base-content"
-          : "before:!bg-base-100 [&>svg]:!text-base-content/60",
+        "toggle border-base-content/20 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:!text-base-content",
       )}
       title="テーマを切り替える"
     >
@@ -51,9 +50,7 @@ export function ThemeToggle() {
         type="checkbox"
         checked={dark}
         onChange={(event) => setTheme(event.currentTarget.checked)}
-        aria-label={
-          dark ? "ライトモードに切り替える" : "ダークモードに切り替える"
-        }
+        aria-label={dark ? "ライトモードに切り替える" : "ダークモードに切り替える"}
       />
       <Sun className="size-3.5" aria-hidden="true" />
       <Moon className="size-3.5" aria-hidden="true" />

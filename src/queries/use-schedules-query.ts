@@ -3,6 +3,8 @@ import type { groupBy } from "es-toolkit";
 import { ofetch } from "ofetch";
 import * as v from "valibot";
 
+import { formatYearMonth } from "@/lib/utils";
+
 const scheduleSchema = v.object({
   date: v.string(),
   match: v.object({
@@ -39,11 +41,9 @@ async function fetchSchedules(date: Date): Promise<Schedule[]> {
 
 export function useSchedulesQuery(date: Date) {
   return useQuery({
-    queryKey: ["schedules", date],
+    queryKey: ["schedules", formatYearMonth(date)],
     queryFn: () => fetchSchedules(date),
   });
 }
 
-export type GroupedSchedulesByDate = ReturnType<
-  typeof groupBy<Schedule, string>
->;
+export type GroupedSchedulesByDate = ReturnType<typeof groupBy<Schedule, string>>;

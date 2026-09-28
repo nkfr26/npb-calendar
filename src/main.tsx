@@ -7,13 +7,7 @@ import { App } from "./App";
 
 import "./index.css";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60_000,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

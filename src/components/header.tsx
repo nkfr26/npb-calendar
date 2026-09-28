@@ -15,7 +15,7 @@ export function Header() {
             href="https://github.com/nkfr26/npb-calendar"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-square btn-ghost"
+            className="btn btn-square btn-ghost btn-sm"
             aria-label="GitHub Repository"
           >
             <MarkGithubIcon />

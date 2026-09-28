@@ -21,13 +21,9 @@ const dayNightValues = ["", "デーゲーム", "ナイター"] as const;
 
 const parsers = {
   teams: parseAsArrayOf(parseAsString).withDefault(DEFAULT_FILTER.teams),
-  homeVisitor: parseAsStringLiteral(homeVisitorValues).withDefault(
-    DEFAULT_FILTER.homeVisitor,
-  ),
+  homeVisitor: parseAsStringLiteral(homeVisitorValues).withDefault(DEFAULT_FILTER.homeVisitor),
   stadiums: parseAsArrayOf(parseAsString).withDefault(DEFAULT_FILTER.stadiums),
-  dayNight: parseAsStringLiteral(dayNightValues).withDefault(
-    DEFAULT_FILTER.dayNight,
-  ),
+  dayNight: parseAsStringLiteral(dayNightValues).withDefault(DEFAULT_FILTER.dayNight),
 };
 
 export type Filter = inferParserType<typeof parsers>;
@@ -37,10 +33,7 @@ export function useFilter() {
   return { filter, setFilter, isFiltered: !isEqual(filter, DEFAULT_FILTER) };
 }
 
-export function filterSchedules(
-  schedules: Schedule[],
-  filter: Filter,
-): Schedule[] {
+export function filterSchedules(schedules: Schedule[], filter: Filter): Schedule[] {
   if (isEqual(filter, DEFAULT_FILTER)) return schedules;
 
   return schedules.filter((schedule) => {

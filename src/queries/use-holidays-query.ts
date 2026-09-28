@@ -6,9 +6,7 @@ const holidaysSchema = v.record(v.string(), v.string());
 
 async function fetchHolidays(): Promise<v.InferOutput<typeof holidaysSchema>> {
   try {
-    const response = await ofetch(
-      "https://nkfr26.github.io/syukujitsu-json/syukujitsu.json",
-    );
+    const response = await ofetch("https://nkfr26.github.io/syukujitsu-json/syukujitsu.json");
     return v.parse(holidaysSchema, response);
   } catch {
     return {};

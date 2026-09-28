@@ -1,8 +1,6 @@
-import { Collapsible } from "@ark-ui/react/collapsible";
-import { Menu } from "@ark-ui/react/menu";
-import { Portal } from "@ark-ui/react/portal";
 import { cn } from "cn";
-import { ChevronDown, Clock, ExternalLink, MapPin, Ticket } from "lucide-react";
+import { Clock, ExternalLink, MapPin, Ticket } from "lucide-react";
+import { useEffect, useId } from "react";
 
 import { formatDate } from "@/lib/utils";
 import { useHolidaysQuery } from "@/queries/use-holidays-query";
@@ -16,11 +14,16 @@ export function ScheduleViewer({
   groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
   const { data: holidays = {} } = useHolidaysQuery();
+  useEffect(() => {
+    const closeTicketPopover = () =>
+      document.querySelector<HTMLElement>(".ticket-popover:popover-open")?.hidePopover();
+
+    window.addEventListener("scroll", closeTicketPopover, true);
+    return () => window.removeEventListener("scroll", closeTicketPopover, true);
+  }, []);
+
   const displaySchedules = selected
-    ? {
-        [formatDate(selected)]:
-          groupedSchedulesByDate[formatDate(selected)] ?? [],
-      }
+    ? { [formatDate(selected)]: groupedSchedulesByDate[formatDate(selected)] ?? [] }
     : groupedSchedulesByDate;
 
   return (
@@ -36,18 +39,16 @@ export function ScheduleViewer({
               : undefined;
 
         return (
-          <Collapsible.Root
+          <details
             key={dateString}
-            className="group overflow-clip rounded-lg border border-base-300 bg-base-100"
+            className="collapse-arrow collapse overflow-clip border border-base-300 bg-base-100"
           >
-            <Collapsible.Trigger className="sticky top-14 z-10 flex w-full items-center justify-between bg-base-100 p-4 text-left hover:bg-base-200">
-              <div className="flex flex-col">
-                <div
-                  className={cn(
-                    "flex items-center gap-1 font-medium",
-                    textColor,
-                  )}
-                >
+            <summary
+              className="collapse-title sticky top-14 z-50 bg-base-100 ring-1 ring-base-300 hover:bg-base-200"
+              aria-labelledby={`schedule-${dateString}`}
+            >
+              <div id={`schedule-${dateString}`} className="flex flex-col">
+                <div className={cn("flex items-center gap-1 font-medium", textColor)}>
                   {date.toLocaleDateString("ja-JP", {
                     month: "long",
                     day: "numeric",
@@ -57,32 +58,21 @@ export function ScheduleViewer({
                 </div>
                 <div className="text-xs opacity-60">{schedules.length}試合</div>
               </div>
-              <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-            </Collapsible.Trigger>
-            <Collapsible.Content
-              className={cn(schedules.length && "border-t border-base-300")}
-            >
-              <div className="flex flex-col divide-y divide-base-300">
-                {schedules.map((schedule) => (
-                  <ScheduleRow
-                    key={`${dateString}-${schedule.match.home}`}
-                    schedule={schedule}
-                  />
-                ))}
-              </div>
-            </Collapsible.Content>
-          </Collapsible.Root>
+            </summary>
+            <div className="collapse-content divide-y divide-base-300 border-base-300 p-0 not-empty:border-t">
+              {schedules.map((schedule) => (
+                <ScheduleRow key={`${dateString}-${schedule.match.home}`} schedule={schedule} />
+              ))}
+            </div>
+          </details>
         );
       })}
     </div>
   );
 }
 
-function ScheduleRow({
-  schedule,
-}: {
-  schedule: GroupedSchedulesByDate[string][number];
-}) {
+function ScheduleRow({ schedule }: { schedule: GroupedSchedulesByDate[string][number] }) {
+  const menuId = useId();
   const ticket = schedule.ticket;
   const resaleUrls = ticket?.resale
     ? Array.isArray(ticket.resale)
@@ -91,7 +81,7 @@ function ScheduleRow({
     : [];
 
   return (
-    <div className="flex justify-between gap-3 p-4">
+    <div className="flex justify-between p-4">
       <div className="flex flex-col justify-center gap-1">
         <div className="font-medium">
           {schedule.match.home} <span className="text-xs font-normal">対</span>{" "}
@@ -113,29 +103,29 @@ function ScheduleRow({
         )}
       </div>
       {ticket && (
-        <Menu.Root positioning={{ placement: "bottom-end" }}>
-          <Menu.Trigger className="btn btn-square btn-primary md:h-auto md:w-auto md:px-4">
+        <>
+          <button
+            type="button"
+            className="btn btn-square btn-primary md:size-auto md:px-4"
+            aria-label="チケット"
+            popoverTarget={menuId}
+          >
             <Ticket className="size-4" />
             <span className="hidden md:inline">チケット</span>
-          </Menu.Trigger>
-          <Portal>
-            <Menu.Positioner className="!z-[60]">
-              <Menu.Content className="min-w-48 rounded-box border border-base-300 bg-base-100 p-1 shadow-xl">
-                <TicketItem href={ticket.primary}>購入</TicketItem>
-                {resaleUrls.length > 0 && (
-                  <div className="my-1 border-t border-base-300" />
-                )}
-                {resaleUrls.map((url, index) => (
-                  <TicketItem key={url} href={url}>
-                    {resaleUrls.length === 1
-                      ? "リセール"
-                      : `リセール ${index + 1}`}
-                  </TicketItem>
-                ))}
-              </Menu.Content>
-            </Menu.Positioner>
-          </Portal>
-        </Menu.Root>
+          </button>
+          <ul
+            id={menuId}
+            popover="auto"
+            className="ticket-popover menu dropdown dropdown-end mt-2 min-w-48 rounded-field border border-base-content/20 bg-base-100 p-2 [position-try-fallbacks:flip-block]"
+          >
+            <TicketItem href={ticket.primary}>購入</TicketItem>
+            {resaleUrls.map((url, index) => (
+              <TicketItem key={url} href={url}>
+                {resaleUrls.length === 1 ? "リセール" : `リセール ${index + 1}`}
+              </TicketItem>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );
@@ -143,15 +133,11 @@ function ScheduleRow({
 
 function TicketItem({ href, children }: { href: string; children: string }) {
   return (
-    <Menu.Item
-      value={href}
-      asChild
-      className="flex w-full items-center gap-2 rounded-field px-3 py-2 text-sm hover:bg-base-200 focus:bg-base-200"
-    >
+    <li>
       <a href={href} target="_blank" rel="noopener noreferrer">
         {children}
         <ExternalLink className="ml-auto size-4" />
       </a>
-    </Menu.Item>
+    </li>
   );
 }

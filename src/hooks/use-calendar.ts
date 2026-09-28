@@ -21,10 +21,7 @@ function getInitialMonth(date: Date) {
 
 export function useCalendar() {
   const [defaultMonth] = useState(() => getInitialMonth(new Date()));
-  const [selected, setSelected] = useQueryState(
-    "selected",
-    createDateParser(formatDate),
-  );
+  const [selected, setSelected] = useQueryState("selected", createDateParser(formatDate));
   const [month, setMonth] = useQueryState(
     "month",
     createDateParser(formatYearMonth).withDefault(defaultMonth),
@@ -32,15 +29,16 @@ export function useCalendar() {
 
   const onSelect = (date: Date | undefined) => setSelected(date ?? null);
   const onMonthChange = (date: Date) => {
-    const monthNumber = date.getMonth() + 1;
-    if (monthNumber === 12) {
-      setMonth(new Date(date.getFullYear() + 1, 2));
-    } else if (monthNumber === 2) {
-      setMonth(new Date(date.getFullYear() - 1, 10));
-    } else {
-      setMonth(date);
-    }
     setSelected(null);
+    const monthNumber = date.getMonth() + 1;
+    let nextMonth = date;
+    if (monthNumber === 12) {
+      nextMonth = new Date(date.getFullYear() + 1, 2);
+    } else if (monthNumber === 2) {
+      nextMonth = new Date(date.getFullYear() - 1, 10);
+    }
+    setMonth(nextMonth);
+    return nextMonth;
   };
 
   return {
