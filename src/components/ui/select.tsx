@@ -1,5 +1,4 @@
 import { createListCollection } from "@ark-ui/react/collection";
-import { Portal } from "@ark-ui/react/portal";
 import { Select as ArkSelect } from "@ark-ui/react/select";
 import { cn } from "cn";
 import type { ComponentProps } from "react";
@@ -10,7 +9,6 @@ export const SelectControl = ArkSelect.Control;
 export const SelectHiddenSelect = ArkSelect.HiddenSelect;
 export const SelectItemText = ArkSelect.ItemText;
 export const SelectItemIndicator = ArkSelect.ItemIndicator;
-export const SelectPortal = Portal;
 
 export function SelectLabel({ className, ...props }: ComponentProps<typeof ArkSelect.Label>) {
   return <ArkSelect.Label {...props} className={cn("sr-only", className)} />;
@@ -29,7 +27,7 @@ export function SelectPositioner({
   className,
   ...props
 }: ComponentProps<typeof ArkSelect.Positioner>) {
-  return <ArkSelect.Positioner {...props} className={cn("!z-[calc(infinity)]", className)} />;
+  return <ArkSelect.Positioner {...props} className={cn("!z-50", className)} />;
 }
 
 export function SelectContent({ className, ...props }: ComponentProps<typeof ArkSelect.Content>) {

@@ -9,7 +9,6 @@ import {
   SelectItemIndicator,
   SelectItemText,
   SelectLabel,
-  SelectPortal,
   SelectPositioner,
   SelectRoot,
   SelectTrigger,
@@ -57,20 +56,18 @@ export function MultiSelect({
         </SelectTrigger>
       </SelectControl>
       <SelectHiddenSelect />
-      <SelectPortal>
-        <SelectPositioner>
-          <SelectContent>
-            {collection.items.map((item) => (
-              <SelectItem key={item.value} item={item}>
-                <SelectItemText>{item.label}</SelectItemText>
-                <SelectItemIndicator>
-                  <Check className="size-4" />
-                </SelectItemIndicator>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </SelectPositioner>
-      </SelectPortal>
+      <SelectPositioner>
+        <SelectContent>
+          {collection.items.map((item) => (
+            <SelectItem key={item.value} item={item}>
+              <SelectItemText>{item.label}</SelectItemText>
+              <SelectItemIndicator>
+                <Check className="size-4" />
+              </SelectItemIndicator>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </SelectPositioner>
     </SelectRoot>
   );
 }
