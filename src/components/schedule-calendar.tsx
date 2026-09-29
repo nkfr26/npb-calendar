@@ -23,6 +23,8 @@ const toDateValue = (date: Date) =>
 
 const toDate = (date: DateValue) => new Date(date.year, date.month - 1, date.day);
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export function ScheduleCalendar({
   selected,
   onSelect,
@@ -38,7 +40,7 @@ export function ScheduleCalendar({
 }) {
   const { data: holidays = {} } = useHolidaysQuery();
 
-  const year = new Date().getFullYear();
+  const year = CURRENT_YEAR;
   const monthValue = toDateValue(month);
   const selectedValue = selected ? toDateValue(selected) : undefined;
 

@@ -8,7 +8,6 @@ import {
   CalendarGridBody,
   CalendarGridHeader,
   CalendarHeaderCell as AriaCalendarHeaderCell,
-  CalendarProps,
   DateValue,
 } from "react-aria-components";
 import type { CalendarSelectionMode } from "react-aria-components/Calendar";
@@ -18,7 +17,7 @@ export { CalendarGridBody, CalendarGridHeader };
 export function Calendar<T extends DateValue, M extends CalendarSelectionMode>({
   className,
   ...props
-}: CalendarProps<T, M>) {
+}: ComponentProps<typeof AriaCalendar<T, M>>) {
   return (
     <AriaCalendar
       {...props}
