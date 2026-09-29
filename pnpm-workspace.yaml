@@ -1,5 +1,0 @@
-allowBuilds:
-  "@tailwindcss/oxide": true
-autoInstallPeers: false
-confirmModulesPurge: false
-storeDir: .pnpm-store

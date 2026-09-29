@@ -42,7 +42,7 @@ export function ThemeToggle() {
   return (
     <label
       className={cn(
-        "toggle border-base-content/20 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:!text-base-content",
+        "toggle border-base-content/20 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:text-base-content",
       )}
       title="テーマを切り替える"
     >
