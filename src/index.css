@@ -91,8 +91,11 @@ html.theme-changing *::after {
 
 [data-scope="drawer"][data-part="backdrop"][data-state="closed"] {
   pointer-events: none;
-  animation: drawer-backdrop-exit calc(var(--drawer-swipe-strength, 1) * 400ms)
-    cubic-bezier(0.32, 0.72, 0, 1);
+  animation: drawer-backdrop-exit 400ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+[data-scope="drawer"][data-part="backdrop"][data-state="closed"][data-swiping] {
+  animation-duration: calc(var(--drawer-swipe-strength, 1) * 400ms);
 }
 
 [data-scope="drawer"][data-part="content"] {
@@ -107,8 +110,11 @@ html.theme-changing *::after {
 }
 
 [data-scope="drawer"][data-part="content"][data-state="closed"] {
-  animation: drawer-content-exit calc(var(--drawer-swipe-strength, 1) * 400ms)
-    cubic-bezier(0.22, 1, 0.36, 1);
+  animation: drawer-content-exit 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-scope="drawer"][data-part="content"][data-state="closed"][data-swiping] {
+  animation-duration: calc(var(--drawer-swipe-strength, 1) * 400ms);
 }
 
 [data-scope="drawer"][data-part="content"] {
