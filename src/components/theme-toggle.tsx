@@ -1,27 +1,18 @@
-import { cn } from "cn";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const mediaQuery = "(prefers-color-scheme: dark)";
-
-function getInitialDarkMode() {
-  let stored: string | null = null;
-  try {
-    stored = localStorage.getItem("theme");
-  } catch {}
-  return stored === "dark" || (stored === null && matchMedia(mediaQuery).matches);
-}
-
 export function ThemeToggle() {
-  const [dark, setDark] = useState(getInitialDarkMode);
+  const [dark, setDark] = useState(() => document.documentElement.dataset.theme === "dark");
 
   useEffect(() => {
-    try {
-      if (localStorage.getItem("theme") !== null) return;
-    } catch {}
-
-    const media = matchMedia(mediaQuery);
-    const onChange = (event: MediaQueryListEvent) => setDark(event.matches);
+    const media = matchMedia("(prefers-color-scheme: dark)");
+    const onChange = (event: MediaQueryListEvent) => {
+      try {
+        if (localStorage.getItem("theme") !== null) return;
+      } catch {}
+      setDark(event.matches);
+      document.documentElement.dataset.theme = event.matches ? "dark" : "light";
+    };
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
   }, []);
@@ -41,9 +32,7 @@ export function ThemeToggle() {
 
   return (
     <label
-      className={cn(
-        "toggle border-base-content/20 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:text-base-content",
-      )}
+      className="toggle border-base-content/10 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:text-base-content"
       title="テーマを切り替える"
     >
       <input

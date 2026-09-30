@@ -4,22 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>npb-calendar</title>
-    <meta name="description" content="NPBの試合日程カレンダー" />
+    <meta name="description" content="NPB試合日程カレンダー" />
     <link rel="canonical" href="https://npb-calendar.nkfr26.com/" />
     <meta property="og:title" content="npb-calendar" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://npb-calendar.nkfr26.com/" />
     <meta property="og:image" content="https://npb-calendar.nkfr26.com/opengraph-image.png" />
-    <meta property="og:description" content="NPBの試合日程カレンダー" />
+    <meta property="og:description" content="NPB試合日程カレンダー" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.png" />
     <script>
+      let theme = null;
       try {
-        const theme = localStorage.getItem("theme");
-        if (theme === "light" || theme === "dark") {
-          document.documentElement.dataset.theme = theme;
-        }
+        theme = localStorage.getItem("theme");
       } catch {}
+      document.documentElement.dataset.theme =
+        theme === "light" || theme === "dark"
+          ? theme
+          : matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
     </script>
   </head>
   <body>

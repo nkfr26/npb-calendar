@@ -44,7 +44,7 @@ export function ScheduleViewer({
             className="collapse-arrow collapse overflow-clip border border-base-300 bg-base-100"
           >
             <summary
-              className="collapse-title sticky top-14 z-50 bg-base-100 ring-1 ring-base-300 hover:bg-base-200"
+              className="collapse-title sticky top-14 z-50 bg-base-100 ring-1 ring-base-300 hover:bg-base-content/10"
               aria-labelledby={`schedule-${dateString}`}
             >
               <div id={`schedule-${dateString}`} className="flex flex-col">
@@ -106,7 +106,7 @@ function ScheduleRow({ schedule }: { schedule: GroupedSchedulesByDate[string][nu
         <>
           <button
             type="button"
-            className="btn btn-square btn-primary md:size-auto md:px-4"
+            className="btn btn-primary max-md:btn-square"
             aria-label="チケット"
             popoverTarget={menuId}
           >

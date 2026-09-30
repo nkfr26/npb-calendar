@@ -100,7 +100,7 @@ export function ScheduleCalendar({
               <span className="font-semibold">
                 {state.visibleRange.start.year}年 {state.visibleRange.start.month}月
               </span>
-              <div className="flex justify-self-end">
+              <div className="flex gap-1 justify-self-end">
                 <CalendarPrevButton aria-label="前の月">
                   <ChevronLeft className="size-4" />
                 </CalendarPrevButton>
@@ -114,8 +114,8 @@ export function ScheduleCalendar({
                 {(weekDay) => (
                   <CalendarHeaderCell
                     className={cn(
-                      weekDay === "土" && "text-blue-800 dark:text-blue-400",
-                      weekDay === "日" && "text-red-600 dark:text-red-400",
+                      weekDay === "土" && "text-blue-600 dark:text-blue-400",
+                      weekDay === "日" && "text-red-500 dark:text-red-400",
                     )}
                   >
                     {weekDay}
@@ -137,8 +137,8 @@ export function ScheduleCalendar({
                       className={({ isOutsideMonth }) =>
                         cn(
                           isOutsideMonth && "invisible",
-                          isSaturday && "text-blue-800 dark:text-blue-400",
-                          isHoliday && "text-red-600 dark:text-red-400",
+                          isSaturday && "text-blue-600 dark:text-blue-400",
+                          isHoliday && "text-red-500 dark:text-red-400",
                           !schedules && "opacity-25",
                         )
                       }
