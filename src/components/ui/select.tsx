@@ -35,7 +35,7 @@ export function SelectContent({ className, ...props }: ComponentProps<typeof Ark
     <ArkSelect.Content
       {...props}
       className={cn(
-        "max-h-72 overflow-y-auto rounded-field border border-base-content/20 bg-base-100 py-2 pl-2",
+        "max-h-72 overflow-y-auto rounded-field border border-base-content/20 bg-base-100 p-2",
         className,
       )}
     />
