@@ -26,7 +26,7 @@ export function App() {
       <main className="mx-auto flex h-full w-full max-w-6xl gap-4 p-4">
         <aside className="hidden md:block">
           <div className="card sticky top-18 w-xs border border-base-300 bg-base-100">
-            <div className="card-body p-6">
+            <div className="card-body">
               <Filter
                 schedules={schedules}
                 filter={filter}
