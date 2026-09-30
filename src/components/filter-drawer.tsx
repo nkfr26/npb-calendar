@@ -60,8 +60,8 @@ export function DrawerOpenButton({
 }: ComponentProps<"button"> & { isFiltered: boolean }) {
   return (
     <button type="button" className={cn("btn indicator w-full md:hidden", className)} {...props}>
+      {isFiltered && <span className="indicator-item status status-primary status-lg" />}
       <Funnel className="size-4" /> 絞り込み
-      {isFiltered && <span className="indicator-item badge size-4 p-0 badge-primary" />}
     </button>
   );
 }
