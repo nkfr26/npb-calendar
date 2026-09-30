@@ -35,7 +35,7 @@ export function ScheduleCalendar({
   selected: Date | undefined;
   onSelect: (date: Date | undefined) => void;
   month: Date;
-  onMonthChange: (date: Date) => Date;
+  onMonthChange: (date: Date) => void;
   groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
   const { data: holidays = {} } = useHolidaysQuery();
@@ -45,6 +45,10 @@ export function ScheduleCalendar({
   const selectedValue = selected ? toDateValue(selected) : undefined;
 
   const [focusedValue, setFocusedValue] = useState<DateValue>(monthValue);
+  const currentFocusedValue =
+    focusedValue.year === monthValue.year && focusedValue.month === monthValue.month
+      ? focusedValue
+      : monthValue;
 
   return (
     <I18nProvider locale="ja-JP">
@@ -55,7 +59,7 @@ export function ScheduleCalendar({
         minValue={new CalendarDate(year, 3, 1)}
         maxValue={new CalendarDate(year + 1, 11, 30)}
         value={selectedValue ? [selectedValue] : []}
-        focusedValue={focusedValue}
+        focusedValue={currentFocusedValue}
         onFocusChange={(date) => {
           setFocusedValue(date);
 
@@ -110,7 +114,7 @@ export function ScheduleCalendar({
                 {(weekDay) => (
                   <CalendarHeaderCell
                     className={cn(
-                      weekDay === "土" && "text-blue-700 dark:text-blue-400",
+                      weekDay === "土" && "text-blue-800 dark:text-blue-400",
                       weekDay === "日" && "text-red-600 dark:text-red-400",
                     )}
                   >
@@ -133,7 +137,7 @@ export function ScheduleCalendar({
                       className={({ isOutsideMonth }) =>
                         cn(
                           isOutsideMonth && "invisible",
-                          isSaturday && "text-blue-700 dark:text-blue-400",
+                          isSaturday && "text-blue-800 dark:text-blue-400",
                           isHoliday && "text-red-600 dark:text-red-400",
                           !schedules && "opacity-25",
                         )

@@ -22,5 +22,5 @@ export function ToggleGroupItem({
 }
 
 export function ToggleGroupSeparator() {
-  return <span aria-hidden="true" className="pointer-events-none w-px bg-base-300" />;
+  return <span aria-hidden="true" className="pointer-events-none w-px bg-base-100" />;
 }

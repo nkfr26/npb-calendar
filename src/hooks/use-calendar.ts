@@ -30,15 +30,15 @@ export function useCalendar() {
   const onSelect = (date: Date | undefined) => setSelected(date ?? null);
   const onMonthChange = (date: Date) => {
     setSelected(null);
+
     const monthNumber = date.getMonth() + 1;
-    let nextMonth = date;
     if (monthNumber === 12) {
-      nextMonth = new Date(date.getFullYear() + 1, 2);
+      setMonth(new Date(date.getFullYear() + 1, 2));
     } else if (monthNumber === 2) {
-      nextMonth = new Date(date.getFullYear() - 1, 10);
+      setMonth(new Date(date.getFullYear() - 1, 10));
+    } else {
+      setMonth(date);
     }
-    setMonth(nextMonth);
-    return nextMonth;
   };
 
   return {

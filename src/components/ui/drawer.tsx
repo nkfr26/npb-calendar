@@ -42,7 +42,7 @@ export function DrawerContent({
 }: ComponentProps<typeof ArkDrawer.Content>) {
   return (
     <ArkDrawer.Content {...props} className={cn("w-full rounded-t-box bg-base-100", className)}>
-      <ArkDrawer.Grabber className="flex justify-center pt-4">
+      <ArkDrawer.Grabber className="flex justify-center pt-3">
         <ArkDrawer.GrabberIndicator className="h-1.5 w-25 rounded-full bg-base-300" />
       </ArkDrawer.Grabber>
       {children}
