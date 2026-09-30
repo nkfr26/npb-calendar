@@ -48,7 +48,7 @@ export function Filter({
             type="checkbox"
             role="switch"
             aria-checked={isDependent}
-            className="toggle border-base-content/10 bg-base-content/10 checked:border-primary checked:bg-primary [&::before]:bg-white"
+            className="toggle toggle-sm border-base-content/10 bg-base-content/10 checked:border-primary checked:bg-primary [&::before]:bg-white"
             checked={isDependent}
             onChange={(event) => setIsDependent(event.currentTarget.checked)}
           />
