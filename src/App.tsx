@@ -1,14 +1,18 @@
 import { groupBy } from "es-toolkit";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 
+import { DrawerOpenButton } from "@/components/drawer-open-button";
 import { Filter } from "@/components/filter";
-import { DrawerOpenButton, FilterDrawer } from "@/components/filter-drawer";
 import { Header } from "@/components/header";
 import { ScheduleCalendar } from "@/components/schedule-calendar";
 import { ScheduleViewer } from "@/components/schedule-viewer";
 import { useCalendar } from "@/hooks/use-calendar";
 import { filterSchedules, useFilter } from "@/hooks/use-filter";
 import { useSchedulesQuery } from "@/queries/use-schedules-query";
+
+const FilterDrawer = lazy(() =>
+  import("@/components/filter-drawer").then(({ FilterDrawer }) => ({ default: FilterDrawer })),
+);
 
 export function App() {
   const calendar = useCalendar();
@@ -18,7 +22,7 @@ export function App() {
     filterSchedules(schedules, filter),
     (schedule) => schedule.date,
   );
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>();
 
   return (
     <>
@@ -46,14 +50,18 @@ export function App() {
           />
         </div>
 
-        <FilterDrawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-          <Filter
-            schedules={schedules}
-            filter={filter}
-            setFilter={setFilter}
-            isFiltered={isFiltered}
-          />
-        </FilterDrawer>
+        {drawerOpen !== undefined && (
+          <Suspense fallback={null}>
+            <FilterDrawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+              <Filter
+                schedules={schedules}
+                filter={filter}
+                setFilter={setFilter}
+                isFiltered={isFiltered}
+              />
+            </FilterDrawer>
+          </Suspense>
+        )}
       </main>
     </>
   );

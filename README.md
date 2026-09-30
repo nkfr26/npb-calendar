@@ -11,6 +11,8 @@ pnpm install
 pnpm dev
 ```
 
+OG画像は `pnpm og:generate` を実行すると再生成できます。
+
 ## 検証とビルド
 
 ```bash

@@ -1,6 +1,4 @@
-import { cn } from "cn";
-import { Funnel } from "lucide-react";
-import type { ComponentProps, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import {
   DrawerBackdrop,
@@ -50,22 +48,5 @@ export function FilterDrawer({
         </DrawerPositioner>
       </DrawerPortal>
     </DrawerRoot>
-  );
-}
-
-export function DrawerOpenButton({
-  isFiltered,
-  className,
-  ...props
-}: ComponentProps<"button"> & { isFiltered: boolean }) {
-  return (
-    <button
-      type="button"
-      className={cn("btn indicator w-full bg-base-100 md:hidden", className)}
-      {...props}
-    >
-      {isFiltered && <span className="indicator-item status status-primary status-lg" />}
-      <Funnel className="size-4" /> 絞り込み
-    </button>
   );
 }
