@@ -21,7 +21,8 @@ import type { GroupedSchedulesByDate } from "@/queries/use-schedules-query";
 const toDateValue = (date: Date) =>
   new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
 
-const toDate = (date: DateValue) => new Date(date.year, date.month - 1, date.day);
+const toDate = (dateValue: DateValue) =>
+  new Date(dateValue.year, dateValue.month - 1, dateValue.day);
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -45,10 +46,8 @@ export function ScheduleCalendar({
   const selectedValue = selected ? toDateValue(selected) : undefined;
 
   const [focusedValue, setFocusedValue] = useState<DateValue>(monthValue);
-  const currentFocusedValue =
-    focusedValue.year === monthValue.year && focusedValue.month === monthValue.month
-      ? focusedValue
-      : monthValue;
+  const isSameMonth = (dateValue: DateValue) =>
+    dateValue.year === monthValue.year && dateValue.month === monthValue.month;
 
   return (
     <I18nProvider locale="ja-JP">
@@ -59,11 +58,11 @@ export function ScheduleCalendar({
         minValue={new CalendarDate(year, 3, 1)}
         maxValue={new CalendarDate(year + 1, 11, 30)}
         value={selectedValue ? [selectedValue] : []}
-        focusedValue={currentFocusedValue}
+        focusedValue={isSameMonth(focusedValue) ? focusedValue : monthValue}
         onFocusChange={(date) => {
           setFocusedValue(date);
 
-          if (date.year !== monthValue.year || date.month !== monthValue.month) {
+          if (!isSameMonth(date)) {
             onMonthChange(toDate(date));
           }
         }}
@@ -111,21 +110,21 @@ export function ScheduleCalendar({
             </CalendarHeader>
             <CalendarGrid weekdayStyle="short">
               <CalendarGridHeader>
-                {(weekDay) => (
+                {(day) => (
                   <CalendarHeaderCell
                     className={cn(
-                      weekDay === "土" && "text-blue-600 dark:text-blue-400",
-                      weekDay === "日" && "text-red-500 dark:text-red-400",
+                      day === "土" && "text-blue-600 dark:text-blue-400",
+                      day === "日" && "text-red-500 dark:text-red-400",
                     )}
                   >
-                    {weekDay}
+                    {day}
                   </CalendarHeaderCell>
                 )}
               </CalendarGridHeader>
               <CalendarGridBody>
-                {(day) => {
-                  const nativeDate = toDate(day);
-                  const dateString = day.toString();
+                {(date) => {
+                  const nativeDate = toDate(date);
+                  const dateString = date.toString();
                   const schedules = groupedSchedulesByDate[dateString];
                   const [isSaturday, isHoliday] = [
                     nativeDate.getDay() === 6,
@@ -133,7 +132,7 @@ export function ScheduleCalendar({
                   ];
                   return (
                     <CalendarCell
-                      date={day}
+                      date={date}
                       className={({ isOutsideMonth }) =>
                         cn(
                           isOutsideMonth && "invisible",
