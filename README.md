@@ -1,6 +1,6 @@
 # npb-calendar
 
-NPBの月間試合日程を、球団・球場・ホーム / ビジター・デー / ナイターで絞り込めるカレンダーです。
+NPBの月間試合日程を球団・球場・ホーム / ビジター・デー / ナイターで絞り込めるカレンダーです。
 
 [npb-schedule](https://github.com/nkfr26/npb-schedule) と [syukujitsu-json](https://github.com/nkfr26/syukujitsu-json) を使用しています。
 
