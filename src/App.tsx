@@ -1,6 +1,5 @@
 import { groupBy } from "es-toolkit";
-import { createElement, lazy, Suspense, useState } from "react";
-import "budoux/module/webcomponents/budoux-ja";
+import { lazy, Suspense, useState } from "react";
 
 import { DrawerOpenButton } from "@/components/drawer-open-button";
 import { Filter } from "@/components/filter";
@@ -69,12 +68,10 @@ export function App() {
         )}
       </main>
       <footer className="border-t border-base-300 bg-base-100 p-4 text-xs leading-relaxed text-base-content/50">
-        <p className="mx-auto max-w-6xl">
-          {createElement(
-            "budoux-ja",
-            null,
-            "本サイトは非公式サービスであり、一般社団法人日本野球機構 (NPB) および各球団とは関係ありません。試合日程等は公開情報をもとに独自に整理しています。最新情報は公式サイト (カレンダー左上) をご確認ください。",
-          )}
+        <p className="mx-auto max-w-6xl [word-break:auto-phrase]">
+          本サイトは非公式サービスであり、一般社団法人日本野球機構 (NPB)
+          および各球団とは関係ありません。試合日程等は公開情報をもとに独自に整理しています。最新情報は公式サイト
+          (カレンダー左上) をご確認ください。
         </p>
       </footer>
     </>
