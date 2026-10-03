@@ -26,12 +26,6 @@ export function Calendar<T extends DateValue, M extends CalendarSelectionMode>({
   );
 }
 
-export function CalendarHeader({ className, ...props }: ComponentProps<"div">) {
-  return (
-    <div {...props} className={cn("mb-2 grid grid-cols-[1fr_auto_1fr] items-center", className)} />
-  );
-}
-
 export function CalendarPrevButton({ className, ...props }: ComponentProps<typeof Button>) {
   return (
     <Button

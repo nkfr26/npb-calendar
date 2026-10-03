@@ -9,7 +9,6 @@ import {
   CalendarGrid,
   CalendarGridBody,
   CalendarGridHeader,
-  CalendarHeader,
   CalendarHeaderCell,
   CalendarNextButton,
   CalendarPrevButton,
@@ -84,7 +83,7 @@ export function ScheduleCalendar({
       >
         {({ state }) => (
           <>
-            <CalendarHeader>
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center">
               <a
                 href={`https://npb.jp/games/${state.visibleRange.start.year}/schedule_${String(
                   state.visibleRange.start.month,
@@ -108,7 +107,7 @@ export function ScheduleCalendar({
                   <ChevronRight className="size-4" />
                 </CalendarNextButton>
               </div>
-            </CalendarHeader>
+            </div>
             <CalendarGrid weekdayStyle="short">
               <CalendarGridHeader>
                 {(day) => (
