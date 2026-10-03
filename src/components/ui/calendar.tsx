@@ -75,7 +75,7 @@ export function CalendarCell({ className, ...props }: ComponentProps<typeof Aria
       {...props}
       className={(values) =>
         cn(
-          "btn h-11 w-full flex-col gap-1 btn-ghost p-0 text-xs",
+          "btn h-11 w-full flex-col gap-1 btn-ghost p-0 text-xs transition-none",
           values.isSelected && "border-2 border-primary/60 bg-transparent dark:border-primary/80",
           typeof className === "function" ? className(values) : className,
         )

@@ -32,10 +32,10 @@ export function ScheduleViewer({
         const date = new Date(`${dateString}T00:00:00`);
         const holiday = holidays[dateString];
         const textColor =
-          date.getDay() === 6
-            ? "text-blue-700 dark:text-blue-400"
-            : date.getDay() === 0 || holiday
-              ? "text-red-600 dark:text-red-400"
+          date.getDay() === 0 || holiday
+            ? "text-red-500 dark:text-red-400"
+            : date.getDay() === 6
+              ? "text-blue-600 dark:text-blue-400"
               : undefined;
 
         return (

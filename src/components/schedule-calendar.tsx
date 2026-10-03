@@ -57,6 +57,7 @@ export function ScheduleCalendar({
         firstDayOfWeek="mon"
         minValue={new CalendarDate(year, 3, 1)}
         maxValue={new CalendarDate(year + 1, 11, 30)}
+        isDateUnavailable={(date) => !groupedSchedulesByDate[date.toString()]?.length}
         value={selectedValue ? [selectedValue] : []}
         focusedValue={isSameMonth(focusedValue) ? focusedValue : monthValue}
         onFocusChange={(date) => {
@@ -126,19 +127,19 @@ export function ScheduleCalendar({
                   const nativeDate = toDate(date);
                   const dateString = date.toString();
                   const schedules = groupedSchedulesByDate[dateString];
-                  const [isSaturday, isHoliday] = [
-                    nativeDate.getDay() === 6,
-                    nativeDate.getDay() === 0 || !!holidays[dateString],
-                  ];
+                  const isHoliday = nativeDate.getDay() === 0 || !!holidays[dateString];
+                  const isSaturday = !isHoliday && nativeDate.getDay() === 6;
                   return (
                     <CalendarCell
                       date={date}
-                      className={({ isOutsideMonth }) =>
+                      className={({ isOutsideMonth, isUnavailable }) =>
                         cn(
                           isOutsideMonth && "invisible",
-                          isSaturday && "text-blue-600 dark:text-blue-400",
-                          isHoliday && "text-red-500 dark:text-red-400",
-                          !schedules && "opacity-25",
+                          isSaturday &&
+                            "[--color-base-content:var(--color-blue-600)] dark:[--color-base-content:var(--color-blue-400)]",
+                          isHoliday &&
+                            "[--color-base-content:var(--color-red-500)] dark:[--color-base-content:var(--color-red-400)]",
+                          isUnavailable && "btn-disabled",
                         )
                       }
                     >

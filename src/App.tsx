@@ -8,6 +8,7 @@ import { ScheduleCalendar } from "@/components/schedule-calendar";
 import { ScheduleViewer } from "@/components/schedule-viewer";
 import { useCalendar } from "@/hooks/use-calendar";
 import { filterSchedules, useFilter } from "@/hooks/use-filter";
+import { formatDate } from "@/lib/utils";
 import { useSchedulesQuery } from "@/queries/use-schedules-query";
 
 const FilterDrawer = lazy(() =>
@@ -16,14 +17,20 @@ const FilterDrawer = lazy(() =>
 
 export function App() {
   const calendar = useCalendar();
-  const { data: schedules = [] } = useSchedulesQuery(calendar.month);
+  const { data: schedules = [], isSuccess } = useSchedulesQuery(calendar.month);
   const { filter, setFilter, isFiltered } = useFilter();
-  const groupedSchedulesByDate = groupBy(
-    filterSchedules(schedules, filter),
-    (schedule) => schedule.date,
-  );
   const [drawerOpen, setDrawerOpen] = useState<boolean>();
 
+  const selected = calendar.selected;
+  const filteredSchedules = filterSchedules(schedules, filter);
+  if (
+    isSuccess &&
+    selected &&
+    !filteredSchedules.some((schedule) => schedule.date === formatDate(selected))
+  ) {
+    calendar.onSelect(undefined);
+  }
+  const groupedSchedulesByDate = groupBy(filteredSchedules, (schedule) => schedule.date);
   return (
     <>
       <Header />
@@ -44,14 +51,11 @@ export function App() {
         <div className="flex w-full min-w-0 flex-col gap-2">
           <DrawerOpenButton isFiltered={isFiltered} onClick={() => setDrawerOpen(true)} />
           <ScheduleCalendar {...calendar} groupedSchedulesByDate={groupedSchedulesByDate} />
-          <ScheduleViewer
-            selected={calendar.selected}
-            groupedSchedulesByDate={groupedSchedulesByDate}
-          />
+          <ScheduleViewer selected={selected} groupedSchedulesByDate={groupedSchedulesByDate} />
         </div>
 
         {drawerOpen !== undefined && (
-          <Suspense fallback={null}>
+          <Suspense>
             <FilterDrawer open={drawerOpen} onOpenChange={setDrawerOpen}>
               <Filter
                 schedules={schedules}

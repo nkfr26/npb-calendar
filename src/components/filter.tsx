@@ -69,10 +69,11 @@ export function Filter({
         items={teams}
         selectedValues={filter.teams}
         setSelectedValues={(values) => {
-          setFilter((previous) => ({ ...previous, teams: values }));
-          if (values.length === 0) {
-            setFilter((previous) => ({ ...previous, homeVisitor: "" }));
-          }
+          setFilter((previous) => ({
+            ...previous,
+            teams: values,
+            homeVisitor: values.length ? previous.homeVisitor : "",
+          }));
         }}
         ariaLabel="球団"
       />

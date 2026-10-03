@@ -40,6 +40,13 @@
   --color-error: oklch(77% 0.158 30.3);
 }
 
+@utility select {
+  &:focus:not(:focus-visible),
+  &:open:not(:focus-visible) {
+    outline: none;
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }
