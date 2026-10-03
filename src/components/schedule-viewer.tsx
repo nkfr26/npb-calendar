@@ -33,7 +33,7 @@ export function ScheduleViewer({
         const holiday = holidays[dateString];
         const textColor =
           date.getDay() === 0 || holiday
-            ? "text-red-500 dark:text-red-400"
+            ? "text-red-600 dark:text-red-400"
             : date.getDay() === 6
               ? "text-blue-600 dark:text-blue-400"
               : undefined;

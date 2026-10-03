@@ -115,7 +115,7 @@ export function ScheduleCalendar({
                   <CalendarHeaderCell
                     className={cn(
                       day === "土" && "text-blue-600 dark:text-blue-400",
-                      day === "日" && "text-red-500 dark:text-red-400",
+                      day === "日" && "text-red-600 dark:text-red-400",
                     )}
                   >
                     {day}
@@ -138,7 +138,7 @@ export function ScheduleCalendar({
                           isSaturday &&
                             "[--color-base-content:var(--color-blue-600)] dark:[--color-base-content:var(--color-blue-400)]",
                           isHoliday &&
-                            "[--color-base-content:var(--color-red-500)] dark:[--color-base-content:var(--color-red-400)]",
+                            "[--color-base-content:var(--color-red-600)] dark:[--color-base-content:var(--color-red-400)]",
                           isUnavailable && "btn-disabled",
                         )
                       }

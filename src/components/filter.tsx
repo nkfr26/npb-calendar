@@ -39,7 +39,6 @@ export function Filter({
     ...schedulesForStadiumSelect.map((schedule) => schedule.info.stadium),
     ...filter.stadiums,
   ]);
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">

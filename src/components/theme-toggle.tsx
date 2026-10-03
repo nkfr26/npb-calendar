@@ -29,7 +29,6 @@ export function ThemeToggle() {
       localStorage.setItem("theme", theme);
     } catch {}
   };
-
   return (
     <label
       className="toggle border-base-content/10 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:text-base-content"

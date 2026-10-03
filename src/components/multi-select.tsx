@@ -30,7 +30,6 @@ export function MultiSelect({
   const collection = createListCollection({
     items: [...items].filter(Boolean).map((value) => ({ label: value, value })),
   });
-
   return (
     <SelectRoot
       collection={collection}
