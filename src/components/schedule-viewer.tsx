@@ -44,7 +44,7 @@ export function ScheduleViewer({
             className="collapse-arrow collapse overflow-clip border border-base-300 bg-base-100"
           >
             <summary
-              className="collapse-title sticky top-14 z-50 bg-base-100 ring-1 ring-base-300 hover:bg-base-content/10"
+              className="collapse-title sticky top-14 z-50 bg-base-100 ring-1 ring-base-300 hover:bg-base-300"
               aria-labelledby={`schedule-${dateString}`}
             >
               <div id={`schedule-${dateString}`} className="flex flex-col">

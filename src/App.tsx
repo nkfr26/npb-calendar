@@ -49,7 +49,11 @@ export function App() {
         </aside>
 
         <div className="flex w-full min-w-0 flex-col gap-2">
-          <DrawerOpenButton isFiltered={isFiltered} onClick={() => setDrawerOpen(true)} />
+          <DrawerOpenButton
+            className="md:hidden"
+            isFiltered={isFiltered}
+            onClick={() => setDrawerOpen(true)}
+          />
           <ScheduleCalendar {...calendar} groupedSchedulesByDate={groupedSchedulesByDate} />
           <ScheduleViewer selected={selected} groupedSchedulesByDate={groupedSchedulesByDate} />
         </div>
