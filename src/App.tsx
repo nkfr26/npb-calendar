@@ -1,5 +1,5 @@
 import { groupBy } from "es-toolkit";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 import { DrawerOpenButton } from "@/components/drawer-open-button";
 import { Filter } from "@/components/filter";
@@ -21,15 +21,17 @@ export function App() {
   const { filter, setFilter, isFiltered } = useFilter();
   const [drawerOpen, setDrawerOpen] = useState<boolean>();
 
-  const selected = calendar.selected;
+  const { selected, onSelect } = calendar;
   const filteredSchedules = filterSchedules(schedules, filter);
-  if (
+  const shouldClearSelection =
     isSuccess &&
-    selected &&
-    !filteredSchedules.some((schedule) => schedule.date === formatDate(selected))
-  ) {
-    calendar.onSelect(undefined);
-  }
+    !!selected &&
+    !filteredSchedules.some((schedule) => schedule.date === formatDate(selected));
+
+  useEffect(() => {
+    if (shouldClearSelection) onSelect(undefined);
+  }, [shouldClearSelection, onSelect]);
+
   const groupedSchedulesByDate = groupBy(filteredSchedules, (schedule) => schedule.date);
   return (
     <>
@@ -71,7 +73,7 @@ export function App() {
           </Suspense>
         )}
       </main>
-      <footer className="border-t border-base-300 bg-base-100 p-4 text-xs leading-relaxed text-base-content/50">
+      <footer className="border-t border-base-300 bg-base-100 p-4 text-xs text-base-content/50">
         <p className="mx-auto max-w-6xl [word-break:auto-phrase]">
           本サイトは非公式サービスであり、一般社団法人日本野球機構 (NPB)
           および各球団とは関係ありません。試合日程等は公開情報をもとに独自に整理しています。最新情報は公式サイト
