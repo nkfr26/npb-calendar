@@ -1,4 +1,4 @@
-import { CalendarDate, isSameDay, type DateValue } from "@internationalized/date";
+import { CalendarDate, getDayOfWeek, isSameDay } from "@internationalized/date";
 import { cn } from "cn";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { useState } from "react";
@@ -17,12 +17,6 @@ import {
 import { useHolidaysQuery } from "@/queries/use-holidays-query";
 import type { GroupedSchedulesByDate } from "@/queries/use-schedules-query";
 
-const toDateValue = (date: Date) =>
-  new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
-
-const toDate = (dateValue: DateValue) =>
-  new Date(dateValue.year, dateValue.month - 1, dateValue.day);
-
 const CURRENT_YEAR = new Date().getFullYear();
 
 export function ScheduleCalendar({
@@ -32,21 +26,17 @@ export function ScheduleCalendar({
   onMonthChange,
   groupedSchedulesByDate,
 }: {
-  selected: Date | undefined;
-  onSelect: (date: Date | undefined) => void;
-  month: Date;
-  onMonthChange: (date: Date) => void;
+  selected: CalendarDate | undefined;
+  onSelect: (date: CalendarDate | undefined) => void;
+  month: CalendarDate;
+  onMonthChange: (date: CalendarDate) => void;
   groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
   const { data: holidays = {} } = useHolidaysQuery();
 
-  const year = CURRENT_YEAR;
-  const monthValue = toDateValue(month);
-  const selectedValue = selected ? toDateValue(selected) : undefined;
-
-  const [focusedValue, setFocusedValue] = useState<DateValue>(monthValue);
-  const isSameMonth = (dateValue: DateValue) =>
-    dateValue.year === monthValue.year && dateValue.month === monthValue.month;
+  const [focusedValue, setFocusedValue] = useState<CalendarDate>(month);
+  const isSameMonth = (dateValue: CalendarDate) =>
+    dateValue.year === month.year && dateValue.month === month.month;
 
   return (
     <I18nProvider locale="ja-JP">
@@ -54,16 +44,16 @@ export function ScheduleCalendar({
         aria-label="NPB試合日程"
         selectionMode="multiple"
         firstDayOfWeek="mon"
-        minValue={new CalendarDate(year, 3, 1)}
-        maxValue={new CalendarDate(year + 1, 11, 30)}
+        minValue={new CalendarDate(CURRENT_YEAR, 3, 1)}
+        maxValue={new CalendarDate(CURRENT_YEAR + 1, 11, 30)}
         isDateUnavailable={(date) => !groupedSchedulesByDate[date.toString()]?.length}
-        value={selectedValue ? [selectedValue] : []}
-        focusedValue={isSameMonth(focusedValue) ? focusedValue : monthValue}
+        value={selected ? [selected] : []}
+        focusedValue={isSameMonth(focusedValue) ? focusedValue : month}
         onFocusChange={(date) => {
           setFocusedValue(date);
 
           if (!isSameMonth(date)) {
-            onMonthChange(toDate(date));
+            onMonthChange(date);
           }
         }}
         onChange={(value) => {
@@ -72,12 +62,12 @@ export function ScheduleCalendar({
             return;
           }
 
-          const nextValue = selectedValue
-            ? value.find((value) => !isSameDay(value, selectedValue))
+          const nextValue = selected
+            ? value.find((value) => !isSameDay(value, selected))
             : value[0];
 
           if (nextValue) {
-            onSelect(toDate(nextValue));
+            onSelect(nextValue);
           }
         }}
       >
@@ -123,11 +113,11 @@ export function ScheduleCalendar({
               </CalendarGridHeader>
               <CalendarGridBody>
                 {(date) => {
-                  const nativeDate = toDate(date);
                   const dateString = date.toString();
                   const schedules = groupedSchedulesByDate[dateString];
-                  const isHoliday = nativeDate.getDay() === 0 || !!holidays[dateString];
-                  const isSaturday = !isHoliday && nativeDate.getDay() === 6;
+                  const weekday = getDayOfWeek(date, "ja-JP", "sun");
+                  const isHoliday = weekday === 0 || !!holidays[dateString];
+                  const isSaturday = !isHoliday && weekday === 6;
                   return (
                     <CalendarCell
                       date={date}

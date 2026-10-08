@@ -8,7 +8,6 @@ import { ScheduleCalendar } from "@/components/schedule-calendar";
 import { ScheduleViewer } from "@/components/schedule-viewer";
 import { useCalendar } from "@/hooks/use-calendar";
 import { filterSchedules, useFilter } from "@/hooks/use-filter";
-import { formatDate } from "@/lib/utils";
 import { useSchedulesQuery } from "@/queries/use-schedules-query";
 
 const FilterDrawer = lazy(() =>
@@ -26,7 +25,7 @@ export function App() {
   const shouldClearSelection =
     isSuccess &&
     !!selected &&
-    !filteredSchedules.some((schedule) => schedule.date === formatDate(selected));
+    !filteredSchedules.some((schedule) => schedule.date === selected.toString());
 
   useEffect(() => {
     if (shouldClearSelection) onSelect(undefined);

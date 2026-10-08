@@ -1,9 +1,5 @@
-import { format } from "date-fns";
+import type { CalendarDate } from "@internationalized/date";
 
-export function formatDate(date: Date): string {
-  return format(date, "yyyy-MM-dd");
-}
-
-export function formatYearMonth(date: Date): string {
-  return format(date, "yyyy-MM");
+export function formatYearMonth(date: CalendarDate): string {
+  return date.toString().slice(0, 7);
 }

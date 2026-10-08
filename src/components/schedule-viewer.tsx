@@ -1,8 +1,13 @@
+import {
+  getDayOfWeek,
+  getLocalTimeZone,
+  parseDate,
+  type CalendarDate,
+} from "@internationalized/date";
 import { cn } from "cn";
 import { Clock, ExternalLink, MapPin, Ticket } from "lucide-react";
 import { useEffect, useId } from "react";
 
-import { formatDate } from "@/lib/utils";
 import { useHolidaysQuery } from "@/queries/use-holidays-query";
 import type { GroupedSchedulesByDate } from "@/queries/use-schedules-query";
 
@@ -10,7 +15,7 @@ export function ScheduleViewer({
   selected,
   groupedSchedulesByDate,
 }: {
-  selected: Date | undefined;
+  selected: CalendarDate | undefined;
   groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
   const { data: holidays = {} } = useHolidaysQuery();
@@ -23,18 +28,20 @@ export function ScheduleViewer({
   }, []);
 
   const displaySchedules = selected
-    ? { [formatDate(selected)]: groupedSchedulesByDate[formatDate(selected)] ?? [] }
+    ? { [selected.toString()]: groupedSchedulesByDate[selected.toString()] ?? [] }
     : groupedSchedulesByDate;
 
   return (
     <div className="flex flex-col gap-2">
       {Object.entries(displaySchedules).map(([dateString, schedules]) => {
-        const date = new Date(`${dateString}T00:00:00`);
+        const date = parseDate(dateString);
+        const weekday = getDayOfWeek(date, "ja-JP", "sun");
+        const timeZone = getLocalTimeZone();
         const holiday = holidays[dateString];
         const textColor =
-          date.getDay() === 0 || holiday
+          weekday === 0 || holiday
             ? "text-red-600 dark:text-red-400"
-            : date.getDay() === 6
+            : weekday === 6
               ? "text-blue-600 dark:text-blue-400"
               : undefined;
 
@@ -49,7 +56,8 @@ export function ScheduleViewer({
             >
               <div id={`schedule-${dateString}`} className="flex flex-col">
                 <div className={cn("flex items-center gap-1 font-medium", textColor)}>
-                  {date.toLocaleDateString("ja-JP", {
+                  {date.toDate(timeZone).toLocaleDateString("ja-JP", {
+                    timeZone,
                     month: "long",
                     day: "numeric",
                     weekday: "short",

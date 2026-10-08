@@ -1,3 +1,4 @@
+import type { CalendarDate } from "@internationalized/date";
 import { useQuery } from "@tanstack/react-query";
 import type { groupBy } from "es-toolkit";
 import { ofetch } from "ofetch";
@@ -25,9 +26,9 @@ const scheduleSchema = v.object({
 
 export type Schedule = v.InferOutput<typeof scheduleSchema>;
 
-async function fetchSchedules(date: Date): Promise<Schedule[]> {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
+async function fetchSchedules(date: CalendarDate): Promise<Schedule[]> {
+  const year = date.year;
+  const month = String(date.month).padStart(2, "0");
 
   try {
     const response = await ofetch(
@@ -39,7 +40,7 @@ async function fetchSchedules(date: Date): Promise<Schedule[]> {
   }
 }
 
-export function useSchedulesQuery(date: Date) {
+export function useSchedulesQuery(date: CalendarDate) {
   return useQuery({
     queryKey: ["schedules", formatYearMonth(date)],
     queryFn: () => fetchSchedules(date),

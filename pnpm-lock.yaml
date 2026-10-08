@@ -26,9 +26,6 @@ importers:
       cn:
         specifier: ^0.3.0
         version: 0.3.3
-      date-fns:
-        specifier: ^4.1.0
-        version: 4.4.0
       es-toolkit:
         specifier: ^1.44.0
         version: 1.52.0
@@ -1194,9 +1191,6 @@ packages:
 
   daisyui@5.7.46:
     resolution: {integrity: sha512-z/tfVXLpLRe1ojGeokzxauHA9Ij5CGfk+83EdatQbFSVr02h5mUcp4nkgQJOw68wH1wAAPu/SY+MWbDdJG2R4w==}
-
-  date-fns@4.4.0:
-    resolution: {integrity: sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w==}
 
   destr@2.0.5:
     resolution: {integrity: sha512-ugFTXCtDZunbzasqBxrK93Ik/DRYsO6S/fedkWEMKqt04xZ4csmnmwGDBAb07QWNaGMAmnTIemsYZCksjATwsA==}
@@ -2779,8 +2773,6 @@ snapshots:
   culori@4.0.2: {}
 
   daisyui@5.7.46: {}
-
-  date-fns@4.4.0: {}
 
   destr@2.0.5: {}
 
