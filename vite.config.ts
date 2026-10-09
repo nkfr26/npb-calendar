@@ -14,9 +14,6 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
-  optimizeDeps: {
-    include: ["react-aria-components > react-aria > use-sync-external-store/shim/index.js"],
-  },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
