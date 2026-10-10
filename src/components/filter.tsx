@@ -2,7 +2,6 @@ import { parseAsBoolean, useQueryState } from "nuqs";
 import { type Dispatch, type SetStateAction } from "react";
 
 import { MultiSelect } from "@/components/multi-select";
-import { ToggleGroupItem, ToggleGroupRoot } from "@/components/ui/toggle-group";
 import { DEFAULT_FILTER, type Filter as FilterType, filterSchedules } from "@/hooks/use-filter";
 import type { Schedule } from "@/queries/use-schedules-query";
 
@@ -35,6 +34,14 @@ export function Filter({
     ...schedulesForStadiumSelect.map((schedule) => schedule.info.stadium),
     ...filter.stadiums,
   ]);
+
+  const toggle = <K extends "homeVisitor" | "dayNight">(key: K, value: FilterType[K]) => {
+    setFilter((previous) => ({
+      ...previous,
+      [key]: previous[key] === value ? "" : value,
+    }));
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -73,19 +80,19 @@ export function Filter({
         ariaLabel="球団"
       />
 
-      <ToggleGroupRoot
-        disabled={filter.teams.length === 0}
-        value={filter.homeVisitor ? [filter.homeVisitor] : []}
-        onValueChange={(details) =>
-          setFilter((previous) => ({
-            ...previous,
-            homeVisitor: (details.value[0] ?? "") as FilterType["homeVisitor"],
-          }))
-        }
-      >
-        <ToggleGroupItem value="ホーム">ホーム</ToggleGroupItem>
-        <ToggleGroupItem value="ビジター">ビジター</ToggleGroupItem>
-      </ToggleGroupRoot>
+      <fieldset className="join w-full gap-px" disabled={filter.teams.length === 0}>
+        {(["ホーム", "ビジター"] as const).map((value) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={filter.homeVisitor === value}
+            className="btn join-item flex-1 aria-pressed:btn-primary"
+            onClick={() => toggle("homeVisitor", value)}
+          >
+            {value}
+          </button>
+        ))}
+      </fieldset>
 
       <MultiSelect
         placeholder="球場"
@@ -95,18 +102,19 @@ export function Filter({
         ariaLabel="球場"
       />
 
-      <ToggleGroupRoot
-        value={filter.dayNight ? [filter.dayNight] : []}
-        onValueChange={(details) =>
-          setFilter((previous) => ({
-            ...previous,
-            dayNight: (details.value[0] ?? "") as FilterType["dayNight"],
-          }))
-        }
-      >
-        <ToggleGroupItem value="デーゲーム">デーゲーム</ToggleGroupItem>
-        <ToggleGroupItem value="ナイター">ナイター</ToggleGroupItem>
-      </ToggleGroupRoot>
+      <fieldset className="join w-full gap-px">
+        {(["デーゲーム", "ナイター"] as const).map((value) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={filter.dayNight === value}
+            className="btn join-item flex-1 aria-pressed:btn-primary"
+            onClick={() => toggle("dayNight", value)}
+          >
+            {value}
+          </button>
+        ))}
+      </fieldset>
     </div>
   );
 }
