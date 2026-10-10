@@ -50,11 +50,9 @@ export function ScheduleViewer({
             key={dateString}
             className="collapse-arrow collapse overflow-clip border border-base-300 bg-base-100"
           >
-            <summary
-              className="collapse-title sticky top-14 z-50 bg-base-100 ring-1 ring-base-300 hover:bg-base-300"
-              aria-labelledby={`schedule-${dateString}`}
-            >
-              <div id={`schedule-${dateString}`} className="flex flex-col">
+            {/* oxlint-disable-next-line jsx-a11y/control-has-associated-label -- The summary gets its name from its nested text. */}
+            <summary className="collapse-title sticky top-14 z-50 bg-base-100 ring-1 ring-base-300 hover:bg-base-300">
+              <div className="flex flex-col">
                 <div className={cn("flex items-center gap-1 font-medium", textColor)}>
                   {date.toDate(timeZone).toLocaleDateString("ja-JP", {
                     timeZone,

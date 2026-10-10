@@ -55,23 +55,22 @@ export function ScheduleCalendar({
       inline
       locale="ja-JP"
       startOfWeek={1}
-      // Multiple mode provides native deselection; the controlled value holds at most one date.
-      selectionMode="multiple"
       min={new CalendarDate(CURRENT_YEAR, 3, 1)}
       max={new CalendarDate(CURRENT_YEAR + 1, 11, 30)}
       isDateUnavailable={(date) => !groupedSchedulesByDate[date.toString()]?.length}
+      // Multiple mode provides native deselection; the controlled value holds at most one date.
+      selectionMode="multiple"
       value={selected ? [selected] : []}
-      focusedValue={isSameMonth(focusedValue) ? focusedValue : month}
-      onFocusChange={({ focusedValue }) => {
-        setFocusedValue(focusedValue);
-
-        if (!isSameMonth(focusedValue)) {
-          onMonthChange(toCalendarDate(focusedValue));
-        }
-      }}
       onValueChange={({ value }) => {
         const date = selected ? value.find((date) => !isSameDay(date, selected)) : value[0];
         onSelect(date && toCalendarDate(date));
+      }}
+      focusedValue={isSameMonth(focusedValue) ? focusedValue : month}
+      onFocusChange={({ focusedValue }) => {
+        setFocusedValue(focusedValue);
+        if (!isSameMonth(focusedValue)) {
+          onMonthChange(toCalendarDate(focusedValue));
+        }
       }}
     >
       {/* The installed Ark UI searches Content for the cell to focus during keyboard navigation. */}
@@ -87,8 +86,7 @@ export function ScheduleCalendar({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-square btn-ghost btn-sm"
-                  aria-label="NPB公式試合日程を新しいタブで開く"
-                  title="NPB公式試合日程"
+                  aria-label="NPB公式試合日程"
                 >
                   <ExternalLink className="size-4" />
                 </a>
@@ -132,6 +130,9 @@ export function ScheduleCalendar({
                         return (
                           <DatePickerTableCell key={dateString} value={date}>
                             <DatePickerTableCellTrigger
+                              aria-label={
+                                schedules ? `${date.day} ${schedules.length}試合` : undefined
+                              }
                               className={cn(
                                 !isSameMonth(date) && "invisible",
                                 isSaturday &&
@@ -144,6 +145,7 @@ export function ScheduleCalendar({
                               {date.day}
                               {schedules && (
                                 <span className="text-[10px] font-normal opacity-60">
+                                  {" "}
                                   {schedules.length}
                                 </span>
                               )}

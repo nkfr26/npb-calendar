@@ -45,8 +45,8 @@ export function Filter({
         <label className="flex cursor-pointer items-center gap-2 text-sm">
           <input
             type="checkbox"
+            // oxlint-disable-next-line jsx-a11y/role-has-required-aria-props -- The native checked property exposes the switch state.
             role="switch"
-            aria-checked={isDependent}
             className="toggle border-base-content/10 bg-base-content/10 toggle-sm checked:border-primary checked:bg-primary [&::before]:bg-white"
             checked={isDependent}
             onChange={(event) => setIsDependent(event.currentTarget.checked)}

@@ -30,18 +30,15 @@ export function ThemeToggle() {
     } catch {}
   };
   return (
-    <label
-      className="toggle border-base-content/10 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:text-base-content"
-      title="テーマを切り替える"
-    >
+    <label className="toggle border-base-content/10 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:text-base-content">
       <input
         type="checkbox"
         checked={dark}
         onChange={(event) => setTheme(event.currentTarget.checked)}
-        aria-label={dark ? "ライトモードに切り替える" : "ダークモードに切り替える"}
+        aria-label="ダークモード"
       />
-      <Sun className="size-3.5" aria-hidden="true" />
-      <Moon className="size-3.5" aria-hidden="true" />
+      <Sun className="size-3.5" />
+      <Moon className="size-3.5" />
     </label>
   );
 }
