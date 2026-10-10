@@ -24,6 +24,7 @@ export function FilterDrawer({
     <DrawerRoot
       open={open}
       onOpenChange={({ open }) => onOpenChange(open)}
+      unmountOnExit
       onPointerDownOutside={(event) => {
         if (
           document.querySelector('[data-scope="select"][data-part="content"][data-state="open"]')
@@ -31,8 +32,6 @@ export function FilterDrawer({
           event.preventDefault();
         }
       }}
-      swipeDirection="down"
-      unmountOnExit
     >
       <DrawerPortal>
         <DrawerBackdrop />
