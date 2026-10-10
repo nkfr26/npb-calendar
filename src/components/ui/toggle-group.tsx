@@ -6,7 +6,7 @@ export function ToggleGroupRoot({
   className,
   ...props
 }: ComponentProps<typeof ArkToggleGroup.Root>) {
-  return <ArkToggleGroup.Root {...props} className={cn("join w-full", className)} />;
+  return <ArkToggleGroup.Root {...props} className={cn("join w-full gap-px", className)} />;
 }
 
 export function ToggleGroupItem({
@@ -19,8 +19,4 @@ export function ToggleGroupItem({
       className={cn("btn join-item flex-1 data-[state=on]:btn-primary", className)}
     />
   );
-}
-
-export function ToggleGroupSeparator() {
-  return <span className="pointer-events-none w-px bg-base-100" />;
 }

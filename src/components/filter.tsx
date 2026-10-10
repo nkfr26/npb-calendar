@@ -2,11 +2,7 @@ import { parseAsBoolean, useQueryState } from "nuqs";
 import { type Dispatch, type SetStateAction } from "react";
 
 import { MultiSelect } from "@/components/multi-select";
-import {
-  ToggleGroupItem,
-  ToggleGroupRoot,
-  ToggleGroupSeparator,
-} from "@/components/ui/toggle-group";
+import { ToggleGroupItem, ToggleGroupRoot } from "@/components/ui/toggle-group";
 import { DEFAULT_FILTER, type Filter as FilterType, filterSchedules } from "@/hooks/use-filter";
 import type { Schedule } from "@/queries/use-schedules-query";
 
@@ -88,7 +84,6 @@ export function Filter({
         }
       >
         <ToggleGroupItem value="ホーム">ホーム</ToggleGroupItem>
-        <ToggleGroupSeparator />
         <ToggleGroupItem value="ビジター">ビジター</ToggleGroupItem>
       </ToggleGroupRoot>
 
