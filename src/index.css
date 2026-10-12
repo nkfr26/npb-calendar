@@ -8,7 +8,6 @@
     light --default,
     dark --prefersdark;
 }
-
 @plugin "daisyui/theme" {
   name: "light";
   color-scheme: light;
@@ -24,7 +23,6 @@
   --color-warning: oklch(68.5% 0.149 82.6);
   --color-error: oklch(77% 0.209 30.3);
 }
-
 @plugin "daisyui/theme" {
   name: "dark";
   color-scheme: dark;
@@ -44,7 +42,6 @@
 @utility badge {
   border-radius: 0.25rem;
 }
-
 @utility select {
   &:focus:not(:focus-visible),
   &:open:not(:focus-visible) {
