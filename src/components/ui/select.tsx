@@ -36,7 +36,7 @@ export function SelectContent({ className, ...props }: ComponentProps<typeof Ark
       {...props}
       data-no-drag
       className={cn(
-        "max-h-72 overflow-y-auto rounded-field border border-base-300 bg-base-100 p-2",
+        "max-h-72 overflow-y-auto overscroll-contain rounded-field border border-base-300 bg-base-100 p-2",
         className,
       )}
     />
