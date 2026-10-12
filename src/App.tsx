@@ -19,14 +19,13 @@ export function App() {
 
   const { selected, onSelect } = calendar;
   const filteredSchedules = filterSchedules(schedules, filter);
-  const shouldClearSelection =
+  if (
     isSuccess &&
     !!selected &&
-    !filteredSchedules.some((schedule) => schedule.date === selected.toString());
-
-  useEffect(() => {
-    if (shouldClearSelection) onSelect(undefined);
-  }, [shouldClearSelection, onSelect]);
+    !filteredSchedules.some((schedule) => schedule.date === selected.toString())
+  ) {
+    onSelect(undefined);
+  }
 
   const groupedSchedulesByDate = groupBy(filteredSchedules, (schedule) => schedule.date);
   return (
