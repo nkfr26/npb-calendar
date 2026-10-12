@@ -40,18 +40,20 @@ export function MultiSelect({
       <SelectControl className="floating-label">
         {selectedValues.length > 0 && <span aria-hidden="true">{label}</span>}
         <SelectTrigger>
-          <span className="flex flex-wrap gap-1">
-            {selectedValues.length === 0 && (
-              <span aria-hidden="true" className="text-base-content/60">
-                {label}
-              </span>
-            )}
-            {selectedValues.map((value) => (
-              <span key={value} className="badge badge-outline border-[color:var(--input-color)]">
-                {value}
-              </span>
-            ))}
-          </span>
+          {selectedValues.length === 0 && (
+            <span aria-hidden="true" className="text-base-content/60">
+              {label}
+            </span>
+          )}
+          {selectedValues.length > 0 && (
+            <span className="flex flex-wrap gap-1 pt-0.5">
+              {selectedValues.map((value) => (
+                <span key={value} className="badge badge-outline border-[color:var(--input-color)]">
+                  {value}
+                </span>
+              ))}
+            </span>
+          )}
         </SelectTrigger>
       </SelectControl>
       <SelectHiddenSelect />
