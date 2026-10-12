@@ -15,17 +15,15 @@ import {
 } from "@/components/ui/select";
 
 export function MultiSelect({
-  placeholder,
+  label,
   items,
   selectedValues,
   setSelectedValues,
-  ariaLabel,
 }: {
-  placeholder: string;
+  label: string;
   items: Set<string>;
   selectedValues: string[];
   setSelectedValues: (values: string[]) => void;
-  ariaLabel: string;
 }) {
   const collection = createListCollection({
     items: [...items].filter(Boolean).map((value) => ({ label: value, value })),
@@ -38,19 +36,21 @@ export function MultiSelect({
       onValueChange={(details) => setSelectedValues(details.value)}
       positioning={{ sameWidth: true }}
     >
-      <SelectLabel>{ariaLabel}</SelectLabel>
-      <SelectControl>
+      <SelectLabel>{label}</SelectLabel>
+      <SelectControl className="floating-label">
+        {selectedValues.length > 0 && <span aria-hidden="true">{label}</span>}
         <SelectTrigger>
           <span className="flex flex-wrap gap-1">
-            {selectedValues.length === 0 ? (
-              <span className="text-base-content/60">{placeholder}</span>
-            ) : (
-              selectedValues.map((value) => (
-                <span key={value} className="badge badge-outline border-[color:var(--input-color)]">
-                  {value}
-                </span>
-              ))
+            {selectedValues.length === 0 && (
+              <span aria-hidden="true" className="text-base-content/60">
+                {label}
+              </span>
             )}
+            {selectedValues.map((value) => (
+              <span key={value} className="badge badge-outline border-[color:var(--input-color)]">
+                {value}
+              </span>
+            ))}
           </span>
         </SelectTrigger>
       </SelectControl>

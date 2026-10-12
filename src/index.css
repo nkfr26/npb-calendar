@@ -41,6 +41,10 @@
   --color-error: oklch(77% 0.158 30.3);
 }
 
+@utility badge {
+  border-radius: 0.25rem;
+}
+
 @utility select {
   &:focus:not(:focus-visible),
   &:open:not(:focus-visible) {

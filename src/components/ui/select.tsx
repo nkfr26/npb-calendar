@@ -18,7 +18,7 @@ export function SelectTrigger({ className, ...props }: ComponentProps<typeof Ark
   return (
     <ArkSelect.Trigger
       {...props}
-      className={cn("select h-auto min-h-10.5 w-full cursor-pointer py-2", className)}
+      className={cn("select h-auto w-full cursor-pointer pt-2.5 pb-2", className)}
     />
   );
 }

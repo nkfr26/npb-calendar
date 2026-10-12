@@ -67,7 +67,7 @@ export function Filter({
       </div>
 
       <MultiSelect
-        placeholder="球団"
+        label="球団"
         items={teams}
         selectedValues={filter.teams}
         setSelectedValues={(values) => {
@@ -77,7 +77,6 @@ export function Filter({
             homeVisitor: values.length ? previous.homeVisitor : "",
           }));
         }}
-        ariaLabel="球団"
       />
 
       <fieldset className="join w-full gap-px" disabled={filter.teams.length === 0}>
@@ -95,11 +94,10 @@ export function Filter({
       </fieldset>
 
       <MultiSelect
-        placeholder="球場"
+        label="球場"
         items={stadiums}
         selectedValues={filter.stadiums}
         setSelectedValues={(values) => setFilter((previous) => ({ ...previous, stadiums: values }))}
-        ariaLabel="球場"
       />
 
       <fieldset className="join w-full gap-px">
