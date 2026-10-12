@@ -37,8 +37,15 @@ export function MultiSelect({
       positioning={{ sameWidth: true, gutter: 4 }}
     >
       <SelectLabel>{label}</SelectLabel>
-      <SelectControl className="floating-label">
-        {selectedValues.length > 0 && <span aria-hidden="true">{label}</span>}
+      <SelectControl className="group floating-label">
+        {selectedValues.length > 0 && (
+          <span
+            aria-hidden="true"
+            className="group-has-[[data-state=open][data-side=top]]:invisible"
+          >
+            {label}
+          </span>
+        )}
         <SelectTrigger>
           {selectedValues.length === 0 && (
             <span aria-hidden="true" className="text-base-content/60">
