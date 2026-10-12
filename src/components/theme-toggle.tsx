@@ -8,7 +8,9 @@ export function ThemeToggle() {
     } catch {}
     document.documentElement.classList.add("theme-changing");
     requestAnimationFrame(() =>
-      requestAnimationFrame(() => document.documentElement.classList.remove("theme-changing")),
+      requestAnimationFrame(() => {
+        document.documentElement.classList.remove("theme-changing");
+      }),
     );
   };
   return (
