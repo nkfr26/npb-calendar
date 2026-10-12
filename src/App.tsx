@@ -64,7 +64,7 @@ export function App() {
           />
         </FilterDrawer>
       </main>
-      <footer className="border-t border-base-300 bg-base-100 p-4 text-xs text-base-content/50">
+      <footer className="border-t border-base-300 bg-base-100 p-4 text-xs text-base-content/60">
         <p className="mx-auto max-w-6xl [word-break:auto-phrase]">
           本サイトは非公式サービスであり、一般社団法人日本野球機構 (NPB)
           および各球団とは関係ありません。試合日程等は公開情報をもとに独自に整理しています。最新情報は公式サイト
