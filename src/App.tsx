@@ -3,6 +3,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 
 import { DrawerOpenButton } from "@/components/drawer-open-button";
 import { Filter } from "@/components/filter";
+import { FilterDrawer } from "@/components/filter-drawer";
 import { Header } from "@/components/header";
 import { ScheduleCalendar } from "@/components/schedule-calendar";
 import { ScheduleViewer } from "@/components/schedule-viewer";
@@ -10,15 +11,11 @@ import { useCalendar } from "@/hooks/use-calendar";
 import { filterSchedules, useFilter } from "@/hooks/use-filter";
 import { useSchedulesQuery } from "@/queries/use-schedules-query";
 
-const FilterDrawer = lazy(() =>
-  import("@/components/filter-drawer").then(({ FilterDrawer }) => ({ default: FilterDrawer })),
-);
-
 export function App() {
   const calendar = useCalendar();
   const { data: schedules = [], isSuccess } = useSchedulesQuery(calendar.month);
   const { filter, setFilter, isFiltered } = useFilter();
-  const [drawerOpen, setDrawerOpen] = useState<boolean>();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const { selected, onSelect } = calendar;
   const filteredSchedules = filterSchedules(schedules, filter);
@@ -59,18 +56,14 @@ export function App() {
           <ScheduleViewer selected={selected} groupedSchedulesByDate={groupedSchedulesByDate} />
         </div>
 
-        {drawerOpen !== undefined && (
-          <Suspense>
-            <FilterDrawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-              <Filter
-                schedules={schedules}
-                filter={filter}
-                setFilter={setFilter}
-                isFiltered={isFiltered}
-              />
-            </FilterDrawer>
-          </Suspense>
-        )}
+        <FilterDrawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+          <Filter
+            schedules={schedules}
+            filter={filter}
+            setFilter={setFilter}
+            isFiltered={isFiltered}
+          />
+        </FilterDrawer>
       </main>
       <footer className="border-t border-base-300 bg-base-100 p-4 text-xs text-base-content/50">
         <p className="mx-auto max-w-6xl [word-break:auto-phrase]">
