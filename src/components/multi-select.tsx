@@ -34,7 +34,7 @@ export function MultiSelect({
       multiple
       value={selectedValues}
       onValueChange={(details) => setSelectedValues(details.value)}
-      positioning={{ sameWidth: true }}
+      positioning={{ sameWidth: true, gutter: 4 }}
     >
       <SelectLabel>{label}</SelectLabel>
       <SelectControl className="floating-label">
