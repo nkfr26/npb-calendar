@@ -1,8 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import { ofetch } from "ofetch";
 import * as v from "valibot";
 
 const holidaysSchema = v.record(v.string(), v.string());
+
+export type Holidays = v.InferOutput<typeof holidaysSchema>;
 
 async function fetchHolidays(): Promise<v.InferOutput<typeof holidaysSchema>> {
   try {
@@ -13,8 +15,8 @@ async function fetchHolidays(): Promise<v.InferOutput<typeof holidaysSchema>> {
   }
 }
 
-export function useHolidaysQuery() {
-  return useQuery({
+export function holidaysQueryOptions() {
+  return queryOptions({
     queryKey: ["holidays"],
     queryFn: fetchHolidays,
   });

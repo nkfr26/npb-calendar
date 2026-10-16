@@ -26,7 +26,7 @@ import {
   DatePickerView,
   DatePickerViewControl,
 } from "@/components/ui/date-picker";
-import { useHolidaysQuery } from "@/queries/use-holidays-query";
+import type { Holidays } from "@/queries/use-holidays-query";
 import type { GroupedSchedulesByDate } from "@/queries/use-schedules-query";
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -37,15 +37,15 @@ export function ScheduleCalendar({
   month,
   onMonthChange,
   groupedSchedulesByDate,
+  holidays,
 }: {
   selected: CalendarDate | undefined;
   onSelect: (date: CalendarDate | undefined) => void;
   month: CalendarDate;
   onMonthChange: (date: CalendarDate) => void;
   groupedSchedulesByDate: GroupedSchedulesByDate;
+  holidays: Holidays;
 }) {
-  const { data: holidays = {} } = useHolidaysQuery();
-
   const [focusedValue, setFocusedValue] = useState<DateValue>(month);
   const isSameMonth = (dateValue: DateValue) =>
     dateValue.year === month.year && dateValue.month === month.month;
@@ -80,9 +80,10 @@ export function ScheduleCalendar({
             <DatePickerView view="day">
               <DatePickerViewControl>
                 <a
-                  href={`https://npb.jp/games/${datePicker.visibleRange.start.year}/schedule_${String(
-                    datePicker.visibleRange.start.month,
-                  ).padStart(2, "0")}_detail.html`}
+                  href={`https://npb.jp/games/${month.year}/schedule_${String(month.month).padStart(
+                    2,
+                    "0",
+                  )}_detail.html`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-square btn-ghost btn-sm"
@@ -91,13 +92,25 @@ export function ScheduleCalendar({
                   <ExternalLink className="size-4" />
                 </a>
                 <DatePickerRangeText>
-                  {datePicker.visibleRange.start.year}年 {datePicker.visibleRange.start.month}月
+                  {month.year}年 {month.month}月
                 </DatePickerRangeText>
                 <div className="flex gap-1 justify-self-end">
-                  <DatePickerPrevTrigger aria-label="前の月">
+                  <DatePickerPrevTrigger
+                    aria-label="前の月"
+                    onClickCapture={(event) => {
+                      event.preventDefault();
+                      onMonthChange(month.subtract({ months: 1 }));
+                    }}
+                  >
                     <ChevronLeft className="size-4" />
                   </DatePickerPrevTrigger>
-                  <DatePickerNextTrigger aria-label="次の月">
+                  <DatePickerNextTrigger
+                    aria-label="次の月"
+                    onClickCapture={(event) => {
+                      event.preventDefault();
+                      onMonthChange(month.add({ months: 1 }));
+                    }}
+                  >
                     <ChevronRight className="size-4" />
                   </DatePickerNextTrigger>
                 </div>
@@ -119,7 +132,8 @@ export function ScheduleCalendar({
                   </DatePickerTableRow>
                 </DatePickerTableHead>
                 <DatePickerTableBody>
-                  {datePicker.weeks.map((week) => (
+                  {/* Ark UI updates its internal range before controlled focus changes resolve. */}
+                  {datePicker.getMonthWeeks(month).map((week) => (
                     <DatePickerTableRow key={week[0]?.toString()}>
                       {week.map((date) => {
                         const dateString = date.toString();

@@ -8,17 +8,18 @@ import { cn } from "cn";
 import { Clock, ExternalLink, MapPin, Ticket } from "lucide-react";
 import { useEffect, useId } from "react";
 
-import { useHolidaysQuery } from "@/queries/use-holidays-query";
+import type { Holidays } from "@/queries/use-holidays-query";
 import type { GroupedSchedulesByDate } from "@/queries/use-schedules-query";
 
 export function ScheduleViewer({
   selected,
   groupedSchedulesByDate,
+  holidays,
 }: {
   selected: CalendarDate | undefined;
   groupedSchedulesByDate: GroupedSchedulesByDate;
+  holidays: Holidays;
 }) {
-  const { data: holidays = {} } = useHolidaysQuery();
   useEffect(() => {
     const closeTicketPopover = () =>
       document.querySelector<HTMLElement>(".ticket-popover:popover-open")?.hidePopover();

@@ -1,5 +1,6 @@
+import { useQueries } from "@tanstack/react-query";
 import { groupBy } from "es-toolkit";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { DrawerOpenButton } from "@/components/drawer-open-button";
 import { Filter } from "@/components/filter";
@@ -9,23 +10,70 @@ import { ScheduleCalendar } from "@/components/schedule-calendar";
 import { ScheduleViewer } from "@/components/schedule-viewer";
 import { useCalendar } from "@/hooks/use-calendar";
 import { filterSchedules, useFilter } from "@/hooks/use-filter";
-import { useSchedulesQuery } from "@/queries/use-schedules-query";
+import { holidaysQueryOptions, type Holidays } from "@/queries/use-holidays-query";
+import { schedulesQueryOptions, type Schedule } from "@/queries/use-schedules-query";
+
+type Calendar = ReturnType<typeof useCalendar>;
+type LoadedCalendar = Pick<Calendar, "month" | "selected"> & {
+  schedules: Schedule[];
+  holidays: Holidays;
+};
 
 export function App() {
   const calendar = useCalendar();
-  const { data: schedules = [], isSuccess } = useSchedulesQuery(calendar.month);
+  const [{ data: schedules }, { data: holidays }] = useQueries({
+    queries: [schedulesQueryOptions(calendar.month), holidaysQueryOptions()],
+  });
+  const [loaded, setLoaded] = useState<LoadedCalendar>();
+
+  // Commit month, selection, and both datasets together. Keep the last snapshot while fetching.
+  if (
+    schedules !== undefined &&
+    holidays !== undefined &&
+    (loaded?.month !== calendar.month ||
+      loaded?.selected !== calendar.selected ||
+      loaded?.schedules !== schedules ||
+      loaded?.holidays !== holidays)
+  ) {
+    setLoaded({ month: calendar.month, selected: calendar.selected, schedules, holidays });
+  }
+
+  if (!loaded) {
+    return <output className="flex min-h-svh items-center justify-center">読み込み中…</output>;
+  }
+
+  return (
+    <ScheduleContent
+      calendar={{ ...calendar, month: loaded.month, selected: loaded.selected }}
+      schedules={loaded.schedules}
+      holidays={loaded.holidays}
+    />
+  );
+}
+
+function ScheduleContent({
+  calendar,
+  schedules,
+  holidays,
+}: {
+  calendar: Calendar;
+  schedules: Schedule[];
+  holidays: Holidays;
+}) {
   const { filter, setFilter, isFiltered } = useFilter();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const { selected, onSelect } = calendar;
+  const { onSelect } = calendar;
   const filteredSchedules = filterSchedules(schedules, filter);
-  if (
-    isSuccess &&
-    !!selected &&
-    !filteredSchedules.some((schedule) => schedule.date === selected.toString())
-  ) {
-    onSelect(undefined);
-  }
+  const selected = filteredSchedules.some(
+    (schedule) => schedule.date === calendar.selected?.toString(),
+  )
+    ? calendar.selected
+    : undefined;
+
+  useEffect(() => {
+    if (calendar.selected && !selected) onSelect(undefined);
+  }, [calendar.selected, selected, onSelect]);
 
   const groupedSchedulesByDate = groupBy(filteredSchedules, (schedule) => schedule.date);
   return (
@@ -51,8 +99,17 @@ export function App() {
             isFiltered={isFiltered}
             onClick={() => setDrawerOpen(true)}
           />
-          <ScheduleCalendar {...calendar} groupedSchedulesByDate={groupedSchedulesByDate} />
-          <ScheduleViewer selected={selected} groupedSchedulesByDate={groupedSchedulesByDate} />
+          <ScheduleCalendar
+            {...calendar}
+            selected={selected}
+            holidays={holidays}
+            groupedSchedulesByDate={groupedSchedulesByDate}
+          />
+          <ScheduleViewer
+            selected={selected}
+            holidays={holidays}
+            groupedSchedulesByDate={groupedSchedulesByDate}
+          />
         </div>
 
         <FilterDrawer open={drawerOpen} onOpenChange={setDrawerOpen}>
