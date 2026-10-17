@@ -5,6 +5,7 @@ import {
   toCalendarDate,
   type DateValue,
 } from "@internationalized/date";
+import { useQuery } from "@tanstack/react-query";
 import { cn } from "cn";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { useState } from "react";
@@ -14,7 +15,6 @@ import {
   DatePickerContext,
   DatePickerNextTrigger,
   DatePickerPrevTrigger,
-  DatePickerRangeText,
   DatePickerRoot,
   DatePickerTable,
   DatePickerTableBody,
@@ -26,8 +26,8 @@ import {
   DatePickerView,
   DatePickerViewControl,
 } from "@/components/ui/date-picker";
-import { useHolidaysQuery } from "@/queries/use-holidays-query";
-import type { GroupedSchedulesByDate } from "@/queries/use-schedules-query";
+import { holidaysQueryOptions } from "@/queries/holidays-query";
+import type { GroupedSchedulesByDate } from "@/queries/schedules-query";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -44,7 +44,7 @@ export function ScheduleCalendar({
   onMonthChange: (date: CalendarDate) => void;
   groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
-  const { data: holidays = {} } = useHolidaysQuery();
+  const { data: holidays = {} } = useQuery(holidaysQueryOptions);
 
   const [focusedValue, setFocusedValue] = useState<DateValue>(month);
   const isSameMonth = (dateValue: DateValue) =>
@@ -80,9 +80,7 @@ export function ScheduleCalendar({
             <DatePickerView view="day">
               <DatePickerViewControl>
                 <a
-                  href={`https://npb.jp/games/${datePicker.visibleRange.start.year}/schedule_${String(
-                    datePicker.visibleRange.start.month,
-                  ).padStart(2, "0")}_detail.html`}
+                  href={`https://npb.jp/games/${month.year}/schedule_${String(month.month).padStart(2, "0")}_detail.html`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-square btn-ghost btn-sm"
@@ -90,9 +88,9 @@ export function ScheduleCalendar({
                 >
                   <ExternalLink className="size-4" />
                 </a>
-                <DatePickerRangeText>
-                  {datePicker.visibleRange.start.year}年 {datePicker.visibleRange.start.month}月
-                </DatePickerRangeText>
+                <div className="font-semibold">
+                  {month.year}年 {month.month}月
+                </div>
                 <div className="flex gap-1 justify-self-end">
                   <DatePickerPrevTrigger aria-label="前の月">
                     <ChevronLeft className="size-4" />
@@ -119,7 +117,7 @@ export function ScheduleCalendar({
                   </DatePickerTableRow>
                 </DatePickerTableHead>
                 <DatePickerTableBody>
-                  {datePicker.weeks.map((week) => (
+                  {datePicker.getMonthWeeks(month).map((week) => (
                     <DatePickerTableRow key={week[0]?.toString()}>
                       {week.map((date) => {
                         const dateString = date.toString();

@@ -7,7 +7,7 @@ import {
   useQueryStates,
 } from "nuqs";
 
-import type { Schedule } from "@/queries/use-schedules-query";
+import type { Schedule } from "@/queries/schedules-query";
 
 export const DEFAULT_FILTER = {
   teams: [],

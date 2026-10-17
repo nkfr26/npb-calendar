@@ -3,7 +3,7 @@ import { type Dispatch, type SetStateAction } from "react";
 
 import { MultiSelect } from "@/components/multi-select";
 import { DEFAULT_FILTER, type Filter as FilterType, filterSchedules } from "@/hooks/use-filter";
-import type { Schedule } from "@/queries/use-schedules-query";
+import type { Schedule } from "@/queries/schedules-query";
 
 export function Filter({
   schedules,

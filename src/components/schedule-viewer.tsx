@@ -4,12 +4,13 @@ import {
   parseDate,
   type CalendarDate,
 } from "@internationalized/date";
+import { useQuery } from "@tanstack/react-query";
 import { cn } from "cn";
 import { Clock, ExternalLink, MapPin, Ticket } from "lucide-react";
 import { useEffect, useId } from "react";
 
-import { useHolidaysQuery } from "@/queries/use-holidays-query";
-import type { GroupedSchedulesByDate } from "@/queries/use-schedules-query";
+import { holidaysQueryOptions } from "@/queries/holidays-query";
+import type { GroupedSchedulesByDate } from "@/queries/schedules-query";
 
 export function ScheduleViewer({
   selected,
@@ -18,7 +19,7 @@ export function ScheduleViewer({
   selected: CalendarDate | undefined;
   groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
-  const { data: holidays = {} } = useHolidaysQuery();
+  const { data: holidays = {} } = useQuery(holidaysQueryOptions);
   useEffect(() => {
     const closeTicketPopover = () =>
       document.querySelector<HTMLElement>(".ticket-popover:popover-open")?.hidePopover();

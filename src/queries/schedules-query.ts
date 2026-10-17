@@ -1,5 +1,5 @@
 import type { CalendarDate } from "@internationalized/date";
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import type { groupBy } from "es-toolkit";
 import { ofetch } from "ofetch";
 import * as v from "valibot";
@@ -40,10 +40,10 @@ async function fetchSchedules(date: CalendarDate): Promise<Schedule[]> {
   }
 }
 
-export function useSchedulesQuery(date: CalendarDate) {
-  return useQuery({
+export function schedulesQueryOptions(date: CalendarDate) {
+  return queryOptions({
     queryKey: ["schedules", formatYearMonth(date)],
-    queryFn: () => fetchSchedules(date),
+    queryFn: async () => ({ month: date, schedules: await fetchSchedules(date) }),
   });
 }
 

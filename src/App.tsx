@@ -1,5 +1,5 @@
 import { groupBy } from "es-toolkit";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useState } from "react";
 
 import { DrawerOpenButton } from "@/components/drawer-open-button";
 import { Filter } from "@/components/filter";
@@ -9,18 +9,16 @@ import { ScheduleCalendar } from "@/components/schedule-calendar";
 import { ScheduleViewer } from "@/components/schedule-viewer";
 import { useCalendar } from "@/hooks/use-calendar";
 import { filterSchedules, useFilter } from "@/hooks/use-filter";
-import { useSchedulesQuery } from "@/queries/use-schedules-query";
 
 export function App() {
-  const calendar = useCalendar();
-  const { data: schedules = [], isSuccess } = useSchedulesQuery(calendar.month);
+  const { schedules, isPending, ...calendar } = useCalendar();
   const { filter, setFilter, isFiltered } = useFilter();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const { selected, onSelect } = calendar;
   const filteredSchedules = filterSchedules(schedules, filter);
   if (
-    isSuccess &&
+    !isPending &&
     !!selected &&
     !filteredSchedules.some((schedule) => schedule.date === selected.toString())
   ) {
@@ -64,13 +62,15 @@ export function App() {
           />
         </FilterDrawer>
       </main>
-      <footer className="border-t border-base-300 bg-base-100 p-4 text-xs text-base-content/60">
-        <p className="mx-auto max-w-6xl [word-break:auto-phrase]">
-          本サイトは非公式サービスであり、一般社団法人日本野球機構 (NPB)
-          および各球団とは関係ありません。試合日程等は公開情報をもとに独自に整理しています。最新情報は公式サイト
-          (カレンダー左上) をご確認ください。
-        </p>
-      </footer>
+      {!isPending && (
+        <footer className="border-t border-base-300 bg-base-100 p-4 text-xs text-base-content/60">
+          <p className="mx-auto max-w-6xl [word-break:auto-phrase]">
+            本サイトは非公式サービスであり、一般社団法人日本野球機構 (NPB)
+            および各球団とは関係ありません。試合日程等は公開情報をもとに独自に整理しています。最新情報は公式サイト
+            (カレンダー左上) をご確認ください。
+          </p>
+        </footer>
+      )}
     </>
   );
 }
