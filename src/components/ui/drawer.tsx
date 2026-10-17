@@ -64,7 +64,7 @@ export function DrawerContent({
         className,
       )}
     >
-      <ArkDrawer.Grabber className="flex justify-center pt-3">
+      <ArkDrawer.Grabber className="flex justify-center pt-2.5">
         <ArkDrawer.GrabberIndicator className="h-1.5 w-25 rounded-full bg-base-300" />
       </ArkDrawer.Grabber>
       {children}
