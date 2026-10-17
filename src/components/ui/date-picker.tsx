@@ -95,7 +95,7 @@ export function DatePickerTableCellTrigger({
       {...props}
       className={cn(
         "btn h-11 w-full flex-col gap-1 btn-ghost p-0 text-xs transition-none",
-        "data-[selected]:border-2 data-[selected]:border-primary/60 data-[selected]:bg-transparent dark:data-[selected]:border-primary/80",
+        "data-[selected]:border-2 data-[selected]:border-primary/60 dark:data-[selected]:border-primary/80",
         className,
       )}
     />
