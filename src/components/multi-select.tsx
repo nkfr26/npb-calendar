@@ -66,6 +66,9 @@ export function MultiSelect({
       <SelectHiddenSelect />
       <SelectPositioner>
         <SelectContent>
+          {collection.items.length === 0 && (
+            <div className="p-2 text-base-content/60">選択肢が存在しません</div>
+          )}
           {collection.items.map((item) => (
             <SelectItem key={item.value} item={item}>
               <SelectItemText>{item.label}</SelectItemText>

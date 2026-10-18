@@ -30,16 +30,22 @@ export function SelectPositioner({
   return <ArkSelect.Positioner {...props} className={cn("!z-50", className)} />;
 }
 
-export function SelectContent({ className, ...props }: ComponentProps<typeof ArkSelect.Content>) {
+export function SelectContent({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof ArkSelect.Content>) {
   return (
     <ArkSelect.Content
       {...props}
       data-no-drag
       className={cn(
-        "max-h-72 overflow-y-auto overscroll-contain rounded-field border border-base-content/20 bg-base-100 p-2",
+        "overflow-hidden rounded-field border border-base-content/20 bg-base-100",
         className,
       )}
-    />
+    >
+      <div className="max-h-72 overflow-y-auto overscroll-contain p-2">{children}</div>
+    </ArkSelect.Content>
   );
 }
 

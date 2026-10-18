@@ -54,7 +54,7 @@ export function DrawerContent({
     <ArkDrawer.Content
       {...props}
       className={cn(
-        "relative w-full rounded-t-box bg-base-100",
+        "relative w-full rounded-t-box border border-base-300 bg-base-100",
         "transition-transform duration-450 ease-[cubic-bezier(0.22,1,0.36,1)]",
         // Starting styles avoid replaying the entrance after a swipe; Ark sets transform inline.
         "starting:data-[state=open]:transform-[translateY(calc(100%+2px))]!",
@@ -64,8 +64,8 @@ export function DrawerContent({
         className,
       )}
     >
-      <ArkDrawer.Grabber className="flex justify-center pt-2.5">
-        <ArkDrawer.GrabberIndicator className="h-1.5 w-25 rounded-full bg-base-300" />
+      <ArkDrawer.Grabber className="flex justify-center pt-2">
+        <ArkDrawer.GrabberIndicator className="h-1 w-10 rounded-full bg-base-300" />
       </ArkDrawer.Grabber>
       {children}
     </ArkDrawer.Content>
