@@ -44,6 +44,7 @@ export function schedulesQueryOptions(date: CalendarDate) {
   return queryOptions({
     queryKey: ["schedules", formatYearMonth(date)],
     queryFn: async () => ({ month: date, schedules: await fetchSchedules(date) }),
+    staleTime: 60 * 1000,
   });
 }
 
