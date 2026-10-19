@@ -1,5 +1,5 @@
 import { CalendarDate, getLocalTimeZone, parseDate, today } from "@internationalized/date";
-import { keepPreviousData, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, noop, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createParser, useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 
@@ -38,10 +38,9 @@ function getNavigableMonth(date: CalendarDate) {
 }
 
 export function useCalendar() {
-  const queryClient = useQueryClient();
   const [defaultMonth] = useState(() => getInitialMonth(today(getLocalTimeZone())));
-  const [selected, setSelected] = useQueryState("selected", parseAsCalendarDate);
   const [month, setMonth] = useQueryState("month", parseAsCalendarMonth.withDefault(defaultMonth));
+  const [selected, setSelected] = useQueryState("selected", parseAsCalendarDate);
 
   const schedulesQuery = useQuery({
     ...schedulesQueryOptions(month),
@@ -49,19 +48,19 @@ export function useCalendar() {
   });
   const holidaysQuery = useQuery(holidaysQueryOptions);
 
+  const queryClient = useQueryClient();
   useEffect(() => {
-    void queryClient.prefetchQuery(
-      schedulesQueryOptions(getNavigableMonth(month.add({ months: -1 }))),
-    );
-    void queryClient.prefetchQuery(
-      schedulesQueryOptions(getNavigableMonth(month.add({ months: 1 }))),
-    );
+    void queryClient
+      .query(schedulesQueryOptions(getNavigableMonth(month.add({ months: -1 }))))
+      .catch(noop);
+    void queryClient
+      .query(schedulesQueryOptions(getNavigableMonth(month.add({ months: 1 }))))
+      .catch(noop);
   }, [queryClient, month]);
 
   const onSelect = (date: CalendarDate | undefined) => setSelected(date ?? null);
   const onMonthChange = (date: CalendarDate) => {
     if (schedulesQuery.isPlaceholderData) return;
-
     setMonth(getNavigableMonth(date));
   };
 
