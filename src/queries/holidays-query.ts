@@ -16,4 +16,5 @@ async function fetchHolidays(): Promise<v.InferOutput<typeof holidaysSchema>> {
 export const holidaysQueryOptions = queryOptions({
   queryKey: ["holidays"],
   queryFn: fetchHolidays,
+  staleTime: Infinity,
 });

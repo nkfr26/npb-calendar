@@ -1,5 +1,5 @@
 import { CalendarDate, getLocalTimeZone, parseDate, today } from "@internationalized/date";
-import { keepPreviousData, noop, useQuery, useQueryClient } from "@tanstack/react-query";
+import { noop, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createParser, useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 
@@ -42,11 +42,10 @@ export function useCalendar() {
   const [month, setMonth] = useQueryState("month", parseAsCalendarMonth.withDefault(defaultMonth));
   const [selected, setSelected] = useQueryState("selected", parseAsCalendarDate);
 
-  const schedulesQuery = useQuery({
-    ...schedulesQueryOptions(month),
-    placeholderData: keepPreviousData,
-  });
-  const holidaysQuery = useQuery(holidaysQueryOptions);
+  const [schedulesQuery, holidaysQuery] = [
+    useQuery(schedulesQueryOptions(month)),
+    useQuery(holidaysQueryOptions),
+  ];
 
   const queryClient = useQueryClient();
   useEffect(() => {

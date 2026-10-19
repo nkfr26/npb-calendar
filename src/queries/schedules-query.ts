@@ -1,5 +1,5 @@
 import type { CalendarDate } from "@internationalized/date";
-import { queryOptions } from "@tanstack/react-query";
+import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import type { groupBy } from "es-toolkit";
 import { ofetch } from "ofetch";
 import * as v from "valibot";
@@ -44,7 +44,8 @@ export function schedulesQueryOptions(date: CalendarDate) {
   return queryOptions({
     queryKey: ["schedules", formatYearMonth(date)],
     queryFn: async () => ({ month: date, schedules: await fetchSchedules(date) }),
-    staleTime: 60 * 1000,
+    staleTime: Infinity,
+    placeholderData: keepPreviousData,
   });
 }
 
