@@ -41,6 +41,10 @@ export function SelectContent({
       data-no-drag
       className={cn(
         "overflow-hidden rounded-field border border-base-content/20 bg-base-100",
+        "origin-(--transform-origin)",
+        "motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.4,0,0.2,1)]",
+        "motion-safe:data-[state=open]:animate-in motion-safe:data-[state=open]:fade-in-0 motion-safe:data-[state=open]:zoom-in-95",
+        "motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=closed]:fade-out-0 motion-safe:data-[state=closed]:zoom-out-95",
         className,
       )}
     >
@@ -54,8 +58,7 @@ export function SelectItem({ className, ...props }: ComponentProps<typeof ArkSel
     <ArkSelect.Item
       {...props}
       className={cn(
-        "flex cursor-pointer items-center justify-between rounded-field p-2",
-        "hover:bg-base-content/10 active:bg-neutral active:text-neutral-content",
+        "interaction-surface flex items-center justify-between rounded-field p-2",
         className,
       )}
     />

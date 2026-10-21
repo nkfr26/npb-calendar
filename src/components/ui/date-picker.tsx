@@ -94,6 +94,7 @@ export function DatePickerTableCellTrigger({
     <ArkDatePicker.TableCellTrigger
       {...props}
       className={cn(
+        // Month changes reuse cells, so transitions would animate unrelated dates.
         "btn h-11 w-full flex-col gap-1 btn-ghost p-0 text-xs transition-none",
         "data-[selected]:border-2 data-[selected]:border-primary/60 dark:data-[selected]:border-primary/80",
         className,

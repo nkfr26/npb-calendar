@@ -48,12 +48,9 @@ export function ScheduleViewer({
               : undefined;
 
         return (
-          <details
-            key={dateString}
-            className="collapse-arrow collapse overflow-clip border border-base-300 bg-base-100"
-          >
+          <details key={dateString} className="collapse-arrow collapse overflow-clip bg-base-100">
             {/* oxlint-disable-next-line jsx-a11y/control-has-associated-label -- The summary gets its name from its nested text. */}
-            <summary className="collapse-title sticky top-14 z-50 bg-base-100 ring-1 ring-base-300 hover:bg-base-300">
+            <summary className="collapse-title sticky top-14 z-50 rounded-box border border-base-300 bg-base-100">
               <div className="flex flex-col">
                 <div className={cn("flex items-center gap-1 font-medium", textColor)}>
                   {date.toDate(timeZone).toLocaleDateString("ja-JP", {
@@ -67,7 +64,7 @@ export function ScheduleViewer({
                 <div className="text-xs opacity-60">{schedules.length}試合</div>
               </div>
             </summary>
-            <div className="collapse-content divide-y divide-base-300 border-base-300 p-0 not-empty:border-t">
+            <div className="collapse-content divide-y divide-base-300 rounded-b-box border-base-300 p-0 not-empty:border-x not-empty:border-b">
               {schedules.map((schedule) => (
                 <ScheduleRow key={`${dateString}-${schedule.match.home}`} schedule={schedule} />
               ))}
@@ -143,7 +140,7 @@ function ScheduleRow({ schedule }: { schedule: GroupedSchedulesByDate[string][nu
 function TicketItem({ href, children }: { href: string; children: string }) {
   return (
     <li>
-      <a href={href} target="_blank" rel="noopener noreferrer">
+      <a href={href} target="_blank" rel="noopener noreferrer" className="interaction-surface">
         {children}
         <ExternalLink className="ml-auto size-4" />
       </a>
