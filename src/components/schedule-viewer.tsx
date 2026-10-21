@@ -21,8 +21,9 @@ export function ScheduleViewer({
 }) {
   const { data: holidays = {} } = useQuery(holidaysQueryOptions);
   useEffect(() => {
-    const closeTicketPopover = () =>
-      document.querySelector<HTMLElement>(".ticket-popover:popover-open")?.hidePopover();
+    const closeTicketPopover = () => {
+      document.querySelector<HTMLElement>("[data-ticket-popover]:popover-open")?.hidePopover();
+    };
 
     window.addEventListener("scroll", closeTicketPopover, true);
     return () => window.removeEventListener("scroll", closeTicketPopover, true);
@@ -123,7 +124,8 @@ function ScheduleRow({ schedule }: { schedule: GroupedSchedulesByDate[string][nu
           <ul
             id={menuId}
             popover="auto"
-            className="ticket-popover menu dropdown dropdown-end mt-1 min-w-48 rounded-field border border-base-300 bg-base-100 p-2 [position-try-fallbacks:flip-block]"
+            data-ticket-popover
+            className="menu dropdown dropdown-end mt-1 min-w-48 rounded-field border border-base-300 bg-base-100 p-2 [position-try-fallbacks:flip-block]"
           >
             <TicketItem href={ticket.primary}>購入</TicketItem>
             {resaleUrls.map((url, index) => (
