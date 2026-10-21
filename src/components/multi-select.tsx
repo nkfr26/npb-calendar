@@ -53,7 +53,7 @@ export function MultiSelect({
             </span>
           )}
           {selectedValues.length > 0 && (
-            <span className="flex flex-wrap gap-1 pt-0.5">
+            <span className="flex flex-wrap gap-1">
               {selectedValues.map((value) => (
                 <span key={value} className="badge badge-outline border-base-content/20">
                   {value}
