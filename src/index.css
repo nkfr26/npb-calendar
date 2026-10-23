@@ -43,6 +43,12 @@
   border-radius: 0.25rem;
 }
 @utility select {
+  &:focus,
+  &:focus-within,
+  &:open {
+    --input-color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+  }
+
   &:focus:not(:focus-visible),
   &:open:not(:focus-visible) {
     outline: none;
