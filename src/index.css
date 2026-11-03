@@ -49,7 +49,7 @@
   &:focus-visible {
     --input-color: --alpha(var(--color-primary) / 60%);
     @variant dark {
-      --input-color: --alpha(var(--color-primary) / 80%);
+      --input-color: var(--color-primary);
     }
   }
 
@@ -67,20 +67,20 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .collapse > .collapse-title {
-      transition: border-radius 200ms;
+      transition: border-radius .2s;
     }
   }
 
   @media (hover: hover) {
     .collapse > .collapse-title:hover {
-      @apply border-primary/60 dark:border-primary/80;
+      @apply border-primary/60 dark:border-primary;
     }
   }
 
   :is(.toggle, .select):not(:disabled, [data-disabled]):not(:has(> input:disabled)) {
     @media (hover: hover) {
       &:hover {
-        @apply border-primary/60 dark:border-primary/80;
+        @apply border-primary/60 dark:border-primary;
       }
     }
   }
