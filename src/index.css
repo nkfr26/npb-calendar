@@ -67,7 +67,7 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .collapse > .collapse-title {
-      transition: border-radius .2s;
+      transition: border-radius 0.2s;
     }
   }
 
@@ -75,10 +75,8 @@
     .collapse > .collapse-title:hover {
       @apply border-primary/60 dark:border-primary;
     }
-  }
 
-  :is(.toggle, .select):not(:disabled, [data-disabled]):not(:has(> input:disabled)) {
-    @media (hover: hover) {
+    :is(.toggle, .select) {
       &:hover {
         @apply border-primary/60 dark:border-primary;
       }
