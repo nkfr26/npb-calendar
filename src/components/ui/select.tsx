@@ -58,7 +58,7 @@ export function SelectItem({ className, ...props }: ComponentProps<typeof ArkSel
     <ArkSelect.Item
       {...props}
       className={cn(
-        "interaction-surface flex items-center justify-between rounded-field p-2",
+        "btn btn-block justify-between btn-ghost p-2 font-normal",
         className,
       )}
     />

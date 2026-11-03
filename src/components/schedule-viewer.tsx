@@ -140,7 +140,12 @@ function ScheduleRow({ schedule }: { schedule: GroupedSchedulesByDate[string][nu
 function TicketItem({ href, children }: { href: string; children: string }) {
   return (
     <li>
-      <a href={href} target="_blank" rel="noopener noreferrer" className="interaction-surface">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn btn-block justify-between btn-ghost font-normal"
+      >
         {children}
         <ExternalLink className="ml-auto size-4" />
       </a>
