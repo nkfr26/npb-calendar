@@ -15,16 +15,18 @@
     <link rel="icon" href="/favicon.png" />
     <link rel="preconnect" href="https://nkfr26.github.io" crossorigin />
     <script>
-      let theme = null;
-      try {
-        theme = localStorage.getItem("theme");
-      } catch {}
-      document.documentElement.dataset.theme =
-        theme === "light" || theme === "dark"
-          ? theme
-          : matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
+      (() => {
+        let e = null;
+        try {
+          e = localStorage.getItem("theme");
+        } catch (e) {}
+        document.documentElement.dataset.theme =
+          "light" === e || "dark" === e
+            ? e
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+      })();
     </script>
   </head>
   <body>
