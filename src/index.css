@@ -46,12 +46,6 @@
 }
 
 @utility select {
-  &:focus-visible {
-    --input-color: --alpha(var(--color-primary) / 60%);
-    @variant dark {
-      --input-color: var(--color-primary);
-    }
-  }
   &:focus:not(:focus-visible) {
     --input-color: --alpha(var(--color-base-content) / 20%);
     outline: none;
@@ -66,7 +60,7 @@
   }
 
   @media (hover: hover) {
-    :is(.collapse > .collapse-title, .toggle, .select):hover {
+    :is(.collapse > .collapse-title, .select, .toggle):hover {
       @apply border-primary/60 dark:border-primary;
     }
   }
