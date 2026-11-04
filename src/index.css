@@ -60,11 +60,6 @@
 }
 
 @layer utilities {
-  .collapse[open] > .collapse-title {
-    border-end-start-radius: 0;
-    border-end-end-radius: 0;
-  }
-
   @media (prefers-reduced-motion: no-preference) {
     .collapse > .collapse-title {
       transition: border-radius 0.2s;
@@ -72,7 +67,7 @@
   }
 
   @media (hover: hover) {
-    :is(.collapse > .collapse-title:hover, .toggle, .select):hover {
+    :is(.collapse > .collapse-title, .toggle, .select):hover {
       @apply border-primary/60 dark:border-primary;
     }
   }
