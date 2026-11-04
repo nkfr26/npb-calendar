@@ -36,12 +36,14 @@ export function ScheduleCalendar({
   onSelect,
   month,
   onMonthChange,
+  prefetchMonth,
   groupedSchedulesByDate,
 }: {
   selected: CalendarDate | undefined;
   onSelect: (date: CalendarDate | undefined) => void;
   month: CalendarDate;
   onMonthChange: (date: CalendarDate) => void;
+  prefetchMonth: (direction: -1 | 1) => void;
   groupedSchedulesByDate: GroupedSchedulesByDate;
 }) {
   const { data: holidays = {} } = useQuery(holidaysQueryOptions);
@@ -92,10 +94,16 @@ export function ScheduleCalendar({
                   {month.year}年 {month.month}月
                 </div>
                 <div className="flex gap-1 justify-self-end">
-                  <DatePickerPrevTrigger aria-label="前の月">
+                  <DatePickerPrevTrigger
+                    onPointerEnter={() => prefetchMonth(-1)}
+                    onFocus={() => prefetchMonth(-1)}
+                  >
                     <ChevronLeft className="size-4" />
                   </DatePickerPrevTrigger>
-                  <DatePickerNextTrigger aria-label="次の月">
+                  <DatePickerNextTrigger
+                    onPointerEnter={() => prefetchMonth(1)}
+                    onFocus={() => prefetchMonth(1)}
+                  >
                     <ChevronRight className="size-4" />
                   </DatePickerNextTrigger>
                 </div>

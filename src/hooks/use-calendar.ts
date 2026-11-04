@@ -1,7 +1,7 @@
 import { CalendarDate, getLocalTimeZone, parseDate, today } from "@internationalized/date";
 import { noop, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createParser, useQueryState } from "nuqs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { formatYearMonth } from "@/lib/utils";
 import { holidaysQueryOptions } from "@/queries/holidays-query";
@@ -47,20 +47,17 @@ export function useCalendar() {
     useQuery(holidaysQueryOptions),
   ];
 
-  const queryClient = useQueryClient();
-  useEffect(() => {
-    void queryClient
-      .query(schedulesQueryOptions(getNavigableMonth(month.add({ months: -1 }))))
-      .catch(noop);
-    void queryClient
-      .query(schedulesQueryOptions(getNavigableMonth(month.add({ months: 1 }))))
-      .catch(noop);
-  }, [queryClient, month]);
-
   const onSelect = (date: CalendarDate | undefined) => setSelected(date ?? null);
   const onMonthChange = (date: CalendarDate) => {
     if (schedulesQuery.isPlaceholderData) return;
     setMonth(getNavigableMonth(date));
+  };
+
+  const queryClient = useQueryClient();
+  const prefetchMonth = (direction: -1 | 1) => {
+    void queryClient
+      .query(schedulesQueryOptions(getNavigableMonth(month.add({ months: direction }))))
+      .catch(noop);
   };
 
   return {
@@ -68,6 +65,7 @@ export function useCalendar() {
     onSelect,
     month: schedulesQuery.data?.month ?? month,
     onMonthChange,
+    prefetchMonth,
     schedules: schedulesQuery.data?.schedules ?? [],
     isPending: schedulesQuery.isPending || holidaysQuery.isPending,
   };

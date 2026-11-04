@@ -45,6 +45,7 @@ export function DatePickerPrevTrigger({
   return (
     <ArkDatePicker.PrevTrigger
       {...props}
+      aria-label="前月"
       className={cn("btn btn-square btn-ghost btn-sm", className)}
     />
   );
@@ -57,6 +58,7 @@ export function DatePickerNextTrigger({
   return (
     <ArkDatePicker.NextTrigger
       {...props}
+      aria-label="翌月"
       className={cn("btn btn-square btn-ghost btn-sm", className)}
     />
   );

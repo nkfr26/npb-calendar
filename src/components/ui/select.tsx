@@ -59,6 +59,7 @@ export function SelectItem({ className, ...props }: ComponentProps<typeof ArkSel
       {...props}
       className={cn(
         "btn btn-block justify-between btn-ghost p-2 font-normal",
+        "data-[highlighted]:bg-base-content/10",
         className,
       )}
     />
