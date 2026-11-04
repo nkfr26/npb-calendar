@@ -52,7 +52,6 @@
       --input-color: var(--color-primary);
     }
   }
-
   &:focus:not(:focus-visible) {
     --input-color: --alpha(var(--color-base-content) / 20%);
     outline: none;
@@ -69,26 +68,6 @@
   @media (hover: hover) {
     :is(.collapse > .collapse-title, .toggle, .select):hover {
       @apply border-primary/60 dark:border-primary;
-    }
-  }
-
-  [data-scope="select"][data-part="content"]:not(:focus-visible) [data-part="item"] {
-    --tap-highlight: --alpha(var(--color-base-content) / 10%);
-    -webkit-tap-highlight-color: var(--tap-highlight);
-
-    @media (hover: none) {
-      &[data-highlighted] {
-        background-color: transparent;
-      }
-      &:active {
-        background-color: var(--tap-highlight);
-      }
-    }
-
-    @media (hover: hover) {
-      &[data-highlighted]:not(:hover) {
-        background-color: transparent;
-      }
     }
   }
 }
