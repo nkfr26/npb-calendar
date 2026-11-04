@@ -72,14 +72,8 @@
   }
 
   @media (hover: hover) {
-    .collapse > .collapse-title:hover {
+    :is(.collapse > .collapse-title:hover, .toggle, .select):hover {
       @apply border-primary/60 dark:border-primary;
-    }
-
-    :is(.toggle, .select) {
-      &:hover {
-        @apply border-primary/60 dark:border-primary;
-      }
     }
   }
 }
