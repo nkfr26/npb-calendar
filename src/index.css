@@ -45,6 +45,17 @@
   border-radius: 0.25rem;
 }
 
+@utility btn-ghost {
+  @media (hover: hover) {
+    :where([data-theme=dark]) &:hover {
+      --btn-bg: var(--color-base-300);
+    }
+  }
+  :where([data-theme=dark]) &:active {
+    --btn-bg: var(--color-base-300);
+  }
+}
+
 @utility select {
   &:focus:not(:focus-visible) {
     --input-color: --alpha(var(--color-base-content) / 20%);
@@ -81,6 +92,7 @@ body {
   grid-template-rows: auto 1fr auto;
 }
 
+html.theme-changing,
 html.theme-changing *,
 html.theme-changing *::before,
 html.theme-changing *::after {

@@ -31,7 +31,7 @@ export function ThemeToggle() {
     <label className="toggle border-base-content/10 bg-base-content/10 toggle-sm before:bg-base-100 has-[:checked]:before:bg-black [&>svg]:text-base-content">
       <input
         type="checkbox"
-        defaultChecked={isDark}
+        checked={isDark}
         onChange={(event) => onThemeChange(event.currentTarget.checked ? "dark" : "light")}
         aria-label="ダークモード"
       />
