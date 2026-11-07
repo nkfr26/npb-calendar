@@ -47,11 +47,11 @@
 
 @utility btn-ghost {
   @media (hover: hover) {
-    :where([data-theme=dark]) &:hover {
+    :where([data-theme="dark"]) &:hover {
       --btn-bg: var(--color-base-300);
     }
   }
-  :where([data-theme=dark]) &:active {
+  :where([data-theme="dark"]) &:active {
     --btn-bg: var(--color-base-300);
   }
 }

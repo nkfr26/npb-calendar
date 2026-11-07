@@ -50,7 +50,7 @@ export function ScheduleViewer({
         return (
           <details
             key={dateString}
-            className="collapse-arrow collapse bg-base-100 open:[&>.collapse-title]:rounded-none"
+            className="collapse-arrow collapse bg-base-100 open:rounded-none open:[&>.collapse-title]:rounded-none"
           >
             {/* oxlint-disable-next-line jsx-a11y/control-has-associated-label -- The summary gets its name from its nested text. */}
             <summary className="collapse-title sticky top-14 z-50 rounded-box border border-base-300 bg-base-100">
@@ -67,7 +67,7 @@ export function ScheduleViewer({
                 <div className="text-xs opacity-60">{schedules.length}試合</div>
               </div>
             </summary>
-            <div className="collapse-content divide-y divide-base-300 rounded-b-box border-x border-b border-base-300 p-0">
+            <div className="collapse-content divide-y divide-base-300 border-x border-b border-base-300 p-0">
               {schedules.map((schedule) => (
                 <ScheduleRow key={`${dateString}-${schedule.match.home}`} schedule={schedule} />
               ))}
