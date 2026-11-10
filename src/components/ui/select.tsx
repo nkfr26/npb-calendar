@@ -4,11 +4,19 @@ import { cn } from "cn";
 import type { ComponentProps } from "react";
 
 export { createListCollection };
-export const SelectRoot = ArkSelect.Root;
 export const SelectControl = ArkSelect.Control;
 export const SelectHiddenSelect = ArkSelect.HiddenSelect;
 export const SelectItemText = ArkSelect.ItemText;
 export const SelectItemIndicator = ArkSelect.ItemIndicator;
+
+export function SelectRoot(props: ComponentProps<typeof ArkSelect.Root>) {
+  return (
+    <ArkSelect.Root
+      scrollToIndexFn={({ getElement }) => getElement()?.scrollIntoView({ block: "nearest" })}
+      {...props}
+    />
+  );
+}
 
 export function SelectLabel({ className, ...props }: ComponentProps<typeof ArkSelect.Label>) {
   return <ArkSelect.Label {...props} className={cn("sr-only", className)} />;
