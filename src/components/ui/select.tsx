@@ -1,4 +1,4 @@
-import { createListCollection } from "@ark-ui/react/collection";
+import { CollectionItem, createListCollection } from "@ark-ui/react/collection";
 import { Select as ArkSelect } from "@ark-ui/react/select";
 import { cn } from "cn";
 import type { ComponentProps } from "react";
@@ -9,9 +9,11 @@ export const SelectHiddenSelect = ArkSelect.HiddenSelect;
 export const SelectItemText = ArkSelect.ItemText;
 export const SelectItemIndicator = ArkSelect.ItemIndicator;
 
-export function SelectRoot(props: ComponentProps<typeof ArkSelect.Root>) {
+export function SelectRoot<T extends CollectionItem>(
+  props: ComponentProps<typeof ArkSelect.Root<T>>,
+) {
   return (
-    <ArkSelect.Root
+    <ArkSelect.Root<T>
       scrollToIndexFn={({ getElement }) => getElement()?.scrollIntoView({ block: "nearest" })}
       {...props}
     />
